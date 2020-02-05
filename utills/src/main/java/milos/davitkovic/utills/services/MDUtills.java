@@ -54,5 +54,5 @@ public interface MDUtills {
 
     Path findFile(String fileName, String folderName);
 
-    void writeInFile(String fileName, String folderName, String inputText);
+    void writeInFile(String fileName, String folderName, List<String> inputText);
 }

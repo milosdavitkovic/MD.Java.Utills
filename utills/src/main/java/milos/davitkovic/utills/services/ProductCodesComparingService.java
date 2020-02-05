@@ -10,9 +10,7 @@ public interface ProductCodesComparingService {
     /**
      *
      * @param folderName
-     * @param fileName1
-     * @param fileName2
      * @throws IOException
      */
-    void compare2Files(String folderName, String fileName1, String fileName2) throws IOException;
+    void compare2Files(String folderName, String sourceFileName1, String sourceFileName2, String resultFileName) throws IOException;
 }

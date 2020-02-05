@@ -14,7 +14,7 @@ public class DefaultProductCodesComparingFacade implements ProductCodesComparing
     private ProductCodesComparingService productCodesComparingService;
 
     @Override
-    public void compare2Files(final String folderName, final String fileName1, final String fileName2) throws IOException {
-        productCodesComparingService.compare2Files(folderName, fileName1, fileName2);
+    public void compare2Files(final String folderName, final String sourceFileName1, final String sourceFileName2, final String resultFileName) throws IOException {
+        productCodesComparingService.compare2Files(folderName, sourceFileName1, sourceFileName2, resultFileName);
     }
 }

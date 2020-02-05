@@ -2,6 +2,7 @@ package milos.davitkovic.utills.controllers;
 
 import milos.davitkovic.utills.facade.ProductCodesComparingFacade;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,13 +19,13 @@ public class ProductCodesComparingController {
     @Resource
     private ProductCodesComparingFacade productCodesComparingFacade;
 
-    @RequestMapping(value = "/productCodesComparing", method = RequestMethod.GET)
+    @GetMapping(value = "/productCodesComparing")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    @ResponseBody
     public void productCodesComparing() throws IOException {
-        final String fileName1 = "File1";
-        final String fileName2 = "File2";
-        final String folderName = "src/main/resources/files/compare/";
-        productCodesComparingFacade.compare2Files(folderName, fileName1, fileName2);
+        final String fileName1 = "File1.txt";
+        final String fileName2 = "File2.txt";
+        final String folderName = "files/compare";
+        final String resultFileName = "Result.txt";
+        productCodesComparingFacade.compare2Files(folderName, fileName1, fileName2, resultFileName);
     }
 }

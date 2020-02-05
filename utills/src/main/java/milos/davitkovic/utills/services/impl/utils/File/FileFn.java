@@ -2,6 +2,7 @@ package milos.davitkovic.utills.services.impl.utils.File;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,11 +12,14 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -24,6 +28,7 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
  * 
@@ -315,7 +320,7 @@ public class FileFn {
 	 * @return String with whole content of specified file
 	 * @throws IOException
 	 */
-	public String readAllLinesOfFileStr(String fileName) throws IOException {
+	public String readResourceFile(String fileName) throws IOException {
 		String outputString = "";
 		List<String> outputLines = Files.readAllLines(findSpecificFilePathInWholeSystem(fileName, 0));
 		for (String it : outputLines) {
@@ -463,6 +468,8 @@ public class FileFn {
 		//		}
 		//		System.out.println("Text put in file: " + fileName);
 	}
+
+
 
 	/**
 	 * 
@@ -900,9 +907,16 @@ public class FileFn {
 	 * @return String with whole content of specified file
 	 * @throws IOException
 	 */
-	public List<String> readAllLinesOfFileStr(final String fileName, final String folderName) throws IOException {
-		List<String> outputLines = Files.readAllLines(findSpecificFilePathInSpecificFolder(fileName, folderName, 0));
-		return outputLines;
+	public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
+		final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
+		final Path path = Paths.get(file.getAbsolutePath());
+		return Files.readAllLines(path);
+	}
+
+	public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
+		final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
+		Files.write(file.toPath(), inputText);
+//		Files.write(file.toPath(), inputText.toString().getBytes(), StandardOpenOption.APPEND);
 	}
 }
 

@@ -9,8 +9,10 @@ public interface ProductCodesComparingFacade {
 
     /**
      * Comparing 2 lists of ProductCodes.
-     * @param fileName1
-     * @param fileName2
+     * @param folderName
+     * @param sourceFileName1
+     * @param sourceFileName2
+     * @param resultFileName
      */
-    void compare2Files(String folderName, String fileName1, String fileName2) throws IOException;
+    void compare2Files(String folderName, String sourceFileName1, String sourceFileName2, String resultFileName) throws IOException;
 }

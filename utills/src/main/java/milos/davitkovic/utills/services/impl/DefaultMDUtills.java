@@ -51,7 +51,7 @@ public class DefaultMDUtills implements MDUtills {
     @Override
     public List<String> readFile(final String fileName, final String folderName) {
         try {
-            return files.readAllLinesOfFileStr(fileName, folderName);
+            return files.readResourceFile(fileName, folderName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,9 +69,9 @@ public class DefaultMDUtills implements MDUtills {
     }
 
     @Override
-    public void writeInFile(final String fileName, final String folderName, final String inputText) {
+    public void writeInFile(final String fileName, final String folderName, final List<String> inputText) {
         try {
-            files.writeInFile(fileName, folderName, inputText);
+            files.writeInResourceFile(fileName, folderName, inputText);
         } catch (IOException e) {
             e.printStackTrace();
         }
