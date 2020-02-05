@@ -12,18 +12,19 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 @RestController
+@RequestMapping(value = "comparing/")
 public class ProductCodesComparingController {
 
-    @Resource(name = "productCodesComparingFacade")
+    @Resource
     private ProductCodesComparingFacade productCodesComparingFacade;
 
-    @RequestMapping(value = "/compare", method = RequestMethod.GET)
+    @RequestMapping(value = "/productCodesComparing", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @ResponseBody
-    public void compare() throws IOException {
+    public void productCodesComparing() throws IOException {
         final String fileName1 = "File1";
         final String fileName2 = "File2";
-        final String folderName = "File2";
+        final String folderName = "src/main/resources/files/compare/";
         productCodesComparingFacade.compare2Files(folderName, fileName1, fileName2);
     }
 }
