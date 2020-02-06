@@ -14,14 +14,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -30,7 +27,6 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
  * 
@@ -39,6 +35,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
  */
 @Service
 public class FileFn {
+
+	private static final int DEFAULT_MAX_DEPTH = 30;
 
 	/**
 	 * 
@@ -72,16 +70,26 @@ public class FileFn {
 	}
 
 	/**
-	 * Return String of founded files which is collection of items separated by space
+	 * Find List of Paths of founded files.
+	 *
 	 * @param fileName
-	 * @return
-	 * @throws IOException 
+	 * @return List of Paths of founded files
+	 *
+	 * @throws IOException
 	 */
+	public List<Path> findFilesInWholeSystem(final String fileName) throws IOException {
+		final Path start = Paths.get(StringUtils.EMPTY);
+		final Stream<Path> stream = Files.find(start, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+		return stream
+				.sorted()
+				.collect(Collectors.toList());
+	}
+
 	public String findSpecificFilesInWholeSystem(String fileName) throws IOException {
 		Path start = Paths.get("");
-		int maxDepth = 30;
+		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
-		String.valueOf(path).endsWith(fileName))) {
+				String.valueOf(path).endsWith(fileName))) {
 			return stream
 					.sorted()
 					.map(String::valueOf)
@@ -91,7 +99,7 @@ public class FileFn {
 
 	public String[] findSpecificFilesArrayInWholeSystem(String fileName) throws IOException {
 		Path start = Paths.get("");
-		int maxDepth = 30;
+		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
 		String.valueOf(path).endsWith(fileName))) {
 			String joined = stream
@@ -130,7 +138,7 @@ public class FileFn {
 
 	public String[] findFolder(String folderName) throws IOException {
 		Path start = Paths.get("");
-		int maxDepth = 30;
+		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
 		String.valueOf(path).endsWith(folderName))) {
 			String joined = stream
@@ -250,7 +258,7 @@ public class FileFn {
 	 */
 	public String findSpecificFilessInSpecificFolder(String fileName, String folderName, String delimiter) throws IOException {
 		Path start = Paths.get(folderName);
-		int maxDepth = 30;
+		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
 		String.valueOf(path).endsWith(fileName))) {
 			String joined = stream
@@ -271,7 +279,7 @@ public class FileFn {
 	 */
 	public String findSpecificFilesInSpecificFolder(String fileName, String folderName, String delimiter) throws IOException {
 		Path start = Paths.get(folderName);
-		int maxDepth = 30;
+		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
 		String.valueOf(path).endsWith(fileName))) {
 			String joined = stream
@@ -924,6 +932,16 @@ public class FileFn {
 	public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
 		final Path path = getResourceFile(folderName, fileName);
 		Files.write(path, inputText, UTF_8, CREATE);
+	}
+
+	/**
+	 *
+	 * @param filePath
+	 * @param inputText
+	 * @throws IOException
+	 */
+	public void writeInFile(final Path filePath, final List<String> inputText) throws IOException {
+		Files.write(filePath, inputText, UTF_8, CREATE);
 	}
 
 	private Path getResourceFile(final String folderName, final String fileName) {
