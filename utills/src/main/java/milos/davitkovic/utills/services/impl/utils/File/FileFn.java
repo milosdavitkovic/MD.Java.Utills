@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl.utils.File;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -8,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -908,15 +910,30 @@ public class FileFn {
 	 * @throws IOException
 	 */
 	public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
-		final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
-		final Path path = Paths.get(file.getAbsolutePath());
+		final Path path = getResourceFile(folderName, fileName);
 		return Files.readAllLines(path);
 	}
 
+	/**
+	 *
+	 * @param fileName
+	 * @param folderName
+	 * @param inputText
+	 * @throws IOException
+	 */
 	public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
-		final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
-		Files.write(file.toPath(), inputText);
-//		Files.write(file.toPath(), inputText.toString().getBytes(), StandardOpenOption.APPEND);
+		final Path path = getResourceFile(folderName, fileName);
+		Files.write(path, inputText, UTF_8, CREATE);
+	}
+
+	private Path getResourceFile(final String folderName, final String fileName) {
+		try {
+			final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
+			return Paths.get(file.getAbsolutePath());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return Paths.get(StringUtils.EMPTY);
 	}
 }
 

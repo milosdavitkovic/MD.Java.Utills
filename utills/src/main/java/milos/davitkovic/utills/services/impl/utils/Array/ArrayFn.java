@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl.utils.Array;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -581,7 +582,7 @@ public class ArrayFn {
                 .collect(Collectors.toSet());
     }
 
-    private Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
+    public Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
         return set1.stream()
                 .filter(set2::contains)
                 .collect(Collectors.toSet());
@@ -594,7 +595,11 @@ public class ArrayFn {
     }
 
     // ##########################################################################################################
-
+    public List<String> removeNullElements (final List<String> array) {
+            return array.stream()
+                    .filter(StringUtils::isNotEmpty)
+                    .collect(Collectors.toList());
+    }
 
     // ##########################################################################################################
 

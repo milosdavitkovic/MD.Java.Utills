@@ -78,7 +78,7 @@ public class DefaultMDUtills implements MDUtills {
     }
 
     /**
-     * Get difference of elements which exists in Set 1 but not exists in S2.
+     * Get difference elements set which exists in Set 1 but not exists in S2.
      *
      * @param set1
      * @param set2
@@ -90,7 +90,7 @@ public class DefaultMDUtills implements MDUtills {
     }
 
     /**
-     * Get intersection of elements which exists in both Sets.
+     * Get intersection elements set which exists in both Sets.
      *
      * @param set1
      * @param set2
@@ -98,6 +98,6 @@ public class DefaultMDUtills implements MDUtills {
      */
     @Override
     public Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
-        return arrays.getDifference(set1, set2);
+        return arrays.getIntersection(set1, set2);
     }
 }
