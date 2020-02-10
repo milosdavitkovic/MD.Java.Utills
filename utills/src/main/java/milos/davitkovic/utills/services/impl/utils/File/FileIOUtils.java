@@ -19,7 +19,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,9 +36,10 @@ import static java.nio.file.StandardOpenOption.CREATE;
  *
  */
 @Service
-public class FileFn {
+public class FileIOUtils {
 
 	private static final int DEFAULT_MAX_DEPTH = 30;
+	private static final Path START_PATH = Paths.get(StringUtils.EMPTY);
 
 	/**
 	 * 
@@ -78,23 +81,33 @@ public class FileFn {
 	 * @throws IOException
 	 */
 	public List<Path> findFilesInWholeSystem(final String fileName) throws IOException {
-		final Path start = Paths.get(StringUtils.EMPTY);
-		final Stream<Path> stream = Files.find(start, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+		final Stream<Path> stream = Files.find(START_PATH, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
 		return stream
 				.sorted()
 				.collect(Collectors.toList());
 	}
 
-	public String findSpecificFilesInWholeSystem(String fileName) throws IOException {
-		Path start = Paths.get("");
-		int maxDepth = DEFAULT_MAX_DEPTH;
-		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
-				String.valueOf(path).endsWith(fileName))) {
-			return stream
-					.sorted()
-					.map(String::valueOf)
-					.collect(Collectors.joining(" "));
-		}
+	public List<Path> findFilesInWholeSystem(final String fileName, final String folderName) throws IOException {
+		final Path folderPath = Paths.get(folderName);
+		final Stream<Path> stream = Files.find(folderPath, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+		return stream
+				.sorted()
+				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Return String representation of List, of Files with specified name
+	 *
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public String findSpecificFilesInWholeSystem(final String fileName) throws IOException {
+		final Stream<Path> stream = Files.find(START_PATH, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+		return stream
+				.sorted()
+				.map(String::valueOf)
+				.collect(Collectors.joining(StringUtils.EMPTY));
 	}
 
 	public String[] findSpecificFilesArrayInWholeSystem(String fileName) throws IOException {
@@ -257,7 +270,7 @@ public class FileFn {
 	 * @throws IOException
 	 */
 	public String findSpecificFilessInSpecificFolder(String fileName, String folderName, String delimiter) throws IOException {
-		Path start = Paths.get(folderName);
+		final Path start = Paths.get(folderName);
 		int maxDepth = DEFAULT_MAX_DEPTH;
 		try (Stream<Path> stream = Files.find(start, maxDepth, (path, attr) ->
 		String.valueOf(path).endsWith(fileName))) {
@@ -919,7 +932,12 @@ public class FileFn {
 	 */
 	public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
 		final Path path = getResourceFile(folderName, fileName);
-		return Files.readAllLines(path);
+		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.EMPTY_LIST;
+	}
+
+	public List<String> readFile(final String fileName, final String folderName) throws IOException {
+		final Path path = getFile(folderName, fileName);
+		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.EMPTY_LIST;
 	}
 
 	/**
@@ -931,7 +949,7 @@ public class FileFn {
 	 */
 	public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
 		final Path path = getResourceFile(folderName, fileName);
-		Files.write(path, inputText, UTF_8, CREATE);
+		writeInFile(path, inputText);
 	}
 
 	/**
@@ -941,7 +959,14 @@ public class FileFn {
 	 * @throws IOException
 	 */
 	public void writeInFile(final Path filePath, final List<String> inputText) throws IOException {
-		Files.write(filePath, inputText, UTF_8, CREATE);
+		if(Files.isWritable(filePath)) {
+			Files.write(filePath, inputText, UTF_8, CREATE);
+		}
+	}
+
+	public void writeInFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
+		final Path path = getFile(folderName, fileName);
+		writeInFile(path, inputText);
 	}
 
 	private Path getResourceFile(final String folderName, final String fileName) {
@@ -951,7 +976,20 @@ public class FileFn {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return Paths.get(StringUtils.EMPTY);
+		return START_PATH;
+	}
+
+	private Path getFile(final String folderName, final String fileName) {
+		try {
+//			final Path currentWorkingDir = Paths.get("").toAbsolutePath();
+			final Optional<Path> filePath = findFilesInWholeSystem(fileName).stream().findFirst();
+//			final File file = ResourceUtils.getFile(currentWorkingDir.toAbsolutePath() + "/" + folderName + "/" + fileName);
+//			return Paths.get(file.getAbsolutePath());
+			return filePath.isPresent() ? filePath.get() : START_PATH;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return START_PATH;
 	}
 }
 

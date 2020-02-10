@@ -63,7 +63,7 @@ import java.util.stream.StreamSupport;
  */
 
 @Service
-public class ArrayFn {
+public class ArrayUtils {
     /**
      * 1.
      * Object[] oa = new Object[100];
@@ -118,9 +118,9 @@ public class ArrayFn {
      * @param a
      * @param c
      */
-    public <T> void ArrayToCollection(T[] a, Collection<T> c) {
+    public <T> void arrayToCollection(T[] a, Collection<T> c) {
         for (T o : a) {
-            c.add(o); // Correct
+            c.add(o);
         }
     }
 
@@ -209,35 +209,16 @@ public class ArrayFn {
         return list;
     }
 
-    public List<String> removeDuplicateInList(List<String> inputList) {
-        List<String> list = inputList;
-        Set<String> set = new HashSet<String>(list);
-        list.addAll(set);
-        return list;
-    }
 
-    public List<String> mapToList(final Map<Integer, String> map) {
-        List<Integer> result = map.entrySet().stream()
-                .map(x -> x.getKey())
-                .collect(Collectors.toList());
-
-        result.forEach(System.out::println);
-
-        System.out.println("\n2. Export Map Value to List...");
-
-        List<String> result2 = map.entrySet().stream()
-                .map(x -> x.getValue())
-                .collect(Collectors.toList());
-
-        result2.forEach(System.out::println);
-
-        return result2;
-    }
-
-    public List<Integer> arrayToList(int[] numbers) {
-        List<Integer> list = Arrays.stream(numbers).boxed().collect(Collectors.toList());
-        System.out.println("list : " + list);
-        return list;
+    /**
+     * (Generic) Convert static Array onto List
+     *
+     * @param array
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> arrayToList(T[] array) {
+        return Arrays.stream(array).collect(Collectors.toList());
     }
 
     public <T> T[] joinArray(T[]... arrays) {

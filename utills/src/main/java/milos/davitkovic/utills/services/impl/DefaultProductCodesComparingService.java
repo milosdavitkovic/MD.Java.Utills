@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl;
 
+import jdk.nashorn.internal.ir.annotations.Reference;
 import milos.davitkovic.utills.services.ProductCodesComparingService;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class DefaultProductCodesComparingService implements ProductCodesComparin
     private MDUtils mdUtils;
 
     public void compare2Files(final String folderName, final String sourceFileName1, final String sourceFileName2, final String resultFileName) {
-        final Set<String> set1 = new HashSet<>(mdUtils.readResourceFile(sourceFileName1, folderName));
-        final Set<String> set2 = new HashSet<>(mdUtils.readResourceFile(sourceFileName2, folderName));
+        final Set<String> set1 = new HashSet<>(mdUtils.readFile(sourceFileName1, folderName));
+        final Set<String> set2 = new HashSet<>(mdUtils.readFile(sourceFileName2, folderName));
 
         final List<String> result = new ArrayList<>();
         result.add("1. ********************************");
@@ -32,6 +33,6 @@ public class DefaultProductCodesComparingService implements ProductCodesComparin
         result.add("DIFFERENCE in 2 not in 1");
         result.addAll(mdUtils.getDifference(set2, set1));
 
-        mdUtils.writeInResourceFile(resultFileName, folderName, result);
+        mdUtils.writeInFile(resultFileName, folderName, result);
     }
 }

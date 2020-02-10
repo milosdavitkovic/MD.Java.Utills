@@ -27,43 +27,23 @@ import javax.annotation.Resource;
  *
  */
 @Service
-public class TimeFn {
+public class TimeUtils {
 
-	public long NTPdifference;
-	public boolean NTPContacted = false;
+	private static long NTPdifference;
+	private static boolean NTPContacted = false;
 	
 	@Resource
 	private NTPClient ntpClient;
 
 	/**
 	 * 
-	 * @param format - "yyyy/MM/dd HH:mm:ss" hh - 12h format, HH - 24h format
+	 * @param format - Format options: "yyyy/MM/dd HH:mm:ss" hh - 12h format, HH - 24h format; yyyy/MM/dd HH:mm:ss; yyyy/MM/dd
 	 * @return
 	 */
-	public String getCurrentDateTime(String format) {
-		// 1.
-		DateFormat dateFormat = new SimpleDateFormat(format);
-		Date date = new Date();
-		System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
+	public String getCurrentDateTime(final String format) {
+		final DateFormat dateFormat = new SimpleDateFormat(format);
+		final Date date = new Date();
 		return dateFormat.format(date);
-		
-//		// 2.
-//		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//		Calendar cal = Calendar.getInstance();
-//		System.out.println(dateFormat.format(cal)); //2016/11/16 12:08:43
-//		return dateFormat.format(cal);
-//		
-//		// 3.
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-//		LocalDateTime now = LocalDateTime.now();
-//		System.out.println(dtf.format(now)); //2016/11/16 12:08:43
-//		return dtf.format(now);
-//		
-//		// 4.
-//		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//		LocalDate localDate = LocalDate.now();
-//		System.out.println(dtf.format(localDate)); //2016/11/16
-//		return dtf.format(localDate);
 	}
 	
 	/**
