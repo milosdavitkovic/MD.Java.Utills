@@ -1,8 +1,10 @@
 package milos.davitkovic.utills.services.impl;
 
 import milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils;
-import milos.davitkovic.utills.services.impl.utils.Array.ListUtils;
+import milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils;
+import milos.davitkovic.utills.services.impl.utils.Array.set.SetUtils;
 import milos.davitkovic.utills.services.impl.utils.File.FileIOUtils;
+import milos.davitkovic.utills.services.impl.utils.Number.NumberUtils;
 import milos.davitkovic.utills.services.impl.utils.Time.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -17,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,11 +40,162 @@ public class MDUtils {
     private TimeUtils timeUtils;
     @Resource(name = "listUtils")
     private ListUtils listUtils;
+    @Resource(name = "setUtils")
+    private SetUtils setUtils;
+    @Resource(name = "numberUtils")
+    private NumberUtils numberUtils;
+
+
+    /**
+     * ***************************************************************************************
+     * Array Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * (Generic) Convert Static Array into Collection
+     *
+     * @param a
+     * @param c
+     * @param <T>
+     */
+    public <T> void arrayToCollection(T[] a, Collection<T> c) {
+        arrayUtils.arrayToCollection(a, c);
+    }
+
+    /**
+     * (Generic) Convert Static Array into List
+     *
+     * @param array
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> arrayToList(T[] array) {
+        return arrayUtils.arrayToList(array);
+    }
+
+    /**
+     * (Generic) Convert Static Array into Set
+     *
+     * @param array
+     * @param <T>
+     * @return
+     */
+    public <T> Set<T> arrayToSet(T[] array) {
+        return arrayUtils.arrayToSet(array);
+    }
+
+    /**
+     * (Generic) Sort Map by Key
+     *
+     * @param unsortedMap
+     * @param reversed
+     * @return
+     */
+    public <K extends Comparable<? super K>, V> Map<K, V> sortMapByKey(Map<K, V> unsortedMap, boolean reversed) {
+        return arrayUtils.sortMapByKey(unsortedMap, reversed);
+    }
+
+    /**
+     * (Generic) Sort map by Value
+     *
+     * @param unsortedMap
+     * @param reversed
+     * @return
+     */
+    public <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(final Map<K, V> unsortedMap, boolean reversed) {
+        return arrayUtils.sortMapByValue(unsortedMap, reversed);
+    }
+
+    /**
+     * Sum array with lambda
+     *
+     * @param array
+     * @return
+     */
+    public int arraySum(int[] array) {
+        return arrayUtils.arraySum(array);
+    }
 
     /**
      * *****************************
-     * Arrays
+     * END of Array Utils
      * *****************************
+     */
+
+    /**
+     * ***************************************************************************************
+     * List Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * (Generic) Remove duplicate elements from ArrayList implementation of List interface.
+     * @param inputList
+     * @return ArrayList implementation of List interface without duplicated elements.
+     */
+    public <T> List<T> removeDuplicates(final List<T> inputList) {
+        return listUtils.removeDuplicates(inputList);
+    }
+
+    /**
+     * (Generic) Remove NULL elements from the List
+     *
+     * @param array
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> removeNullElements(final List<T> array) {
+        return listUtils.removeNullElements(array);
+    }
+
+    /**
+     * Get Odd number from rangeStart up to rangeEnd
+     *
+     * @param rangeStart
+     * @param rangeEnd
+     * @return
+     */
+    public List<Integer> getOddNumbersInRange(int rangeStart, int rangeEnd) {
+        return listUtils.getOddNumbersInRange(rangeStart, rangeEnd);
+    }
+
+    /**
+     * (Generic) Get List of Keys from provided Map
+     *
+     * @param map
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public <K, V> List<K> getKeyList(final Map<K, V> map) {
+        return listUtils.getKeyList(map);
+    }
+
+
+    /**
+     * (Generic) Get List of Values from provided Map
+     *
+     * @param map
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public <K, V> List<V> getValueList(final Map<K, V> map) {
+        return listUtils.getValueList(map);
+    }
+
+
+    /**
+     * ***************************************************************************************
+     * END of List Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * ***************************************************************************************
+     * Set Utils
+     * ***************************************************************************************
      */
 
     /**
@@ -54,7 +208,7 @@ public class MDUtils {
     public Set<String> getDifference(final Set<String> set1, final Set<String> set2) {
         Assert.notNull(set1, "set1 cannot be null!");
         Assert.notNull(set2, "set2 cannot be null!");
-        return arrayUtils.getDifference(set1, set2);
+        return setUtils.getDifference(set1, set2);
     }
 
     /**
@@ -67,20 +221,83 @@ public class MDUtils {
     public Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
         Assert.notNull(set1, "set1 cannot be null!");
         Assert.notNull(set2, "set2 cannot be null!");
-        return arrayUtils.getIntersection(set1, set2);
+        return setUtils.getIntersection(set1, set2);
+    }
+
+    /**
+     * ***************************************************************************************
+     * END of Set Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * ***************************************************************************************
+     * Number Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * Null Safe, Double to Integer conversion
+     *
+     * @param inputValue
+     * @return
+     */
+    public Integer toInteger(final Double inputValue) {
+        return numberUtils.toInteger(inputValue);
+    }
+
+    /**
+     * Null Safe, Double to Long conversion
+     *
+     * @param inputValue
+     * @return
+     */
+    public Long toLong(final Double inputValue) {
+        return numberUtils.toLong(inputValue);
+    }
+
+    /**
+     * Null Safe, get a rounded Integer value on less number
+     *
+     * @param inputValue
+     * @return
+     */
+    public Integer roundOnLess(final Double inputValue) {
+        return numberUtils.roundOnLess(inputValue);
+    }
+
+    /**
+     * ***************************************************************************************
+     * END of Number Utils
+     * ***************************************************************************************
+     */
+
+    /**
+     * ***************************************************************************************
+     * Data & Time
+     * ***************************************************************************************
+     */
+
+    /**
+     * Get a String representation of Current DateTime, based of provided format
+     *
+     * @param dataTimeFormat Format options: "yyyy/MM/dd HH:mm:ss" hh - 12h format, HH - 24h format; yyyy/MM/dd HH:mm:ss; yyyy/MM/dd
+     * @return String representation of Current DateTime, based of required format
+     */
+    public String getCurrentDateTime(final String dataTimeFormat) {
+        return timeUtils.getCurrentDateTime(dataTimeFormat);
     }
 
     /**
      * *****************************
-     * END of Arrays
+     * End of Data & Time Utils
      * *****************************
      */
 
-
     /**
-     * *****************************
+     * ***************************************************************************************
      * Input/Output File Management
-     * *****************************
+     * ***************************************************************************************
      */
 
     /**
@@ -224,84 +441,6 @@ public class MDUtils {
     /**
      * *****************************
      * END of Input/Output File Management
-     * *****************************
-     */
-
-    /**
-     * *****************************
-     * Data & Time
-     * *****************************
-     */
-
-    /**
-     * Get a String representation of Current DateTime, based of required format
-     *
-     * @param dataTimeFormat Format options: "yyyy/MM/dd HH:mm:ss" hh - 12h format, HH - 24h format; yyyy/MM/dd HH:mm:ss; yyyy/MM/dd
-     * @return String representation of Current DateTime, based of required format
-     */
-    public String getCurrentDateTime(final String dataTimeFormat) {
-        return timeUtils.getCurrentDateTime(dataTimeFormat);
-    }
-
-    /**
-     * *****************************
-     * End of Data & Time Utils
-     * *****************************
-     */
-
-
-    /**
-     * *****************************
-     * Array Utils
-     * *****************************
-     */
-
-    /**
-     * (Generic) Convert Static Array into Collection
-     *
-     * @param a
-     * @param c
-     * @param <T>
-     */
-    public <T> void arrayToCollection(T[] a, Collection<T> c) {
-        arrayUtils.arrayToCollection(a, c);
-    }
-
-    /**
-     * 
-     *
-     * @param array
-     * @param <T>
-     * @return
-     */
-    public <T> List<T> arrayToList(T[] array) {
-        return arrayUtils.arrayToList(array);
-    }
-
-    /**
-     * *****************************
-     * END of Array Utils
-     * *****************************
-     */
-
-    /**
-     * *****************************
-     * List Utils
-     * *****************************
-     */
-
-    /**
-     * Remove duplicate elements from ArrayList implementation of List interface.
-     * @param inputList
-     * @return ArrayList implementation of List interface without duplicated elements.
-     */
-    public List<?> removeDuplicates(final List<?> inputList) {
-        return listUtils.removeDuplicates(inputList);
-    }
-
-    /**
-     * *****************************
-     * END of List Utils
      * *****************************
      */
 }

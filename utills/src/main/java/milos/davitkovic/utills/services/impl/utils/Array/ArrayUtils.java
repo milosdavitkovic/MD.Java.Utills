@@ -18,6 +18,7 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.function.BiConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -221,6 +222,10 @@ public class ArrayUtils {
         return Arrays.stream(array).collect(Collectors.toList());
     }
 
+    public <T> Set<T> arrayToSet(T[] array) {
+        return Arrays.stream(array).collect(Collectors.toSet());
+    }
+
     public <T> T[] joinArray(T[]... arrays) {
         int length = 0;
         for (T[] array : arrays) {
@@ -261,29 +266,44 @@ public class ArrayUtils {
         return collect;
     }
 
-    public Map<String, Integer> SortMapByKey(Map<String, Integer> unsortMap) {
-        Map<String, Integer> result = new LinkedHashMap<>();
+    /**
+     * (Generic) Sort Map with key with type String
+     *
+     * @param unsortedMap
+     * @param
+     * @return
+     */
+    public <K extends Comparable<? super K>, V> Map<K, V> sortMapByKey(final Map<K, V> unsortedMap, final boolean reversed) {
+        final Map<K, V> result = new LinkedHashMap<>();
 
-        //sort by key, a,b,c..., and put it into the "result" map
-        unsortMap.entrySet().stream()
-                .sorted(Map.Entry.<String, Integer>comparingByKey())
-                .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+        if(reversed) {
+            unsortedMap.entrySet().stream()
+                    .sorted(Map.Entry.<K, V>comparingByKey().reversed())
+                    .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+        } else {
+            //sort by key, a,b,c..., or 1, 2, 3... and put it into the "result" map
+            unsortedMap.entrySet().stream()
+                    .sorted(Map.Entry.<K, V>comparingByKey())
+                    .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+        }
 
-        System.out.println("Sorted...");
-        System.out.println(result);
         return result;
     }
 
-    public Map<String, Integer> SortMapByValue(Map<String, Integer> unsortMap) {
-        Map<String, Integer> result = new LinkedHashMap<>();
+    public <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(final Map<K, V> unsortedMap, final boolean reversed) {
+        final Map<K, V> result = new LinkedHashMap<>();
 
-        //sort by value, and reserve, 10,9,8,7,6...
-        unsortMap.entrySet().stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
-
-        System.out.println("Sorted...");
-        System.out.println(result);
+        if(reversed) {
+            //sort by value, and reserve, 10,9,8,7,6...
+            unsortedMap.entrySet().stream()
+                    .sorted(Map.Entry.<K, V>comparingByValue().reversed())
+                    .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+        } else {
+            //sort by value, 1, 2, 3, 4 ...
+            unsortedMap.entrySet().stream()
+                    .sorted(Map.Entry.<K, V>comparingByValue())
+                    .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+        }
         return result;
     }
 
@@ -427,9 +447,9 @@ public class ArrayUtils {
     /**
      * If all consignments have same status return that status, if not return null
      */
-//	public ConsignmentStatus isSameStatus(Set<ConsignmentModel> consignments) {
-//		List<ConsignmentModel> consignmentList = new ArrayList<>(consignments);
-//		final Predicate<ConsignmentModel> p1 = con -> con.getStatus().equals(consignmentList.get(0).getStatus());
+//	public String isSameStatus(final Set<String> consignments) {
+//		final List<String> consignmentList = new ArrayList<>(consignments);
+//		final Predicate<String> p1 = con -> con.getStatus().equals(consignmentList.get(0).getStatus());
 //        if(consignmentList.stream().allMatch(p1))
 //            return consignmentList.get(0).getStatus();
 //        else
@@ -450,8 +470,8 @@ public class ArrayUtils {
 
     // ##########################################################################################################
 
-    private int simpleArraySum(int[] ar) {
-        return Arrays.stream(ar)
+    public int arraySum(int[] array) {
+        return Arrays.stream(array)
                 .boxed()
                 .mapToInt(Integer::valueOf)
                 .sum();
@@ -471,116 +491,18 @@ public class ArrayUtils {
         return arr.contains(k) ? YES : NO;
     }
 
-    // ##########################################################################################################
-    // https://www.hackerrank.com/test/5qqdbqh3j95/questions/3pramr7a684
-    // Complete the oddNumbers function below.
-    private List<Integer> oddNumbers(int l, int r) {
-        final List<Integer> result = new ArrayList<>();
-        if(l > r) {
-            return result;
-        }
-
-        for(int i = l; i <= r; i++) {
-            if(isOddNumber(i)) {
-                result.add(i);
-            }
-        }
-
-        return result;
-    }
-
-    private boolean isOddNumber(int number) {
-        return number % 2 != 0 ? true : false;
-    }
-
-    // ##########################################################################################################
-
-    /*
-     * Complete the 'findMatch' function below.
-     *
-     * The function is expected to return a STRING.
-     * The function accepts following parameters:
-     *  1. STRING_ARRAY possibleMatches
-     *  2. STRING crossword
-     */
-
-    public static String findMatch(List<String> possibleMatches, String crossword) {
-        // Write your code here
-        final Map<Integer, String> knownLetters = getKnownLetters(crossword);
-        final int crosswordLength = Arrays.asList(crossword.split(" ")).size();
-        for(String possibleMatch : possibleMatches) {
-            if(isPossibleMatches(possibleMatch,crosswordLength,knownLetters)) {
-                return possibleMatch;
-            }
-        }
-        return "";
-    }
-
-    private static boolean isPossibleMatches(final String possibleMatch, final int crosswordLength, final Map<Integer, String> knownLetters) {
-        final List<String> possibleMatchLetters = Arrays.asList(possibleMatch.split(" "));
-        final int possibleMatchLength = possibleMatchLetters.size();
-        if (possibleMatchLength != crosswordLength) {
-            return false;
-        }
-
-        for (Map.Entry<Integer, String> knownLetter : knownLetters.entrySet()) {
-            final Integer letterPosition = knownLetter.getKey();
-            final String knownLetterValue = knownLetter.getValue();
-
-            final String possibleMatchLetter = possibleMatchLetters.get(letterPosition);
-            if (!possibleMatchLetter.equals(knownLetterValue)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private static Map<Integer, String> getKnownLetters(final String crossword) {
-        final List<String> crosswordLetters = Arrays.asList(crossword.split(" "));
-        final int crosswordLength = crosswordLetters.size();
-        final Map<Integer, String> knownLetter = new HashMap<>();
-        for (int i = 0; i < crosswordLength; i++) {
-            final String letter = crosswordLetters.get(i);
-            if (!letter.equals(".")) {
-                knownLetter.put(i, letter);
-            }
-        }
-        return knownLetter;
-    }
 
 
     // ##########################################################################################################
-    public Set<String> getDifference(final Set<String> set1, final Set<String> set2) {
-        return set1.stream()
-                .filter(code -> !set2.contains(code))
-                .collect(Collectors.toSet());
-    }
 
-    private Set<String> getDifferenceS2S1(final Set<String> set1, final Set<String> set2) {
-        return set2.stream()
-                .filter(code -> !set1.contains(code))
-                .collect(Collectors.toSet());
-    }
 
-    public Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
-        return set1.stream()
-                .filter(set2::contains)
-                .collect(Collectors.toSet());
-    }
 
-    private Set<String> getIntersectionS2S1(final Set<String> set1, final Set<String> set2) {
-        return set2.stream()
-                .filter(set1::contains)
-                .collect(Collectors.toSet());
-    }
 
     // ##########################################################################################################
-    public List<String> removeNullElements (final List<String> array) {
-            return array.stream()
-                    .filter(StringUtils::isNotEmpty)
-                    .collect(Collectors.toList());
-    }
+
+
+    // ##########################################################################################################
+
 
     // ##########################################################################################################
 

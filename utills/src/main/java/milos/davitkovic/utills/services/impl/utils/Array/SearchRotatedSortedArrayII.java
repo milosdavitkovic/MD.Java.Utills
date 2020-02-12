@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
  *
  * author milos.davitkovic@gmail.com
  */
+@Service
 public class SearchRotatedSortedArrayII {
 
     public boolean search(int[] nums, int target) {

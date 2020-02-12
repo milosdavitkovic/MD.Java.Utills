@@ -15,12 +15,6 @@
 
 	<context:annotation-config />
 
-<!--	&lt;!&ndash; Utils &ndash;&gt;-->
-<!--	<alias name="mdUtils" alias="mdUtils" />-->
-<!--	<bean id="mdUtils"-->
-<!--		  class="milos.davitkovic.utills.services.impl.MDUtils" />-->
-<!--	&lt;!&ndash; End of Utils &ndash;&gt;-->
-
 	<!-- Services -->
 	<alias name="defaultProductCodesComparingService" alias="productCodesComparingService" />
 	<bean id="defaultProductCodesComparingService"
@@ -32,7 +26,19 @@
 
 	<alias name="defaultListUtils" alias="listUtils" />
 	<bean id="defaultListUtils"
-		  class="milos.davitkovic.utills.services.impl.utils.Array.ListUtils" />
+		  class="milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils" />
+
+	<alias name="defaultMapUtils" alias="mapUtils" />
+	<bean id="defaultMapUtils"
+		  class="milos.davitkovic.utills.services.impl.utils.Array.map.MapUtils" />
+
+	<alias name="defaultSetUtils" alias="setUtils" />
+	<bean id="defaultSetUtils"
+		  class="milos.davitkovic.utills.services.impl.utils.Array.set.SetUtils" />
+
+	<alias name="defaultNumberUtils" alias="numberUtils" />
+	<bean id="defaultNumberUtils"
+		  class="milos.davitkovic.utills.services.impl.utils.Number.NumberUtils" />
 
 	<alias name="defaultFileIOUtils" alias="fileIOUtils" />
 	<bean id="defaultFileIOUtils"

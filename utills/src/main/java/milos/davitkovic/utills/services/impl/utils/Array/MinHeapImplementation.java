@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 /**
  * Min Heap implementation
@@ -6,6 +8,7 @@ package arrays;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class MinHeapImplementation {
 
 }

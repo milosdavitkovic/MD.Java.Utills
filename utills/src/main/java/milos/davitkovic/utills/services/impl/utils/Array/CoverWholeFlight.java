@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,6 +9,7 @@ import java.util.List;
 /**
  *
  */
+@Service
 public class CoverWholeFlight {
 
     public List<Integer> coverWholeFlight(List<Integer> movies, Integer flightDuration) {

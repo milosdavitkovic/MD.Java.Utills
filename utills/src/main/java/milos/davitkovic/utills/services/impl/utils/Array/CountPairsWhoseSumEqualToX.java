@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 
@@ -8,6 +10,7 @@ import java.util.LinkedList;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class CountPairsWhoseSumEqualToX {
 
     public static int countPairs(LinkedList<Integer> head1, LinkedList<Integer> head2, int x) {

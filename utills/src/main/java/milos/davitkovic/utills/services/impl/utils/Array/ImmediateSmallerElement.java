@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class ImmediateSmallerElement {
 
     public static void main(String[] args) throws IOException {

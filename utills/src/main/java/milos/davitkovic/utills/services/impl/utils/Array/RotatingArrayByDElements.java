@@ -1,10 +1,12 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.lang.*;
 import java.io.*;
 
-
+@Service
 public class RotatingArrayByDElements {
 
     public static void main (String[] args) throws IOException

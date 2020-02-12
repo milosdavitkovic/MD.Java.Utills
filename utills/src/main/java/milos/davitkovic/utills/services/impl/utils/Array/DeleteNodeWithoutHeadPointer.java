@@ -1,4 +1,6 @@
-package arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
+
+import org.springframework.stereotype.Service;
 
 /**
  * Delete without head pointer
@@ -6,6 +8,7 @@ package arrays;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class DeleteNodeWithoutHeadPointer {
 
     class Node

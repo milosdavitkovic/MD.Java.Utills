@@ -1,4 +1,4 @@
-package milos.davitkovic.utills.services.impl.utils.Integer;
+package milos.davitkovic.utills.services.impl.utils.Number.Integer;
 
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,11 @@ import java.util.logging.Logger;
  *
  */
 @Service
-public class IntegerFn {
+public class IntegerUtils {
 
 	final private Logger log = Logger.getLogger(this.getClass().getName());
 
-	public IntegerFn() {
-		super();
-	}
-	
-	
+
 	public List<Integer> eval(List<Integer> list, Predicate<Integer> predicate) {
 		List<Integer> outputList = new ArrayList<>();
 	      for(Integer n: list) {

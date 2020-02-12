@@ -1,4 +1,4 @@
-package milos.davitkovic.utills.services.impl.arrays;
+package milos.davitkovic.utills.services.impl.utils.Array;
 
 import org.springframework.stereotype.Service;
 
