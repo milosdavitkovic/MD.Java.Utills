@@ -1,4 +1,4 @@
-package milos.davitkovic.utills.services.impl.utils.Array;
+package milos.davitkovic.utills.services.impl.utils.Array.map;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 
 @Service
-public class MapFn {
+public class MapUtils {
 
     final private Logger log = Logger.getLogger(this.getClass().getName());
     /*

@@ -16,6 +16,10 @@
 	<context:annotation-config />
 
 	<!-- Services -->
+	<alias name="defaultMDUtils" alias="mdUtils" />
+	<bean id="defaultMDUtils"
+		  class="milos.davitkovic.utills.services.impl.DefaultMDUtils" />
+
 	<alias name="defaultProductCodesComparingService" alias="productCodesComparingService" />
 	<bean id="defaultProductCodesComparingService"
 		  class="milos.davitkovic.utills.services.impl.DefaultProductCodesComparingService" />

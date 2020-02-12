@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl;
 
+import milos.davitkovic.utills.services.MDUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.set.SetUtils;
@@ -28,9 +29,9 @@ import java.util.Set;
  * @author milos.davitkovic@gmail.com
  */
 @Service
-public class MDUtils {
+public class DefaultMDUtils implements MDUtils {
 
-    final static Logger logger = LoggerFactory.getLogger(MDUtils.class);
+    final static Logger logger = LoggerFactory.getLogger(DefaultMDUtils.class);
 
     @Resource(name = "fileIOUtils")
     private FileIOUtils fileIOUtils;
@@ -45,7 +46,6 @@ public class MDUtils {
     @Resource(name = "numberUtils")
     private NumberUtils numberUtils;
 
-
     /**
      * ***************************************************************************************
      * Array Utils
@@ -59,6 +59,7 @@ public class MDUtils {
      * @param c
      * @param <T>
      */
+    @Override
     public <T> void arrayToCollection(T[] a, Collection<T> c) {
         arrayUtils.arrayToCollection(a, c);
     }
@@ -70,6 +71,7 @@ public class MDUtils {
      * @param <T>
      * @return
      */
+    @Override
     public <T> List<T> arrayToList(T[] array) {
         return arrayUtils.arrayToList(array);
     }
@@ -81,6 +83,7 @@ public class MDUtils {
      * @param <T>
      * @return
      */
+    @Override
     public <T> Set<T> arrayToSet(T[] array) {
         return arrayUtils.arrayToSet(array);
     }
@@ -92,6 +95,7 @@ public class MDUtils {
      * @param reversed
      * @return
      */
+    @Override
     public <K extends Comparable<? super K>, V> Map<K, V> sortMapByKey(Map<K, V> unsortedMap, boolean reversed) {
         return arrayUtils.sortMapByKey(unsortedMap, reversed);
     }
@@ -103,6 +107,7 @@ public class MDUtils {
      * @param reversed
      * @return
      */
+    @Override
     public <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(final Map<K, V> unsortedMap, boolean reversed) {
         return arrayUtils.sortMapByValue(unsortedMap, reversed);
     }
@@ -113,6 +118,7 @@ public class MDUtils {
      * @param array
      * @return
      */
+    @Override
     public int arraySum(int[] array) {
         return arrayUtils.arraySum(array);
     }
@@ -134,6 +140,7 @@ public class MDUtils {
      * @param inputList
      * @return ArrayList implementation of List interface without duplicated elements.
      */
+    @Override
     public <T> List<T> removeDuplicates(final List<T> inputList) {
         return listUtils.removeDuplicates(inputList);
     }
@@ -145,6 +152,7 @@ public class MDUtils {
      * @param <T>
      * @return
      */
+    @Override
     public <T> List<T> removeNullElements(final List<T> array) {
         return listUtils.removeNullElements(array);
     }
@@ -156,6 +164,7 @@ public class MDUtils {
      * @param rangeEnd
      * @return
      */
+    @Override
     public List<Integer> getOddNumbersInRange(int rangeStart, int rangeEnd) {
         return listUtils.getOddNumbersInRange(rangeStart, rangeEnd);
     }
@@ -168,6 +177,7 @@ public class MDUtils {
      * @param <V>
      * @return
      */
+    @Override
     public <K, V> List<K> getKeyList(final Map<K, V> map) {
         return listUtils.getKeyList(map);
     }
@@ -181,6 +191,7 @@ public class MDUtils {
      * @param <V>
      * @return
      */
+    @Override
     public <K, V> List<V> getValueList(final Map<K, V> map) {
         return listUtils.getValueList(map);
     }
@@ -205,6 +216,7 @@ public class MDUtils {
      * @param set2
      * @return
      */
+    @Override
     public Set<String> getDifference(final Set<String> set1, final Set<String> set2) {
         Assert.notNull(set1, "set1 cannot be null!");
         Assert.notNull(set2, "set2 cannot be null!");
@@ -218,6 +230,7 @@ public class MDUtils {
      * @param set2
      * @return
      */
+    @Override
     public Set<String> getIntersection(final Set<String> set1, final Set<String> set2) {
         Assert.notNull(set1, "set1 cannot be null!");
         Assert.notNull(set2, "set2 cannot be null!");
@@ -242,6 +255,7 @@ public class MDUtils {
      * @param inputValue
      * @return
      */
+    @Override
     public Integer toInteger(final Double inputValue) {
         return numberUtils.toInteger(inputValue);
     }
@@ -252,6 +266,7 @@ public class MDUtils {
      * @param inputValue
      * @return
      */
+    @Override
     public Long toLong(final Double inputValue) {
         return numberUtils.toLong(inputValue);
     }
@@ -262,6 +277,7 @@ public class MDUtils {
      * @param inputValue
      * @return
      */
+    @Override
     public Integer roundOnLess(final Double inputValue) {
         return numberUtils.roundOnLess(inputValue);
     }
@@ -284,6 +300,7 @@ public class MDUtils {
      * @param dataTimeFormat Format options: "yyyy/MM/dd HH:mm:ss" hh - 12h format, HH - 24h format; yyyy/MM/dd HH:mm:ss; yyyy/MM/dd
      * @return String representation of Current DateTime, based of required format
      */
+    @Override
     public String getCurrentDateTime(final String dataTimeFormat) {
         return timeUtils.getCurrentDateTime(dataTimeFormat);
     }
@@ -305,6 +322,7 @@ public class MDUtils {
      *
      * @return
      */
+    @Override
     public String listFiles() {
         try {
             return fileIOUtils.listFilesInDefaultFolder();
@@ -321,6 +339,7 @@ public class MDUtils {
      * @param folderName
      * @return
      */
+    @Override
     public  String listFiles(final String folderName) {
         Assert.notNull(folderName, "folderName cannot be null!");
         try {
@@ -338,6 +357,7 @@ public class MDUtils {
      * @param folderName
      * @return lines from file
      */
+    @Override
     public  List<String> readResourceFile(final String fileName, final String folderName) {
         try {
             return fileIOUtils.readResourceFile(fileName, folderName);
@@ -354,6 +374,7 @@ public class MDUtils {
      * @param folderName
      * @return lines from file
      */
+    @Override
     public List<String> readFile(final String fileName, final String folderName) {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
@@ -365,6 +386,7 @@ public class MDUtils {
         return Collections.EMPTY_LIST;
     }
 
+    @Override
     public Path findFile(final String fileName, final String folderName) {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
@@ -382,6 +404,7 @@ public class MDUtils {
      * @param fileName
      * @return Path of the File if exists
      */
+    @Override
     public List<Path> findFiles(final String fileName) {
         Assert.notNull(fileName, "fileName cannot be null!");
         try {
@@ -401,6 +424,7 @@ public class MDUtils {
      * @param folderName
      * @param inputText
      */
+    @Override
     public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) {
         try {
             fileIOUtils.writeInResourceFile(fileName, folderName, inputText);
@@ -415,6 +439,7 @@ public class MDUtils {
      *
      * @param inputText content for writing in the file
      */
+    @Override
     public void writeInFile(final String fileName, final String folderName, final List<String> inputText) {
         try {
             fileIOUtils.writeInFile(fileName, folderName, inputText);
@@ -429,6 +454,7 @@ public class MDUtils {
      * @param filePath  path of the File
      * @param inputText content for writing in the file
      */
+    @Override
     public void writeInFile(final Path filePath, final List<String> inputText) {
         Assert.notNull(filePath, "filePath cannot be null!");
         try {

@@ -1,4 +1,4 @@
-package milos.davitkovic.utills.services.impl.utils.Array;
+package milos.davitkovic.utills.services.impl.utils.Array.list.linkedlist;
 
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class MergeSortForLinkedList {
         }
     }
 
-    static Node mergeSort(Node head) {
+    static Node mergeSort(final Node head) {
         if (head == null || head.next == null) {
             return head;
         }
@@ -29,7 +29,7 @@ public class MergeSortForLinkedList {
         return merge(mergeSort(head), mergeSort(mid));
     }
 
-    static Node partition(Node head) {
+    static Node partition(final Node head) {
         Node fast = head.next;
         Node slow = head;
         while (fast != null) {
