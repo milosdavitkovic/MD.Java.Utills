@@ -44,6 +44,10 @@
 	<bean id="defaultNumberUtils"
 		  class="milos.davitkovic.utills.services.impl.utils.Number.NumberUtils" />
 
+	<alias name="defaultIntegerUtils" alias="integerUtils" />
+	<bean id="defaultIntegerUtils"
+		  class="milos.davitkovic.utills.services.impl.utils.Number.Integer.IntegerUtils" />
+
 	<alias name="defaultFileIOUtils" alias="fileIOUtils" />
 	<bean id="defaultFileIOUtils"
 		  class="milos.davitkovic.utills.services.impl.utils.File.FileIOUtils" />

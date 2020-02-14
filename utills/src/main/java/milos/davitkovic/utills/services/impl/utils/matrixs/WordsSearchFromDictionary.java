@@ -1,4 +1,6 @@
-package milos.davitkovic.utills.services.impl.matrixs;
+package milos.davitkovic.utills.services.impl.utils.matrixs;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +13,7 @@ import java.util.Set;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class WordsSearchFromDictionary {
 
     private class TrieNode {
@@ -23,6 +26,7 @@ public class WordsSearchFromDictionary {
             this.wordIdx = wordIdx;
         }
     }
+
     public List<String> findWords(char[][] board, String[] words) {
         if (board == null || board.length == 0 || board[0].length == 0 ||
                 words == null || words.length == 0) {
@@ -57,6 +61,7 @@ public class WordsSearchFromDictionary {
         }
         return res;
     }
+
     private void dfs(final char[][] board, final Set<Integer> resIdx, final int h, final int w,
                      final boolean[][] visited, final TrieNode node) {
         int height = board.length, width = board[0].length;

@@ -1,5 +1,7 @@
 package milos.davitkovic.utills.services.impl.utils.Number.Integer;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -7,6 +9,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 
@@ -16,49 +21,81 @@ import java.util.logging.Logger;
 @Service
 public class IntegerUtils {
 
-	final private Logger log = Logger.getLogger(this.getClass().getName());
-
-
-	public List<Integer> eval(List<Integer> list, Predicate<Integer> predicate) {
-		List<Integer> outputList = new ArrayList<>();
-	      for(Integer n: list) {
-			
-	         if(predicate.test(n)) {
-	        	 outputList.add(n);
-	         }
-	      }
-	      return outputList;
-	   }
-	
 	/**
-	 * 
+	 * Get Even Numbers from the List
+	 *
 	 * @param list
 	 * @return List of Integer with even numbers only
 	 */
-	public List<Integer> evenNumbers(List<Integer> list) {
-		return eval(list, n-> n%2 == 0 );
+	public List<Integer> getEvenNumbers(final List<Integer> list) {
+		return eval(list, n -> n % 2 == 0 );
 	}
 	
 	/**
-	 * 
+	 * Get Odd Numbers from the List
+	 *
 	 * @param list
 	 * @return List of Integer with odd numbers only
 	 */
-	public List<Integer> oddNumbers(List<Integer> list) {
-		return eval(list, n-> n%2 != 0 );
+	public List<Integer> getOddNumbers(final List<Integer> list) {
+		return eval(list, n -> n % 2 != 0 );
 	}
-	
-	public List<Integer> greaterThenNumbers(List<Integer> list, Integer number) {
-		return eval(list, n-> n > number );
+
+	/**
+	 * Get all number from List bigger then specified number
+	 *
+	 * @param list
+	 * @param number
+	 * @return
+	 */
+	public List<Integer> getNumbersGreaterThen(final List<Integer> list, final Integer number) {
+		return eval(list, n -> n > number );
 	}
-	
-	public int getRandomNumberInRange(int min, int max) {
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
+
+	/**
+	 * Get all number smaller then specified number
+	 *
+	 * @param list
+	 * @param number
+	 * @return
+	 */
+	public List<Integer> getNumbersSmallerThen(final List<Integer> list, final Integer number) {
+		return eval(list, n -> n < number );
+	}
+
+	private <T> List<T> eval(final List<T> list, final Predicate<T> predicate) {
+		final List<T> inputList = new ArrayList<>(CollectionUtils.emptyIfNull(list));
+		final List<T> outputList = new ArrayList<>();
+		if(inputList.isEmpty()) {
+			return outputList;
 		}
 
-		Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
+		for(T element : inputList) {
+			if(predicate.test(element)) {
+				outputList.add(element);
+			}
+		}
+
+		return outputList;
+	}
+
+	/**
+	 * Get random Integer number between a range.
+	 *
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public Integer getRandomNumberInRange(final Integer min, final Integer max) {
+		assertNotNull( "Min parameter cannot be null", min);
+		assertNotNull( "Max parameter cannot be null", max);
+
+		if (min >= max) {
+			throw new IllegalArgumentException("Max parameter must be greater than Min parameter!");
+		}
+
+		final Random random = new Random();
+		return random.nextInt((max - min) + 1) + min;
 	}
 
 	public boolean isFirstGreatherThenSecond(Integer int1, Integer int2) {

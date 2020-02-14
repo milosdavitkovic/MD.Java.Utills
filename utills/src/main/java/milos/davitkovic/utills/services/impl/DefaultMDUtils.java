@@ -5,6 +5,7 @@ import milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.set.SetUtils;
 import milos.davitkovic.utills.services.impl.utils.File.FileIOUtils;
+import milos.davitkovic.utills.services.impl.utils.Number.Integer.IntegerUtils;
 import milos.davitkovic.utills.services.impl.utils.Number.NumberUtils;
 import milos.davitkovic.utills.services.impl.utils.Time.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +46,8 @@ public class DefaultMDUtils implements MDUtils {
     private SetUtils setUtils;
     @Resource(name = "numberUtils")
     private NumberUtils numberUtils;
+    @Resource(name = "integerUtils")
+    private IntegerUtils integerUtils;
 
     /**
      * ***************************************************************************************
@@ -137,6 +140,7 @@ public class DefaultMDUtils implements MDUtils {
 
     /**
      * (Generic) Remove duplicate elements from ArrayList implementation of List interface.
+     * 
      * @param inputList
      * @return ArrayList implementation of List interface without duplicated elements.
      */
@@ -162,7 +166,7 @@ public class DefaultMDUtils implements MDUtils {
      *
      * @param rangeStart
      * @param rangeEnd
-     * @return
+     * @return Odd number from rangeStart up to rangeEnd
      */
     @Override
     public List<Integer> getOddNumbersInRange(int rangeStart, int rangeEnd) {
@@ -175,7 +179,7 @@ public class DefaultMDUtils implements MDUtils {
      * @param map
      * @param <K>
      * @param <V>
-     * @return
+     * @return List of Keys from provided Map
      */
     @Override
     public <K, V> List<K> getKeyList(final Map<K, V> map) {
@@ -186,16 +190,68 @@ public class DefaultMDUtils implements MDUtils {
     /**
      * (Generic) Get List of Values from provided Map
      *
-     * @param map
-     * @param <K>
-     * @param <V>
-     * @return
+     * @param map map
+     * @param <K> key
+     * @param <V> value
+     * @return List of Values from provided Map
      */
     @Override
     public <K, V> List<V> getValueList(final Map<K, V> map) {
         return listUtils.getValueList(map);
     }
 
+    /**
+     * Get Even Numbers from the List
+     *
+     * @param list of numbers
+     * @return List of Integer with even numbers only
+     */
+    public List<Integer> getEvenNumbers(final List<Integer> list) {
+        return integerUtils.getEvenNumbers(list);
+    }
+
+    /**
+     * Get Odd Numbers from the List
+     *
+     * @param list
+     * @return List of Integer with odd numbers only
+     */
+    public List<Integer> getOddNumbers(final List<Integer> list) {
+        return integerUtils.getOddNumbers(list);
+    }
+
+    /**
+     * Get all number from List bigger then specified number
+     *
+     * @param list
+     * @param number
+     * @return all number from List bigger then specified number
+     */
+    public List<Integer> getNumbersGreaterThen(final List<Integer> list, final Integer number) {
+        return integerUtils.getNumbersGreaterThen(list, number);
+    }
+
+    /**
+     * Get all number smaller then specified number
+     *
+     * @param list
+     * @param number
+     * @return all number smaller then specified number
+     */
+    public List<Integer> getNumbersSmallerThen(final List<Integer> list, final Integer number) {
+        return integerUtils.getNumbersSmallerThen(list, number);
+    }
+
+    /**
+     * Get random Integer number between a range.
+     *
+     * @param min minimum value
+     * @param max maximal value
+     * @return random Integer number between a range
+     */
+    public Integer getRandomNumberInRange(final Integer min, final Integer max) {
+        return integerUtils.getRandomNumberInRange(min, max);
+    }
 
     /**
      * ***************************************************************************************

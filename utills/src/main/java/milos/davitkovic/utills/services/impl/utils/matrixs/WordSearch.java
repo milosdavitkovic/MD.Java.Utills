@@ -1,4 +1,6 @@
-package milos.davitkovic.utills.services.impl.matrixs;
+package milos.davitkovic.utills.services.impl.utils.matrixs;
+
+import org.springframework.stereotype.Service;
 
 /**
  * Word Search
@@ -6,6 +8,7 @@ package milos.davitkovic.utills.services.impl.matrixs;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class WordSearch {
 
     private static boolean[][] visited;

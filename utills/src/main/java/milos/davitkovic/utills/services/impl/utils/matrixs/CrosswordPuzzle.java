@@ -1,4 +1,6 @@
-package milos.davitkovic.utills.services.impl.matrixs;
+package milos.davitkovic.utills.services.impl.utils.matrixs;
+
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,6 +15,7 @@ import java.util.Scanner;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Service
 public class CrosswordPuzzle {
 
     private static final Scanner scanner = new Scanner(System.in);

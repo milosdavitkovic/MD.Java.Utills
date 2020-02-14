@@ -1,4 +1,6 @@
-package milos.davitkovic.utills.services.impl.matrixs;
+package milos.davitkovic.utills.services.impl.utils.matrixs;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +12,7 @@ import java.util.List;
  *
  * author milos.davitkovic@gmail.com
  */
+@Service
 public class MaxIncreaseKeepingSkyline {
 
     public int maxIncreaseKeepingSkyline(int[][] grid) {
