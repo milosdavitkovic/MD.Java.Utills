@@ -1,5 +1,7 @@
 package milos.davitkovic.utills.services;
 
+import milos.davitkovic.utills.annotations.Interface;
+
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Set;
  *
  * @author milos.davitkovic@gmail.com
  */
+@Interface
 public interface MDUtils {
     /**
      * (Generic) Convert Static Array into Collection
@@ -137,6 +140,17 @@ public interface MDUtils {
     Integer toInteger(Double inputValue);
 
     /**
+     * (Generic) Find duplicate elements in the list.
+     *
+     * For example I have list [1, 1, 2, 3, 3, 3] and as result want to have [1, 3]
+     *
+     * @param inputCollection
+     * @param <T>
+     * @return
+     */
+    <T> Set<T> getDuplicates(final Collection<T> inputCollection);
+
+    /**
      * Null Safe, Double to Long conversion
      *
      * @param inputValue
@@ -217,9 +231,9 @@ public interface MDUtils {
     /**
      * Write in the specified File
      *
-     * @param inputText content for writing in the file
+     * @param input content for writing in the file
      */
-    void writeInFile(String fileName, String folderName, List<String> inputText);
+    <T> void writeInFile(String fileName, String folderName, Collection<T> input);
 
     /**
      * Write in the specified File

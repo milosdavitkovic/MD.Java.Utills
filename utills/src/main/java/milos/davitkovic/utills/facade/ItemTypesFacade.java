@@ -1,11 +1,11 @@
 package milos.davitkovic.utills.facade;
 
-import org.springframework.stereotype.Component;
+import milos.davitkovic.utills.annotations.Interface;
 
 import java.io.IOException;
 
-@Component
-public interface ProductCodesComparingFacade {
+@Interface
+public interface ItemTypesFacade {
 
     /**
      * Comparing 2 lists of ProductCodes.
@@ -15,4 +15,6 @@ public interface ProductCodesComparingFacade {
      * @param resultFileName
      */
     void compare2Files(String folderName, String sourceFileName1, String sourceFileName2, String resultFileName) throws IOException;
+
+    void getDuplicates(final String folderName, final String sourceFileName, final String resultFileName);
 }

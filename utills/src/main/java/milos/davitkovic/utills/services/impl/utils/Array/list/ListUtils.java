@@ -1,10 +1,12 @@
 package milos.davitkovic.utills.services.impl.utils.Array.list;
 
+import milos.davitkovic.utills.annotations.UtilClass;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+@UtilClass
 public class ListUtils {
 
     /**
@@ -30,20 +32,93 @@ public class ListUtils {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Find duplicate elements in the list.
+     * For example I have list [1, 1, 2, 3, 3, 3] and as result want to have [1, 3]
+     *
+     * @param inputCollection
+     * @param <T>
+     * @return
+     */
+    public <T> Set<T> getDuplicates(final Collection<T> inputCollection) {
+        final Set<T> uniques = new HashSet<>();
+        return inputCollection.stream()
+                .filter(e -> !uniques.add(e))
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 1
+     * returns {2,6,8,7} - returns numbers which occur only once
+     * @param frequency
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getElementsWithFrequency(final List<T> inputList, final int frequency) {
+        return inputList.stream()
+                .filter(e -> Collections.frequency(inputList, e) == frequency)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 1
+     * returns {1,3} - returns only numbers which occur more times than 1
+     * @param inputList
+     * @param frequency
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getElementsWithHigherFrequencyThen(final List<T> inputList, final int frequency) {
+        return inputList.stream()
+                .filter(e -> Collections.frequency(inputList, e) > frequency)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 2
+     * returns {1,3} - returns only numbers which occur less times than 1
+     * @param inputList
+     * @param frequency
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getElementsWithLowerFrequencyThen(final List<T> inputList, final int frequency) {
+        return inputList.stream()
+                .filter(e -> Collections.frequency(inputList, e) < frequency)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * returns {1,2,3,6,8,7} - returns the list without duplicates
+     * @param inputList
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getListWithoutDuplicates(final List<T> inputList) {
+        return inputList.stream()
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
     public <K, V> List<K> getKeyList(final Map<K, V> map) {
-        List<K> result = map.entrySet().stream()
+        return map.entrySet().stream()
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     public <K, V> List<V> getValueList(final Map<K, V> map) {
-        List<V> result = map.entrySet().stream()
+        return map.entrySet().stream()
                 .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
-
-        return result;
     }
 
     // ##########################################################################################################

@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl;
 
+import milos.davitkovic.utills.annotations.UtilClass;
 import milos.davitkovic.utills.services.MDUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils;
@@ -11,13 +12,13 @@ import milos.davitkovic.utills.services.impl.utils.Time.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.Set;
  *
  * @author milos.davitkovic@gmail.com
  */
-@Service
+@UtilClass
 public class DefaultMDUtils implements MDUtils {
 
     final static Logger logger = LoggerFactory.getLogger(DefaultMDUtils.class);
@@ -140,13 +141,82 @@ public class DefaultMDUtils implements MDUtils {
 
     /**
      * (Generic) Remove duplicate elements from ArrayList implementation of List interface.
-     * 
+     *
      * @param inputList
      * @return ArrayList implementation of List interface without duplicated elements.
      */
     @Override
     public <T> List<T> removeDuplicates(final List<T> inputList) {
         return listUtils.removeDuplicates(inputList);
+    }
+
+    /**
+     *  (Generic) Get a List without duplicate elements
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * returns {1,2,3,6,8,7} - returns the list without duplicates
+     * @param inputList
+     * @param <T>
+     * @return a List without duplicates
+     */
+    public <T> List<T> getListWithoutDuplicates(final List<T> inputList) {
+        return getListWithoutDuplicates(inputList);
+    }
+
+    /**
+     * (Generic) Find duplicate elements in the list.
+     *
+     * For example I have list [1, 1, 2, 3, 3, 3] and as result want to have [1, 3]
+     *
+     * @param inputCollection
+     * @param <T>
+     * @return
+     */
+    public  <T> Set<T> getDuplicates(final Collection<T> inputCollection) {
+        return listUtils.getDuplicates(inputCollection);
+    }
+
+    /**
+     * (Generic) Get elements repeated specific number of times in the input list
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 1
+     * returns {2,6,8,7} - returns numbers which occur only once
+     * @param frequency how many times element is repeated
+     * @param <T>
+     * @return elements repeated frequency number of times in the input list
+     */
+    public <T> List<T> getElementsWithFrequency(final List<T> inputList, final int frequency) {
+        return listUtils.getElementsWithFrequency(inputList, frequency);
+    }
+
+    /**
+     * (Generic) Get elements repeated many number of times then provided number in the input list
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 1
+     * returns {1,3} - returns only numbers which occur more times than 1
+     * @param inputList
+     * @param frequency
+     * @param <T>
+     * @return elements repeated many number of times then frequency in the input list
+     */
+    public <T> List<T> getElementsWithHigherFrequencyThen(final List<T> inputList, final int frequency) {
+        return listUtils.getElementsWithFrequency(inputList, frequency);
+    }
+
+    /**
+     *
+     * If original list is filled with {1,1,2,3,6,3,8,7}
+     * and frequency is 2
+     * returns {1,3} - returns only numbers which occur less times than 1
+     * @param inputList
+     * @param frequency
+     * @param <T>
+     * @return
+     */
+    public <T> List<T> getElementsWithLowerFrequencyThen(final List<T> inputList, final int frequency) {
+        return listUtils.getElementsWithLowerFrequencyThen(inputList, frequency);
     }
 
     /**
@@ -493,10 +563,18 @@ public class DefaultMDUtils implements MDUtils {
     /**
      * Write in the specified File
      *
-     * @param inputText content for writing in the file
+     * @param input content for writing in the file
      */
     @Override
-    public void writeInFile(final String fileName, final String folderName, final List<String> inputText) {
+    public <T> void writeInFile(final String fileName, final String folderName, final Collection<T> input) {
+        Assert.notNull(fileName, "fileName cannot be null!");
+        Assert.notNull(folderName, "folderName cannot be null!");
+        Assert.notNull(input, "input cannot be null!");
+
+        final List<String> inputText = new ArrayList<>();
+        input.stream()
+                .map(String::valueOf)
+                .map(inputText::add);
         try {
             fileIOUtils.writeInFile(fileName, folderName, inputText);
         } catch (IOException e) {
@@ -513,6 +591,8 @@ public class DefaultMDUtils implements MDUtils {
     @Override
     public void writeInFile(final Path filePath, final List<String> inputText) {
         Assert.notNull(filePath, "filePath cannot be null!");
+        Assert.notNull(inputText, "inputText cannot be null!");
+
         try {
             fileIOUtils.writeInFile(filePath, inputText);
         } catch (IOException e) {

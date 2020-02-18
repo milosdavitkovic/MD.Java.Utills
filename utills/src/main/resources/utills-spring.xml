@@ -24,6 +24,10 @@
 	<bean id="defaultProductCodesComparingService"
 		  class="milos.davitkovic.utills.services.impl.DefaultProductCodesComparingService" />
 
+	<alias name="defaultUniqueIndexesService" alias="uniqueIndexesService" />
+	<bean id="defaultUniqueIndexesService"
+		  class="milos.davitkovic.utills.services.impl.DefaultUniqueIndexesService" />
+
 	<alias name="defaultArrayUtils" alias="arrayUtils" />
 	<bean id="defaultArrayUtils"
 		  class="milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils" />
@@ -62,7 +66,7 @@
 	<!--	*****************************************************************************************-->
 	<alias name="defaultProductCodesComparingFacade" alias="productCodesComparingFacade" />
 	<bean id="defaultProductCodesComparingFacade"
-		  class="milos.davitkovic.utills.facade.impl.DefaultProductCodesComparingFacade" />
+		  class="milos.davitkovic.utills.facade.impl.DefaultItemTypesFacade" />
 	<!--	*****************************************************************************************-->
 	<!-- End of Facade -->
 	<!--	*****************************************************************************************-->
