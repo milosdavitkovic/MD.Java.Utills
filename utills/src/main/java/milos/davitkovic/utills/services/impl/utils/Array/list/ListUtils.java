@@ -32,6 +32,15 @@ public class ListUtils {
                 .collect(Collectors.toList());
     }
 
+    public <T> List<String> convertToStringList(final Collection<T> input) {
+        final List<String> inputText = new ArrayList<>();
+        for(T inputElement : input) {
+            final String element = String.valueOf(inputElement);
+            inputText.add(element);
+        }
+        return inputText;
+    }
+
 
     /**
      * Find duplicate elements in the list.

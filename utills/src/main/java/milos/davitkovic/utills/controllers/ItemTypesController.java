@@ -29,7 +29,7 @@ public class ItemTypesController {
 
     @GetMapping(value = "/uniqueIndexes")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public void uniqueIndexes() {
+    public void uniqueIndexes() throws IOException {
         final String inputFileName = "InputFile.txt";
         final String folderName = "files/uniqueIndexes";
         final String resultFileName = "Result.txt";

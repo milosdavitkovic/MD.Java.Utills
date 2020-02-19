@@ -484,13 +484,15 @@ public class DefaultMDUtils implements MDUtils {
      * @return lines from file
      */
     @Override
-    public  List<String> readResourceFile(final String fileName, final String folderName) {
+    public  List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
+        Assert.notNull(fileName, "fileName cannot be null!");
+        Assert.notNull(fileName, "folderName cannot be null!");
+
         try {
             return fileIOUtils.readResourceFile(fileName, folderName);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("Cannot read a resource file [%s] from folder [%s]!", fileName, folderName));
         }
-        return Collections.EMPTY_LIST;
     }
 
     /**
@@ -501,27 +503,25 @@ public class DefaultMDUtils implements MDUtils {
      * @return lines from file
      */
     @Override
-    public List<String> readFile(final String fileName, final String folderName) {
+    public List<String> readFile(final String fileName, final String folderName) throws IOException {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
         try {
             return fileIOUtils.readFile(fileName, folderName);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("Cannot read a file [%s] from folder [%s]!", fileName, folderName));
         }
-        return Collections.EMPTY_LIST;
     }
 
     @Override
-    public Path findFile(final String fileName, final String folderName) {
+    public Path findFile(final String fileName, final String folderName) throws IOException {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
         try {
             return fileIOUtils.findSpecificFilePathInSpecificFolder(fileName, folderName, 0);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("Cannot read a file [%s] from folder [%s]!", fileName, folderName));
         }
-        return Paths.get(StringUtils.EMPTY);
     }
 
     /**
@@ -548,17 +548,22 @@ public class DefaultMDUtils implements MDUtils {
      *
      * @param fileName
      * @param folderName
-     * @param inputText
+     * @param input
      */
     @Override
-    public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) {
+    public <T> void writeInResourceFile(final String fileName, final String folderName, final Collection<T> input) throws IOException {
+        Assert.notNull(fileName, "fileName cannot be null!");
+        Assert.notNull(folderName, "folderName cannot be null!");
+        Assert.notNull(input, "input cannot be null!");
+
+        final List<String> inputText = listUtils.convertToStringList(input);
+
         try {
             fileIOUtils.writeInResourceFile(fileName, folderName, inputText);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("Cannot write in a file [%s] from folder [%s]!", fileName, folderName));
         }
     }
-
 
     /**
      * Write in the specified File
@@ -571,10 +576,8 @@ public class DefaultMDUtils implements MDUtils {
         Assert.notNull(folderName, "folderName cannot be null!");
         Assert.notNull(input, "input cannot be null!");
 
-        final List<String> inputText = new ArrayList<>();
-        input.stream()
-                .map(String::valueOf)
-                .map(inputText::add);
+        final List<String> inputText = listUtils.convertToStringList(input);
+
         try {
             fileIOUtils.writeInFile(fileName, folderName, inputText);
         } catch (IOException e) {

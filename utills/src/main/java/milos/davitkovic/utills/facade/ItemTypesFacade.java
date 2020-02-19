@@ -16,5 +16,5 @@ public interface ItemTypesFacade {
      */
     void compare2Files(String folderName, String sourceFileName1, String sourceFileName2, String resultFileName) throws IOException;
 
-    void getDuplicates(final String folderName, final String sourceFileName, final String resultFileName);
+    void getDuplicates(final String folderName, final String sourceFileName, final String resultFileName) throws IOException;
 }

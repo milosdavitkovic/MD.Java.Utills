@@ -2,6 +2,7 @@ package milos.davitkovic.utills.services;
 
 import milos.davitkovic.utills.annotations.Interface;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
@@ -196,7 +197,7 @@ public interface MDUtils {
      * @param folderName
      * @return lines from file
      */
-    List<String> readResourceFile(String fileName, String folderName);
+    List<String> readResourceFile(String fileName, String folderName) throws IOException;
 
     /**
      * Read from the file in the specified folder
@@ -205,9 +206,9 @@ public interface MDUtils {
      * @param folderName
      * @return lines from file
      */
-    List<String> readFile(String fileName, String folderName);
+    List<String> readFile(String fileName, String folderName) throws IOException;
 
-    Path findFile(String fileName, String folderName);
+    Path findFile(String fileName, String folderName) throws IOException;
 
     /**
      * Search for File in the whole system
@@ -224,9 +225,9 @@ public interface MDUtils {
      *
      * @param fileName
      * @param folderName
-     * @param inputText
+     * @param input
      */
-    void writeInResourceFile(String fileName, String folderName, List<String> inputText);
+    <T> void writeInResourceFile(final String fileName, final String folderName, final Collection<T> input) throws IOException;
 
     /**
      * Write in the specified File

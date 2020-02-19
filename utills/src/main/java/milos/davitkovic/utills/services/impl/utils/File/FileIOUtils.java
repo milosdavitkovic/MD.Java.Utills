@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.services.impl.utils.File;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
  *
  */
 @Service
+@Slf4j
 public class FileIOUtils {
 
 	private static final int DEFAULT_MAX_DEPTH = 30;
@@ -175,13 +177,13 @@ public class FileIOUtils {
 	 * @throws IOException
 	 */
 	public Path findFolderPath(String folderName) throws IOException {
-		String[] inputList = findFolder(folderName);
-		Path outputPath = Paths.get(inputList[0]);
+		final String[] inputList = findFolder(folderName);
+		final Path outputPath = Paths.get(inputList[0]);
 		return outputPath;
 	}
 
 	public Path findFilePath(String fileName) throws IOException {
-		Path outputPath = findSpecificFilePathInWholeSystem(fileName, 0);
+		final Path outputPath = findSpecificFilePathInWholeSystem(fileName, 0);
 		return outputPath;
 	}
 
@@ -932,12 +934,20 @@ public class FileIOUtils {
 	 */
 	public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
 		final Path path = getResourceFile(folderName, fileName);
-		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.EMPTY_LIST;
+		if(StringUtils.isBlank(path.toString())) {
+			return Collections.emptyList();
+		}
+		log.info("Resource File for reading, path: " + path.toAbsolutePath());
+		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.emptyList();
 	}
 
 	public List<String> readFile(final String fileName, final String folderName) throws IOException {
 		final Path path = getFile(folderName, fileName);
-		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.EMPTY_LIST;
+		if(StringUtils.isBlank(path.toString())) {
+			return Collections.emptyList();
+		}
+		log.info("File for reading, path: " + path.toAbsolutePath());
+		return Files.isReadable(path) ? Files.readAllLines(path) : Collections.emptyList();
 	}
 
 	/**
@@ -949,6 +959,7 @@ public class FileIOUtils {
 	 */
 	public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
 		final Path path = getResourceFile(folderName, fileName);
+		log.info("Resource File for writing, path: " + path.toAbsolutePath());
 		writeInFile(path, inputText);
 	}
 
@@ -969,27 +980,24 @@ public class FileIOUtils {
 		writeInFile(path, inputText);
 	}
 
-	private Path getResourceFile(final String folderName, final String fileName) {
+	private Path getResourceFile(final String folderName, final String fileName) throws FileNotFoundException {
 		try {
 			final File file = ResourceUtils.getFile("classpath:" + folderName + "/" + fileName);
 			return Paths.get(file.getAbsolutePath());
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			throw new FileNotFoundException(String.format("Cannot find file [%s] in the folder [%s].", fileName, folderName));
 		}
-		return START_PATH;
 	}
 
-	private Path getFile(final String folderName, final String fileName) {
+	private Path getFile(final String folderName, final String fileName) throws IOException {
 		try {
-//			final Path currentWorkingDir = Paths.get("").toAbsolutePath();
-			final Optional<Path> filePath = findFilesInWholeSystem(fileName).stream().findFirst();
-//			final File file = ResourceUtils.getFile(currentWorkingDir.toAbsolutePath() + "/" + folderName + "/" + fileName);
+			final Path currentWorkingDir = Paths.get("").toAbsolutePath();
+			final Optional<Path> filePath = findFilesInWholeSystem(fileName, folderName).stream().findFirst();
 //			return Paths.get(file.getAbsolutePath());
-			return filePath.isPresent() ? filePath.get() : START_PATH;
+			return filePath.orElseThrow(() -> new IOException(String.format("Cannot find file [%s] in the folder [%s].", fileName, folderName)));
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new IOException(String.format("Cannot find file [%s] in the folder [%s].", fileName, folderName));
 		}
-		return START_PATH;
 	}
 }
 
