@@ -11,8 +11,6 @@ import java.lang.annotation.Target;
 @Documented
 public @interface IntegrationTest {
     boolean standalone() default false;
-
     Class replaces() default IntegrationTest.class;
-
     String excludedAppserver() default "";
 }
