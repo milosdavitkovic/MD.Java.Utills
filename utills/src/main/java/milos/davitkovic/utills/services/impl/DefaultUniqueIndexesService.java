@@ -19,12 +19,12 @@ public class DefaultUniqueIndexesService implements UniqueIndexesService {
 
     public void getDuplicates(final String folderName, final String sourceFileName, final String resultFileName) throws IOException {
         final List<String> elements = mdUtils.readResourceFile(sourceFileName, folderName);
-        log.debug(String.format("Number of lines read from file [%s] is [%s] elements", sourceFileName, elements.size()));
+        log.info(String.format("Number of lines read from file [%s] is [%s] elements", sourceFileName, elements.size()));
 
         final Set<String> duplicates = mdUtils.getDuplicates(elements);
-        log.debug(String.format("Number of duplicated lines in the file [%s] is [%s] elements", sourceFileName, duplicates.size()));
+        log.info(String.format("Number of duplicated lines in the file [%s] is [%s] elements", sourceFileName, duplicates.size()));
 
-        log.debug(String.format("Number of lines ready to write in the file [%s] is [%s] elements", resultFileName, duplicates.size()));
+        log.info(String.format("Number of lines ready to write in the file [%s] is [%s] elements", resultFileName, duplicates.size()));
         mdUtils.writeInResourceFile(resultFileName, folderName, duplicates);
     }
 }
