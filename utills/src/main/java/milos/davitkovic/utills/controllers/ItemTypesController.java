@@ -35,4 +35,14 @@ public class ItemTypesController {
         final String resultFileName = "Result.txt";
         itemTypesFacade.getDuplicates(folderName, inputFileName, resultFileName);
     }
+
+    @GetMapping(value = "/createUpdateImpex")
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public void createUpdateImpex() throws IOException {
+        final String inputFileName = "InputFile.txt";
+        final String folderName = "files/impex";
+        final String resultFileName = "update.impex";
+        final String header = "UPDATE ProductReference;pk[unique=true];active";
+        itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header);
+    }
 }

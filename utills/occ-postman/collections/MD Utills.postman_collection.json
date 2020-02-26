@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "d8e28b8d-0129-493a-bd4f-bb0e63f28427",
+		"name": "MD Utills",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get productCodesComparing",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itemTypes/productCodesComparing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itemTypes",
+						"productCodesComparing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get uniqueIndexes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itemTypes/uniqueIndexes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itemTypes",
+						"uniqueIndexes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create UPDATE Impex",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/itemTypes/createUpdateImpex",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"itemTypes",
+						"createUpdateImpex"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

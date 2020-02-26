@@ -28,6 +28,11 @@
 	<bean id="defaultUniqueIndexesService"
 		  class="milos.davitkovic.utills.services.impl.DefaultUniqueIndexesService" />
 
+	<alias name="defaultImpexFilesCreation" alias="impexFilesCreation" />
+	<bean id="defaultImpexFilesCreation"
+		  class="milos.davitkovic.utills.services.impl.DefaultImpexFilesCreation" />
+
+	<!-- Utils Services -->
 	<alias name="defaultArrayUtils" alias="arrayUtils" />
 	<bean id="defaultArrayUtils"
 		  class="milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils" />
