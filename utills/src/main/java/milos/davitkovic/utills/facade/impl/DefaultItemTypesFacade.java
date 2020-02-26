@@ -2,7 +2,7 @@ package milos.davitkovic.utills.facade.impl;
 
 import milos.davitkovic.utills.annotations.Facade;
 import milos.davitkovic.utills.facade.ItemTypesFacade;
-import milos.davitkovic.utills.services.ImpexFilesCreation;
+import milos.davitkovic.utills.services.ImpexFilesCreationService;
 import milos.davitkovic.utills.services.ProductCodesComparingService;
 import milos.davitkovic.utills.services.UniqueIndexesService;
 
@@ -17,7 +17,7 @@ public class DefaultItemTypesFacade implements ItemTypesFacade {
     @Resource
     private UniqueIndexesService uniqueIndexesService;
     @Resource
-    private ImpexFilesCreation impexFilesCreation;
+    private ImpexFilesCreationService impexFilesCreationService;
 
     @Override
     public void compare2Files(final String folderName, final String sourceFileName1, final String sourceFileName2, final String resultFileName) throws IOException {
@@ -31,6 +31,11 @@ public class DefaultItemTypesFacade implements ItemTypesFacade {
 
     @Override
     public void createUpdateImpexWithPKs(final String folderName, final String sourceFileName, final String resultFileName, final String header) throws IOException {
-        impexFilesCreation.createUpdateImpexWithPKs(folderName, sourceFileName, resultFileName, header);
+        impexFilesCreationService.createUpdateImpexWithPKs(folderName, sourceFileName, resultFileName, header);
+    }
+
+    @Override
+    public void createUpdateImpexWithPKs(final String folderName, final String sourceFileName, final String resultFileName, final String header, final String lineAddition) throws IOException {
+        impexFilesCreationService.createUpdateImpexWithPKs(folderName, sourceFileName, resultFileName, header, lineAddition);
     }
 }

@@ -43,6 +43,7 @@ public class ItemTypesController {
         final String folderName = "files/impex";
         final String resultFileName = "update.impex";
         final String header = "UPDATE ProductReference;pk[unique=true];active";
-        itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header);
+        final String additionalParameter = "false";
+        itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header, additionalParameter);
     }
 }

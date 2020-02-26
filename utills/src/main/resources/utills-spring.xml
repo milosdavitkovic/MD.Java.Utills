@@ -30,7 +30,7 @@
 
 	<alias name="defaultImpexFilesCreation" alias="impexFilesCreation" />
 	<bean id="defaultImpexFilesCreation"
-		  class="milos.davitkovic.utills.services.impl.DefaultImpexFilesCreation" />
+		  class="milos.davitkovic.utills.services.impl.DefaultImpexFilesCreationService" />
 
 	<!-- Utils Services -->
 	<alias name="defaultArrayUtils" alias="arrayUtils" />
