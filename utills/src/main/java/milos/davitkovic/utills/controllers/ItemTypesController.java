@@ -42,8 +42,11 @@ public class ItemTypesController {
         final String inputFileName = "InputFile.txt";
         final String folderName = "files/impex";
         final String resultFileName = "update.impex";
-        final String header = "UPDATE ProductReference;pk[unique=true];active";
-        final String additionalParameter = "false";
+        final String header = "UPDATE NewsletterProspect;pk[unique=true];emailStatus(code)";
+//        final String header = "UPDATE ProductReference;pk[unique=true];active";
+//        final String header = "UPDATE NewsletterProspect;pk[unique=true];domain";
+//        final String additionalParameter = "at";
+        final String additionalParameter = "SENT_OK";
         itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header, additionalParameter);
     }
 }

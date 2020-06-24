@@ -9,6 +9,7 @@ import milos.davitkovic.utills.services.impl.utils.File.FileIOUtils;
 import milos.davitkovic.utills.services.impl.utils.Number.Integer.IntegerUtils;
 import milos.davitkovic.utills.services.impl.utils.Number.NumberUtils;
 import milos.davitkovic.utills.services.impl.utils.Time.TimeUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -557,9 +558,14 @@ public class DefaultMDUtils implements MDUtils {
         Assert.notNull(input, "input cannot be null!");
 
         final List<String> inputText = listUtils.convertToStringList(input);
+        if(CollectionUtils.isEmpty(inputText)) {
+            logger.warn("List with lines for write is empty. Nothing to write down in a file {} from folder {}.", fileName, folderName);
+            return;
+        }
 
         try {
             fileIOUtils.writeInResourceFile(fileName, folderName, inputText);
+            logger.info("{} lines of text have been written down in file {} placed in folder {}", inputText.size(), fileName, folderName);
         } catch (IOException e) {
             throw new IOException(String.format("Cannot write in a file [%s] from folder [%s]!", fileName, folderName));
         }

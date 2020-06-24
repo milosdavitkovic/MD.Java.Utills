@@ -32,7 +32,7 @@ public class DefaultImpexFilesCreationService implements ImpexFilesCreationServi
         final Set<String> pkList = new HashSet<>(mdUtils.readResourceFile(sourceFileName, folderName));
         log.debug(String.format("Number of lines read from file [%s] is [%s] elements.", sourceFileName, pkList.size()));
 
-        final Set<String> result = createUpdateImpexWithPKs(header, pkList, StringUtils.EMPTY);
+        final List<String> result = createUpdateImpexWithPKs(header, pkList, StringUtils.EMPTY);
         log.debug(String.format("Number of lines ready to write in the file [%s] is [%s] elements.", resultFileName, result.size()));
 
         mdUtils.writeInResourceFile(resultFileName, folderName, result);
@@ -43,26 +43,29 @@ public class DefaultImpexFilesCreationService implements ImpexFilesCreationServi
         final Set<String> pkList = new HashSet<>(mdUtils.readResourceFile(sourceFileName, folderName));
         log.info(String.format("Number of lines read from file [%s] is [%s] elements.", sourceFileName, pkList.size()));
 
-        final Set<String> result = createUpdateImpexWithPKs(header, pkList, lineAddition);
+        final List<String> result = createUpdateImpexWithPKs(header, pkList, lineAddition);
         log.info(String.format("Number of lines ready to write in the file [%s] is [%s] elements.", resultFileName, result.size()));
 
         mdUtils.writeInResourceFile(resultFileName, folderName, result);
     }
 
-    private Set<String> createUpdateImpexWithPKs(final String header, final Collection<String> pkList, final String lineAddition) {
-        final Set<String> impexFile = new HashSet<>();
+    private List<String> createUpdateImpexWithPKs(final String header, final Collection<String> pkList, final String lineAddition) {
+        final List<String> impexFile = new ArrayList<>();
         impexFile.add(header);
+
+        final Set<String> impexFileContent = new HashSet<>();
 
         if(StringUtils.isNotBlank(lineAddition)) {
             for(String pk : pkList) {
-                impexFile.add(IMPEX_DELIMITER + pk + IMPEX_DELIMITER + lineAddition);
+                impexFileContent.add(IMPEX_DELIMITER + pk + IMPEX_DELIMITER + lineAddition);
             }
         } else {
             for(String pk : pkList) {
-                impexFile.add(IMPEX_DELIMITER + pk);
+                impexFileContent.add(IMPEX_DELIMITER + pk);
             }
         }
 
+        impexFile.addAll(impexFileContent);
         return impexFile;
     }
 }

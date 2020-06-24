@@ -1,6 +1,7 @@
 package milos.davitkovic.utills.services.impl.utils.File;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 /**
  * 
@@ -964,14 +966,35 @@ public class FileIOUtils {
 	}
 
 	/**
-	 *
+	 * Write down inputText in the file with filePath.
+	 * Create a new file if it does not exist.
 	 * @param filePath
 	 * @param inputText
-	 * @throws IOException
 	 */
 	public void writeInFile(final Path filePath, final List<String> inputText) throws IOException {
+		if(filePath == null) {
+			log.error("WRITE-IN-FILE-ERROR File path is null. Not able to write.");
+			return;
+		}
+
+		if(CollectionUtils.isEmpty(inputText)) {
+			log.error("WRITE-IN-FILE-ERROR list of strings for write is empty. Nothing to write.");
+			return;
+		}
+
 		if(Files.isWritable(filePath)) {
-			Files.write(filePath, inputText, UTF_8, CREATE);
+			try {
+				if(Files.exists(filePath)) {
+					log.debug("WRITE-IN-FILE-INFO File {} already exists. All data from file will be deleted.", filePath);
+					Files.deleteIfExists(filePath);
+				}
+
+				Files.write(filePath, inputText, UTF_8, CREATE);
+				log.debug("WRITE-IN-FILE-INFO {} lines have been successfully written in the file {}", inputText.size(), filePath);
+			} catch (IOException ex) {
+				log.error("WRITE-IN-FILE-ERROR with file path {}. IOException {}", filePath, ex.getMessage());
+				throw ex;
+			}
 		}
 	}
 
