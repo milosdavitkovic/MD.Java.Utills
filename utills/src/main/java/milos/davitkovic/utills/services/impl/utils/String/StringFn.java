@@ -421,6 +421,13 @@ public class StringFn {
     /**
      * is provided value boolean value
      *
+     * System.out.println(isBoolean(null)); //false
+     * System.out.println(isBoolean("")); //false
+     * System.out.println(isBoolean("true")); //true
+     * System.out.println(isBoolean("fALsE")); //true
+     * System.out.println(isBoolean("asdf")); //false
+     * System.out.println(isBoolean("01truefalse")); //false
+     * 
      * @param value
      * @return
      */
