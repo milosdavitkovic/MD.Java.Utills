@@ -1,6 +1,7 @@
 package milos.davitkovic.utills.services.impl.utils.Array.list;
 
 import milos.davitkovic.utills.annotations.UtilClass;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -209,5 +210,38 @@ public class ListUtils {
         return array.stream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Get String value from the List of Strings
+     *
+     * @param list
+     * @param index
+     * @return
+     */
+    private String getValue(final List<String> list, int index) {
+        final int sizeOfList = CollectionUtils.size(list);
+        if(sizeOfList > index) {
+           return CollectionUtils.get(list, index);
+        }
+
+        return StringUtils.EMPTY;
+    }
+
+    /**
+     * Get a value from the list
+     *
+     * @param list
+     * @param index
+     * @param <T>
+     * @return
+     */
+    private <T> T getValue(final Collection<T> list, int index) {
+        final int sizeOfList = CollectionUtils.size(list);
+        if(sizeOfList > index) {
+            return CollectionUtils.get(list, index);
+        }
+
+        return null;
     }
 }

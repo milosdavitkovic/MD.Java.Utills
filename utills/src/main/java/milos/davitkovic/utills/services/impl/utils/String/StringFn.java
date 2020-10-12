@@ -2,6 +2,7 @@ package milos.davitkovic.utills.services.impl.utils.String;
 
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import info.debatty.java.stringsimilarity.QGram;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.Collator;
@@ -445,6 +446,10 @@ public class StringFn {
     private boolean isString(final String value) {
         final String stringValue = String.valueOf(value);
         return stringValue != null;
+    }
+
+    private boolean isNotContains(final String inputValue, final String containsString) {
+        return !StringUtils.contains(inputValue, containsString);
     }
 
     // Example implementation of the Levenshtein Edit Distance

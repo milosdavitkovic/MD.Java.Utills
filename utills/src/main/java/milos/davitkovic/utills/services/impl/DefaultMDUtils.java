@@ -1,11 +1,15 @@
 package milos.davitkovic.utills.services.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.UtilClass;
 import milos.davitkovic.utills.services.MDUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.ArrayUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.list.ListUtils;
 import milos.davitkovic.utills.services.impl.utils.Array.set.SetUtils;
 import milos.davitkovic.utills.services.impl.utils.File.FileIOUtils;
+import milos.davitkovic.utills.services.impl.utils.File.find.FindIOUtils;
+import milos.davitkovic.utills.services.impl.utils.File.read.ReadIOUtils;
+import milos.davitkovic.utills.services.impl.utils.File.write.WriteIOUtils;
 import milos.davitkovic.utills.services.impl.utils.Number.Integer.IntegerUtils;
 import milos.davitkovic.utills.services.impl.utils.Number.NumberUtils;
 import milos.davitkovic.utills.services.impl.utils.Time.TimeUtils;
@@ -13,13 +17,13 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,12 +36,19 @@ import java.util.Set;
  * @author milos.davitkovic@gmail.com
  */
 @UtilClass
+@Slf4j
 public class DefaultMDUtils implements MDUtils {
 
     final static Logger logger = LoggerFactory.getLogger(DefaultMDUtils.class);
 
-    @Resource(name = "fileIOUtils")
+    @Autowired
     private FileIOUtils fileIOUtils;
+    @Autowired
+    private ReadIOUtils readIOUtils;
+    @Autowired
+    private FindIOUtils findIOUtils;
+    @Autowired
+    private WriteIOUtils writeIOUtils;
     @Resource(name = "arrayUtils")
     private ArrayUtils arrayUtils;
     @Resource(name = "timeUtils")
@@ -152,10 +163,11 @@ public class DefaultMDUtils implements MDUtils {
     }
 
     /**
-     *  (Generic) Get a List without duplicate elements
-     *
+     * (Generic) Get a List without duplicate elements
+     * <p>
      * If original list is filled with {1,1,2,3,6,3,8,7}
      * returns {1,2,3,6,8,7} - returns the list without duplicates
+     *
      * @param inputList
      * @param <T>
      * @return a List without duplicates
@@ -166,23 +178,24 @@ public class DefaultMDUtils implements MDUtils {
 
     /**
      * (Generic) Find duplicate elements in the list.
-     *
+     * <p>
      * For example I have list [1, 1, 2, 3, 3, 3] and as result want to have [1, 3]
      *
      * @param inputCollection
      * @param <T>
      * @return
      */
-    public  <T> Set<T> getDuplicates(final Collection<T> inputCollection) {
+    public <T> Set<T> getDuplicates(final Collection<T> inputCollection) {
         return listUtils.getDuplicates(inputCollection);
     }
 
     /**
      * (Generic) Get elements repeated specific number of times in the input list
-     *
+     * <p>
      * If original list is filled with {1,1,2,3,6,3,8,7}
      * and frequency is 1
      * returns {2,6,8,7} - returns numbers which occur only once
+     *
      * @param frequency how many times element is repeated
      * @param <T>
      * @return elements repeated frequency number of times in the input list
@@ -193,10 +206,11 @@ public class DefaultMDUtils implements MDUtils {
 
     /**
      * (Generic) Get elements repeated many number of times then provided number in the input list
-     *
+     * <p>
      * If original list is filled with {1,1,2,3,6,3,8,7}
      * and frequency is 1
      * returns {1,3} - returns only numbers which occur more times than 1
+     *
      * @param inputList
      * @param frequency
      * @param <T>
@@ -207,10 +221,10 @@ public class DefaultMDUtils implements MDUtils {
     }
 
     /**
-     *
      * If original list is filled with {1,1,2,3,6,3,8,7}
      * and frequency is 2
      * returns {1,3} - returns only numbers which occur less times than 1
+     *
      * @param inputList
      * @param frequency
      * @param <T>
@@ -467,7 +481,7 @@ public class DefaultMDUtils implements MDUtils {
      * @return
      */
     @Override
-    public  String listFiles(final String folderName) {
+    public String listFiles(final String folderName) {
         Assert.notNull(folderName, "folderName cannot be null!");
         try {
             return fileIOUtils.listFilesInSpecificFolder(folderName);
@@ -485,12 +499,12 @@ public class DefaultMDUtils implements MDUtils {
      * @return lines from file
      */
     @Override
-    public  List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
+    public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
 
         try {
-            return fileIOUtils.readResourceFile(fileName, folderName);
+            return readIOUtils.readResourceFile(fileName, folderName);
         } catch (IOException e) {
             throw new IOException(String.format("Cannot read a resource file [%s] from folder [%s]!", fileName, folderName));
         }
@@ -508,7 +522,7 @@ public class DefaultMDUtils implements MDUtils {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
         try {
-            return fileIOUtils.readFile(fileName, folderName);
+            return readIOUtils.readFile(fileName, folderName);
         } catch (IOException e) {
             throw new IOException(String.format("Cannot read a file [%s] from folder [%s]!", fileName, folderName));
         }
@@ -518,8 +532,9 @@ public class DefaultMDUtils implements MDUtils {
     public Path findFile(final String fileName, final String folderName) throws IOException {
         Assert.notNull(fileName, "fileName cannot be null!");
         Assert.notNull(fileName, "folderName cannot be null!");
+
         try {
-            return fileIOUtils.findSpecificFilePathInSpecificFolder(fileName, folderName, 0);
+            return findIOUtils.findSpecificFilePathInSpecificFolder(fileName, folderName, 0);
         } catch (IOException e) {
             throw new IOException(String.format("Cannot read a file [%s] from folder [%s]!", fileName, folderName));
         }
@@ -535,7 +550,7 @@ public class DefaultMDUtils implements MDUtils {
     public List<Path> findFiles(final String fileName) {
         Assert.notNull(fileName, "fileName cannot be null!");
         try {
-            return fileIOUtils.findFilesInWholeSystem(fileName);
+            return findIOUtils.findFilesInWholeSystem(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -558,13 +573,13 @@ public class DefaultMDUtils implements MDUtils {
         Assert.notNull(input, "input cannot be null!");
 
         final List<String> inputText = listUtils.convertToStringList(input);
-        if(CollectionUtils.isEmpty(inputText)) {
+        if (CollectionUtils.isEmpty(inputText)) {
             logger.warn("List with lines for write is empty. Nothing to write down in a file {} from folder {}.", fileName, folderName);
             return;
         }
 
         try {
-            fileIOUtils.writeInResourceFile(fileName, folderName, inputText);
+            writeIOUtils.writeInResourceFile(fileName, folderName, inputText);
             logger.info("{} lines of text have been written down in file {} placed in folder {}", inputText.size(), fileName, folderName);
         } catch (IOException e) {
             throw new IOException(String.format("Cannot write in a file [%s] from folder [%s]!", fileName, folderName));
@@ -585,7 +600,7 @@ public class DefaultMDUtils implements MDUtils {
         final List<String> inputText = listUtils.convertToStringList(input);
 
         try {
-            fileIOUtils.writeInFile(fileName, folderName, inputText);
+            writeIOUtils.writeInFile(fileName, folderName, inputText);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -603,7 +618,7 @@ public class DefaultMDUtils implements MDUtils {
         Assert.notNull(inputText, "inputText cannot be null!");
 
         try {
-            fileIOUtils.writeInFile(filePath, inputText);
+            writeIOUtils.writeInFile(filePath, inputText);
         } catch (IOException e) {
             e.printStackTrace();
         }

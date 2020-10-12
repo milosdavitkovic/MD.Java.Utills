@@ -21,24 +21,25 @@ public class DefaultProductCodesComparingService implements ProductCodesComparin
 
     public void compare2Files(final String folderName, final String sourceFileName1, final String sourceFileName2, final String resultFileName) throws IOException {
         final Set<String> set1 = new HashSet<>(mdUtils.readResourceFile(sourceFileName1, folderName));
-        log.debug(String.format("Number of lines read from file [%s] is [%s] elements.", sourceFileName1, set1.size()));
+        log.info("Number of lines read from file {} is {} elements.", sourceFileName1, set1.size());
         final Set<String> set2 = new HashSet<>(mdUtils.readResourceFile(sourceFileName2, folderName));
-        log.debug(String.format("Number of lines read from file [%s] is [%s] elements.", sourceFileName2, set2.size()));
+        log.info("Number of lines read from file {} is {} elements.", sourceFileName2, set2.size());
 
         final List<String> result = new ArrayList<>();
+        result.add("***************************************************");
         result.add("1. ********************************");
-        result.add("INTERSECTION 1 and 2");
+        result.add("INTERSECTION: List 1 and List 2");
         result.addAll(mdUtils.getIntersection(set1, set2));
 
         result.add("2. ********************************");
-        result.add("DIFFERENCE in 1, not in 2");
+        result.add("DIFFERENCE: Elements from List 1, but not in List 2");
         result.addAll(mdUtils.getDifference(set1, set2));
 
         result.add("3. ********************************");
-        result.add("DIFFERENCE in 2 not in 1");
+        result.add("DIFFERENCE: Elements from List 2, but not in List 1");
         result.addAll(mdUtils.getDifference(set2, set1));
 
-        log.debug(String.format("Number of lines ready to write in the file [%s] is [%s] elements.", resultFileName, result.size()));
+        log.info("Number of lines ready to write in the file {} is {} elements.", resultFileName, result.size());
         mdUtils.writeInResourceFile(resultFileName, folderName, result);
     }
 }
