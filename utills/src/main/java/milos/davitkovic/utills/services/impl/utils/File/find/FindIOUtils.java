@@ -19,6 +19,8 @@ public interface FindIOUtils {
 
     List<Path> findFilesInWholeSystem(final String fileName, final String folderName) throws IOException;
 
+    Path findFile(final String fileName);
+
     Path findFileInSystem(final String fileName, final String folderName);
 
     Path findSpecificFilePathInSpecificFolder(String fileName, String folderName, Integer ordinalNumberOfItem) throws IOException;

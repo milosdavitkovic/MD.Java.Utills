@@ -6,7 +6,84 @@
 	},
 	"item": [
 		{
-			"name": "get productCodesComparing",
+			"name": "Impex Files",
+			"item": [
+				{
+					"name": "create UPDATE Impex",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/itemTypes/createUpdateImpex",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itemTypes",
+								"createUpdateImpex"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Logging",
+			"item": [
+				{
+					"name": "createCleanLogs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "inputFileName",
+									"value": "{{CLEAN_LOGS_INPUT_FILE}}",
+									"type": "text"
+								},
+								{
+									"key": "folderName",
+									"value": "{{CLEAN_LOGS_FOLDER}}",
+									"type": "text"
+								},
+								{
+									"key": "resultFileName",
+									"value": "{{CLEAN_LOGS_RESULT_FILE}}",
+									"type": "text"
+								},
+								{
+									"key": "keyMessage",
+									"value": "b2c.test.user@test.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/itemTypes/createCleanLogs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"itemTypes",
+								"createCleanLogs"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "productCodesComparing",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -40,26 +117,6 @@
 					"path": [
 						"itemTypes",
 						"uniqueIndexes"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create UPDATE Impex",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/itemTypes/createUpdateImpex",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"itemTypes",
-						"createUpdateImpex"
 					]
 				}
 			},
