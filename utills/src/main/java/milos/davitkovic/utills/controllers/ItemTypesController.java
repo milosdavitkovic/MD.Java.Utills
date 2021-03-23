@@ -46,7 +46,9 @@ public class ItemTypesController {
 //        final String header = "UPDATE NewsletterProspect;pk[unique=true];emailStatus(code)";
 //        final String header = "UPDATE PriceRow;pk[unique = true];basePriceUnit";
 //        final String header = "REMOVE NearestPointOfService; pk[unique = true]";
-        final String header = "UPDATE Product; pk[unique = true];deleted";
+//        final String header = "UPDATE Product; pk[unique = true];deleted";
+        final String header = "UPDATE Commission; pk[unique = true];deleted";
+//        final String header = "UPDATE ObjectNumber; pk[unique = true];deleted";
 //        final String header = "UPDATE ProductReference;pk[unique=true];active";
 //        final String header = "UPDATE NewsletterProspect;pk[unique=true];domain";
 //        final String additionalParameter = "at";

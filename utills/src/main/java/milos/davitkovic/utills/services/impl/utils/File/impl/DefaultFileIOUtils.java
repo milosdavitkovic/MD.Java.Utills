@@ -1079,6 +1079,11 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     @Override
     public void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
         final Path path = getOrCreateResourceFile(folderName, fileName);
+        if(path == null) {
+            log.error("Resource file {} in folder {} cannot be found!", fileName, folderName);
+            return;
+        }
+
         log.debug("Resource File for writing, path: " + path.toAbsolutePath());
         writeInFile(path, inputText);
     }
