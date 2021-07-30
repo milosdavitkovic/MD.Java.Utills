@@ -15,16 +15,16 @@ import java.util.List;
 @Facade
 public class DefaultLogsFacade implements LogsFacade {
 
-    public static final String DAIMLER_DCP_PACKAGE = "com.daimler.dcp";
     @Autowired
     private LogsService logsService;
 
     @Override
-    public ErrorLogsDTO getErrorLogs(String sourceFileName, String folderName, String resultFileName) {
+    public ErrorLogsDTO getErrorLogs(final String sourceFileName, final String folderName, final String resultFileName, final String packageName) {
         final List<String> errorLogsPath = logsService.getErrorLogsLines(folderName, sourceFileName);
-        final ErrorLogsDTO errorLog = getErrorLog(errorLogsPath, DAIMLER_DCP_PACKAGE);
+        final ErrorLogsDTO errorLog = getErrorLog(errorLogsPath, packageName);
 
         final List<String> logsFileContent = getLogFileContent(errorLog);
+        errorLog.setErrorLogsLines(logsFileContent);
         logsService.writeErrorLogsInFile(folderName, resultFileName, logsFileContent);
 
         return errorLog;

@@ -7,4 +7,6 @@ import java.util.List;
 @Data
 public class ErrorLogsDTO {
     private List<ErrorLogDTO> errorLogsDTO;
+
+    private List<String> errorLogsLines;
 }

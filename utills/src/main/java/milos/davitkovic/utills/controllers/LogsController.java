@@ -21,6 +21,7 @@ public class LogsController {
         final String inputFileName = "InputLogs.txt";
         final String folderName = "files/logs";
         final String resultFileName = "LogsRoute.txt";
-        return logsFacade.getErrorLogs(inputFileName, folderName, resultFileName);
+        final String DAIMLER_DCP_PACKAGE = "com.daimler.dcp";
+        return logsFacade.getErrorLogs(inputFileName, folderName, resultFileName, DAIMLER_DCP_PACKAGE);
     }
 }
