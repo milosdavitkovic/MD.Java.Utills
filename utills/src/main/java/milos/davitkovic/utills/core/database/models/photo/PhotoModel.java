@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
-@Entity
+//@Entity
 @Data
 public class PhotoModel implements Serializable {
 
