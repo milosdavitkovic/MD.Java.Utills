@@ -12,5 +12,7 @@ public interface LogsService {
 
     List<String> getErrorLogsLines(final String folderName, final String sourceFileName);
 
-    void writeErrorLogsInFile(final String folderName, final String resultFileName, final List<String> content);
+    void writeErrorLogsInFile(final String resultFileName, final List<String> content);
+
+    String getErrorLineFromProjectFile(final String fileName, final int lineNumber);
 }

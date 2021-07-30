@@ -8,5 +8,6 @@ public class ErrorLogDTO {
     private String className;
     private String method;
     private Integer lineNumber;
+    private String errorLine;
     private String packagePath;
 }

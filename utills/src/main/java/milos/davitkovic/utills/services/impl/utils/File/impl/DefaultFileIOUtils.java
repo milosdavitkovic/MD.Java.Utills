@@ -46,8 +46,9 @@ import static java.nio.file.StandardOpenOption.CREATE;
 @UtilClass
 public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUtils, WriteIOUtils, FileIOUtils {
 
-    private static final int DEFAULT_MAX_DEPTH = 30;
+    private static final int DEFAULT_MAX_DEPTH = 50;
     private static final Path START_PATH = Paths.get(StringUtils.EMPTY);
+    // /Users/milosdavitkovic/MEGAsync/Programming/davitko/projects/utils/milos.davitkovic.utills/utills/src/main/java/milos/davitkovic/utills/services/logs/impl/DefaultLogsService.java
 
     /**
      * @return
@@ -105,6 +106,14 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
         return stream
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Path findFileInWholeSystem(String fileName) throws IOException {
+        final Stream<Path> stream = Files.find(START_PATH, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+        return stream.findFirst().orElse(null);
+
+//        return Paths.get(fileName);
     }
 
     @Override
@@ -1059,9 +1068,7 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
         }
         try {
              if(Files.isReadable(filePath)) {
-                 return Files.readAllLines(filePath);
-             } else {
-                 Collections.emptyList();
+                 return new ArrayList<>(CollectionUtils.emptyIfNull(Files.readAllLines(filePath)));
              }
         } catch (IOException ex) {
             log.error("ERROR-READ-FILE, File {}. IOException {}.", filePath.toString(), ex.getMessage());

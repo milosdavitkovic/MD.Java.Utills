@@ -25,7 +25,7 @@ public class DefaultLogsFacade implements LogsFacade {
 
         final List<String> logsFileContent = getLogFileContent(errorLog);
         errorLog.setErrorLogsLines(logsFileContent);
-        logsService.writeErrorLogsInFile(folderName, resultFileName, logsFileContent);
+        logsService.writeErrorLogsInFile(resultFileName, logsFileContent);
 
         return errorLog;
     }
@@ -45,6 +45,7 @@ public class DefaultLogsFacade implements LogsFacade {
 
                 final boolean errorLogValid = isErrorLogValid(errorLog);
                 if (errorLogValid) {
+                    setErrorLine(errorLog);
                     result.add(errorLog);
                 }
             }
@@ -54,30 +55,50 @@ public class DefaultLogsFacade implements LogsFacade {
         return errorLogs;
     }
 
+    private void setErrorLine(ErrorLogDTO errorLog) {
+        final String className = errorLog.getClassName();
+        final Integer lineNumber = errorLog.getLineNumber();
+        final String errorLineFromProjectFile = logsService.getErrorLineFromProjectFile(className, lineNumber - 1);
+        final String cleanErrorLineFromProjectFile = StringUtils.remove(errorLineFromProjectFile, "\t");
+        errorLog.setErrorLine(cleanErrorLineFromProjectFile);
+    }
+
     private ErrorLogDTO getErrorLog(String line) {
         final ErrorLogDTO errorLog = new ErrorLogDTO();
 
         final String lineWithoutAt = StringUtils.remove(line, "at ");
         final String[] divideLinWithOpenBrackets = StringUtils.split(lineWithoutAt, "(");
-        if (divideLinWithOpenBrackets != null && divideLinWithOpenBrackets.length == 2) {
+        if (divideLinWithOpenBrackets != null && divideLinWithOpenBrackets.length > 1) {
 
             final String classPathMethod = divideLinWithOpenBrackets[0];
             final String[] classPathMethodArray = StringUtils.split(classPathMethod, ".");
             final String method = classPathMethodArray[classPathMethodArray.length - 1];
             errorLog.setMethod(method);
 
-            final String packagePath = StringUtils.remove(classPathMethod, "." + method);
-            final String cleanPackagePath = StringUtils.remove(packagePath, "\t");
-            errorLog.setPackagePath(cleanPackagePath);
+            setPackagePath(errorLog, classPathMethod, method);
         }
 
-        final String classNameLineNumber = StringUtils.remove(divideLinWithOpenBrackets[1], ")");
+        setClassNameLineNumber(errorLog, divideLinWithOpenBrackets[1]);
+        return errorLog;
+    }
+
+    private void setClassNameLineNumber(ErrorLogDTO errorLog, String divideLinWithOpenBracket) {
+        if (StringUtils.isEmpty(divideLinWithOpenBracket)) {
+            return;
+        }
+
+        final String classNameLineNumber = StringUtils.remove(divideLinWithOpenBracket, ")");
         final String[] classNameLineNumberArray = StringUtils.split(classNameLineNumber, ":");
-        if (classNameLineNumberArray != null && classNameLineNumberArray.length == 2) {
+        if (classNameLineNumberArray != null && classNameLineNumberArray.length > 1) {
             errorLog.setClassName(classNameLineNumberArray[0]);
             errorLog.setLineNumber(Integer.valueOf(classNameLineNumberArray[1]));
         }
-        return errorLog;
+    }
+
+    private void setPackagePath(ErrorLogDTO errorLog, String classPathMethod, String method) {
+        final String packagePath = StringUtils.remove(classPathMethod, "." + method);
+        final String cleanPackagePath = StringUtils.remove(packagePath, "\t");
+        errorLog.setPackagePath(cleanPackagePath);
     }
 
     private boolean isErrorLogValid(final ErrorLogDTO errorLogDTO) {
