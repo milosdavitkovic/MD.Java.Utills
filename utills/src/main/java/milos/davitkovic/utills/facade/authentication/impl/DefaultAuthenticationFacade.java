@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.Facade;
 import milos.davitkovic.utills.facade.authentication.AuthenticationFacade;
 import milos.davitkovic.utills.facade.dto.AuthenticationDTO;
+import milos.davitkovic.utills.facade.dto.UserDTO;
 import milos.davitkovic.utills.services.authentication.AuthenticationService;
 import milos.davitkovic.utills.services.crypto.TweetNaclFast;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class DefaultAuthenticationFacade implements AuthenticationFacade
 
       log.info("New Private key is {} and New Public key is {}.", opoPrivateKey, opoPublicKey);
       return authenticationDTO;
+   }
+
+   @Override
+   public boolean isAuthorized(String userEmail) {
+      return false;
    }
 }

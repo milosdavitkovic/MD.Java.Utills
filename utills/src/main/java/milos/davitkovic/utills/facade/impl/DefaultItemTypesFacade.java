@@ -8,6 +8,7 @@ import milos.davitkovic.utills.services.impex.ImpexFilesCreationService;
 import milos.davitkovic.utills.services.ProductCodesComparingService;
 import milos.davitkovic.utills.services.UniqueIndexesService;
 import milos.davitkovic.utills.services.logs.LogsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;

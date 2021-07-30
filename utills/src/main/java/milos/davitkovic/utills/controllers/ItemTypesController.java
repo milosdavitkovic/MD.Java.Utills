@@ -1,12 +1,12 @@
 package milos.davitkovic.utills.controllers;
 
 import milos.davitkovic.utills.facade.ItemTypesFacade;
-import org.apache.commons.lang3.StringUtils;
+import milos.davitkovic.utills.facade.authentication.AuthenticationFacade;
+import milos.davitkovic.utills.facade.dto.UserDTO;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.AuthorizationServiceException;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -47,14 +47,15 @@ public class ItemTypesController {
 //        final String header = "UPDATE PriceRow;pk[unique = true];basePriceUnit";
 //        final String header = "REMOVE NearestPointOfService; pk[unique = true]";
 //        final String header = "UPDATE Product; pk[unique = true];deleted";
-        final String header = "UPDATE Commission; pk[unique = true];deleted";
+//        final String header = "UPDATE Commission; pk[unique = true];deleted";
 //        final String header = "UPDATE ObjectNumber; pk[unique = true];deleted";
+        final String header = "UPDATE AbstractIdentifier; pk[unique = true];deleted";
 //        final String header = "UPDATE ProductReference;pk[unique=true];active";
 //        final String header = "UPDATE NewsletterProspect;pk[unique=true];domain";
 //        final String additionalParameter = "at";
 //        final String additionalParameter = "SENT_OK";
 //        final String additionalParameter = "kg";
-        final String additionalParameter = "true";
+        final String additionalParameter = "false";
         itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header, additionalParameter);
     }
 
