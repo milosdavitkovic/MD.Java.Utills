@@ -21,8 +21,6 @@ import java.util.List;
 @Slf4j
 public class DefaultLogsService implements LogsService {
 
-    private static final String DAIMLER_DCP_PACKAGE = "com.daimler.dcp";
-
     @Autowired
     private FindIOUtils findUtils;
     @Autowired
@@ -62,7 +60,7 @@ public class DefaultLogsService implements LogsService {
             }
 
             final List<String> systemLogs = readIOUtils.readFile(sourceFilePath);
-            if(CollectionUtils.isEmpty(systemLogs)) {
+            if (CollectionUtils.isEmpty(systemLogs)) {
                 return new ArrayList<>();
             }
 
@@ -79,7 +77,7 @@ public class DefaultLogsService implements LogsService {
     public void writeErrorLogsInFile(final String resultFileName, final List<String> content) {
         try {
             final Path resultFilePath = findUtils.findFilesInWholeSystem(resultFileName).stream().findFirst().orElse(null);
-            if(resultFilePath == null) {
+            if (resultFilePath == null) {
                 log.warn("ERROR-LOGS-FILE, File {} is not found.", resultFileName);
                 return;
             }
@@ -91,18 +89,17 @@ public class DefaultLogsService implements LogsService {
         }
     }
 
-    //     // /Users/milosdavitkovic/MEGAsync/Programming/davitko/projects/mbio/hybris/dcp/dcp-core/dcp-platform/dcpfacades/src/com/daimler/dcp/facades/pointofservice/populator/DcpPointOfServicePopulator.java
     @Override
-    public String getErrorLineFromProjectFile(final String sourceFileName, final int lineNumber) {
+    public String getErrorLineFromProjectFile(final String sourceFileName, final int lineNumber, final String projectPath) {
         try {
-            final Path sourceFilePath = findUtils.findFilesInWholeSystem(sourceFileName, "/Users/milosdavitkovic/MEGAsync/Programming/davitko/projects/mbio/hybris").stream().findFirst().orElse(null);
+            final Path sourceFilePath = findUtils.findFilesInWholeSystem(sourceFileName, projectPath).stream().findFirst().orElse(null);
             if (sourceFilePath == null) {
                 log.warn("FIND-CODE-BASE-FILE, File {} cannot be found in system.", sourceFileName);
                 return StringUtils.EMPTY;
             }
 
             final List<String> codeLines = readIOUtils.readFile(sourceFilePath);
-            if(CollectionUtils.isEmpty(codeLines)) {
+            if (CollectionUtils.isEmpty(codeLines)) {
                 log.warn("GET-CODE-LINE-FROM-FILE, File {} is empty.", sourceFileName);
                 return StringUtils.EMPTY;
             }

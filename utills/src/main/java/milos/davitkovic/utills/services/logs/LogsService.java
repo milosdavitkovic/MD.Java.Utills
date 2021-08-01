@@ -2,7 +2,6 @@ package milos.davitkovic.utills.services.logs;
 
 import milos.davitkovic.utills.annotations.Interface;
 
-import java.io.IOException;
 import java.util.List;
 
 @Interface
@@ -14,5 +13,5 @@ public interface LogsService {
 
     void writeErrorLogsInFile(final String resultFileName, final List<String> content);
 
-    String getErrorLineFromProjectFile(final String fileName, final int lineNumber);
+    String getErrorLineFromProjectFile(String fileName, int lineNumber, String projectPath);
 }

@@ -6,5 +6,5 @@ import milos.davitkovic.utills.facade.dto.ErrorLogsDTO;
 @Interface
 public interface LogsFacade {
 
-    ErrorLogsDTO getErrorLogs(String inputFileName, String folderName, String resultFileName, String packageName);
+    ErrorLogsDTO getErrorLogs(String inputFileName, String folderName, String resultFileName, String packageName, String projectPath);
 }

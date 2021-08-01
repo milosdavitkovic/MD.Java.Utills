@@ -19,9 +19,9 @@ public class DefaultLogsFacade implements LogsFacade {
     private LogsService logsService;
 
     @Override
-    public ErrorLogsDTO getErrorLogs(final String sourceFileName, final String folderName, final String resultFileName, final String packageName) {
+    public ErrorLogsDTO getErrorLogs(final String sourceFileName, final String folderName, final String resultFileName, final String packageName, final String projectPath) {
         final List<String> errorLogsPath = logsService.getErrorLogsLines(folderName, sourceFileName);
-        final ErrorLogsDTO errorLog = getErrorLog(errorLogsPath, packageName);
+        final ErrorLogsDTO errorLog = getErrorLog(errorLogsPath, packageName, projectPath);
 
         final List<String> logsFileContent = getLogFileContent(errorLog);
         errorLog.setErrorLogsLines(logsFileContent);
@@ -30,7 +30,7 @@ public class DefaultLogsFacade implements LogsFacade {
         return errorLog;
     }
 
-    public ErrorLogsDTO getErrorLog(final List<String> errorLogsLines, final String packageName) {
+    public ErrorLogsDTO getErrorLog(final List<String> errorLogsLines, final String packageName, String projectPath) {
         final ErrorLogsDTO errorLogs = new ErrorLogsDTO();
 
         if (CollectionUtils.isEmpty(errorLogsLines)) {
@@ -45,7 +45,7 @@ public class DefaultLogsFacade implements LogsFacade {
 
                 final boolean errorLogValid = isErrorLogValid(errorLog);
                 if (errorLogValid) {
-                    setErrorLine(errorLog);
+                    setErrorLine(errorLog, projectPath);
                     result.add(errorLog);
                 }
             }
@@ -55,12 +55,30 @@ public class DefaultLogsFacade implements LogsFacade {
         return errorLogs;
     }
 
-    private void setErrorLine(ErrorLogDTO errorLog) {
+    private void setErrorLine(ErrorLogDTO errorLog, String projectPath) {
         final String className = errorLog.getClassName();
         final Integer lineNumber = errorLog.getLineNumber();
-        final String errorLineFromProjectFile = logsService.getErrorLineFromProjectFile(className, lineNumber - 1);
-        final String cleanErrorLineFromProjectFile = StringUtils.remove(errorLineFromProjectFile, "\t");
-        errorLog.setErrorLine(cleanErrorLineFromProjectFile);
+
+        final String errorLine = getErrorLine(className, lineNumber, projectPath);
+        errorLog.setErrorLine(errorLine);
+    }
+
+    private String getErrorLine(final String className, final Integer lineNumber, String projectPath) {
+        final StringBuilder errorLine = new StringBuilder();
+
+        final int readLineNumber = lineNumber - 1;
+        for (int i = readLineNumber; i < readLineNumber + 3; i++) {
+            final String errorLineFromProjectFile = logsService.getErrorLineFromProjectFile(className, i, projectPath);
+
+            final String cleanErrorLineFromProjectFile = StringUtils.remove(errorLineFromProjectFile, "\t");
+            errorLine.append(cleanErrorLineFromProjectFile).append(StringUtils.EMPTY);
+
+            if (cleanErrorLineFromProjectFile.contains(";")) {
+                return errorLine.toString();
+            }
+        }
+
+        return errorLine.toString();
     }
 
     private ErrorLogDTO getErrorLog(String line) {
