@@ -15,6 +15,13 @@ import java.util.List;
 @Facade
 public class DefaultLogsFacade implements LogsFacade {
 
+    private static final String TAB_SIGN = "\t";
+    private static final String SEMICOLON_SIGN = ";";
+    private static final String CLOSE_BRACKET_SIGN = "(";
+    private static final String DOT_SIGN = ".";
+    private static final String CLASS_PREFIX = "Dcp";
+    private static final String JAVA_CLASS = ".java";
+
     @Autowired
     private LogsService logsService;
 
@@ -70,10 +77,10 @@ public class DefaultLogsFacade implements LogsFacade {
         for (int i = readLineNumber; i < readLineNumber + 3; i++) {
             final String errorLineFromProjectFile = logsService.getErrorLineFromProjectFile(className, i, projectPath);
 
-            final String cleanErrorLineFromProjectFile = StringUtils.remove(errorLineFromProjectFile, "\t");
+            final String cleanErrorLineFromProjectFile = StringUtils.remove(errorLineFromProjectFile, TAB_SIGN);
             errorLine.append(cleanErrorLineFromProjectFile).append(StringUtils.EMPTY);
 
-            if (cleanErrorLineFromProjectFile.contains(";")) {
+            if (cleanErrorLineFromProjectFile.contains(SEMICOLON_SIGN)) {
                 return errorLine.toString();
             }
         }
@@ -85,11 +92,11 @@ public class DefaultLogsFacade implements LogsFacade {
         final ErrorLogDTO errorLog = new ErrorLogDTO();
 
         final String lineWithoutAt = StringUtils.remove(line, "at ");
-        final String[] divideLinWithOpenBrackets = StringUtils.split(lineWithoutAt, "(");
+        final String[] divideLinWithOpenBrackets = StringUtils.split(lineWithoutAt, CLOSE_BRACKET_SIGN);
         if (divideLinWithOpenBrackets != null && divideLinWithOpenBrackets.length > 1) {
 
             final String classPathMethod = divideLinWithOpenBrackets[0];
-            final String[] classPathMethodArray = StringUtils.split(classPathMethod, ".");
+            final String[] classPathMethodArray = StringUtils.split(classPathMethod, DOT_SIGN);
             final String method = classPathMethodArray[classPathMethodArray.length - 1];
             errorLog.setMethod(method);
 
@@ -114,14 +121,14 @@ public class DefaultLogsFacade implements LogsFacade {
     }
 
     private void setPackagePath(ErrorLogDTO errorLog, String classPathMethod, String method) {
-        final String packagePath = StringUtils.remove(classPathMethod, "." + method);
-        final String cleanPackagePath = StringUtils.remove(packagePath, "\t");
+        final String packagePath = StringUtils.remove(classPathMethod, DOT_SIGN + method);
+        final String cleanPackagePath = StringUtils.remove(packagePath, TAB_SIGN);
         errorLog.setPackagePath(cleanPackagePath);
     }
 
     private boolean isErrorLogValid(final ErrorLogDTO errorLogDTO) {
         final String className = errorLogDTO.getClassName();
-        if (StringUtils.isEmpty(className) || !className.contains("Dcp")) {
+        if (StringUtils.isEmpty(className) || !className.contains(CLASS_PREFIX)) {
             return false;
         }
 
@@ -154,10 +161,10 @@ public class DefaultLogsFacade implements LogsFacade {
             final StringBuilder stringBuilder = new StringBuilder();
 
             final String className = errorLog.getClassName();
-            final String cleanClassName = StringUtils.remove(className, ".java");
+            final String cleanClassName = StringUtils.remove(className, JAVA_CLASS);
             stringBuilder.append(cleanClassName);
 
-            stringBuilder.append(".");
+            stringBuilder.append(DOT_SIGN);
             final String method = errorLog.getMethod();
             stringBuilder.append(method);
 
