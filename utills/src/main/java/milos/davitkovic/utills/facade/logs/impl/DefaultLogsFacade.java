@@ -1,5 +1,6 @@
 package milos.davitkovic.utills.facade.logs.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.Facade;
 import milos.davitkovic.utills.facade.dto.ErrorLogDTO;
 import milos.davitkovic.utills.facade.dto.ErrorLogsDTO;
@@ -7,11 +8,13 @@ import milos.davitkovic.utills.facade.logs.LogsFacade;
 import milos.davitkovic.utills.services.logs.LogsService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Facade
 public class DefaultLogsFacade implements LogsFacade {
 
@@ -21,6 +24,10 @@ public class DefaultLogsFacade implements LogsFacade {
     private static final String DOT_SIGN = ".";
     private static final String CLASS_PREFIX = "Dcp";
     private static final String JAVA_CLASS = ".java";
+    public static final String AT_STRING = "at ";
+    public static final String REGEX_ONLY_NUMBERS = "[^0-9]";
+    public static final String INVOKE = "invoke";
+    public static final String DO_FILTER = "doFilter";
 
     @Autowired
     private LogsService logsService;
@@ -37,7 +44,12 @@ public class DefaultLogsFacade implements LogsFacade {
         return errorLog;
     }
 
-    public ErrorLogsDTO getErrorLog(final List<String> errorLogsLines, final String packageName, String projectPath) {
+    @Override
+    public String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName) {
+        return logsService.getXmlErrors(xmlFileName, xsdFileName, folderName, resultFileName);
+    }
+
+    private ErrorLogsDTO getErrorLog(final List<String> errorLogsLines, final String packageName, String projectPath) {
         final ErrorLogsDTO errorLogs = new ErrorLogsDTO();
 
         if (CollectionUtils.isEmpty(errorLogsLines)) {
@@ -50,7 +62,7 @@ public class DefaultLogsFacade implements LogsFacade {
             if (line.contains(packageName)) {
                 final ErrorLogDTO errorLog = getErrorLog(line);
 
-                final boolean errorLogValid = isErrorLogValid(errorLog);
+                final boolean errorLogValid = isErrorLogValid(errorLog, result);
                 if (errorLogValid) {
                     setErrorLine(errorLog, projectPath);
                     result.add(errorLog);
@@ -88,10 +100,10 @@ public class DefaultLogsFacade implements LogsFacade {
         return errorLine.toString();
     }
 
-    private ErrorLogDTO getErrorLog(String line) {
+    private ErrorLogDTO getErrorLog(final String line) {
         final ErrorLogDTO errorLog = new ErrorLogDTO();
 
-        final String lineWithoutAt = StringUtils.remove(line, "at ");
+        final String lineWithoutAt = StringUtils.remove(line, AT_STRING);
         final String[] divideLinWithOpenBrackets = StringUtils.split(lineWithoutAt, CLOSE_BRACKET_SIGN);
         if (divideLinWithOpenBrackets != null && divideLinWithOpenBrackets.length > 1) {
 
@@ -101,9 +113,10 @@ public class DefaultLogsFacade implements LogsFacade {
             errorLog.setMethod(method);
 
             setPackagePath(errorLog, classPathMethod, method);
+
+            setClassNameLineNumber(errorLog, divideLinWithOpenBrackets[1]);
         }
 
-        setClassNameLineNumber(errorLog, divideLinWithOpenBrackets[1]);
         return errorLog;
     }
 
@@ -116,7 +129,17 @@ public class DefaultLogsFacade implements LogsFacade {
         final String[] classNameLineNumberArray = StringUtils.split(classNameLineNumber, ":");
         if (classNameLineNumberArray != null && classNameLineNumberArray.length > 1) {
             errorLog.setClassName(classNameLineNumberArray[0]);
-            errorLog.setLineNumber(Integer.valueOf(classNameLineNumberArray[1]));
+            setLineNumber(errorLog, classNameLineNumberArray[1]);
+        }
+    }
+
+    private void setLineNumber(ErrorLogDTO errorLog, String lineNumberInputString) {
+        try {
+            final String cleanLineNumber = lineNumberInputString.replaceAll(REGEX_ONLY_NUMBERS, StringUtils.EMPTY);
+            final Integer lineNum = NumberUtils.createInteger(cleanLineNumber);
+            errorLog.setLineNumber(lineNum);
+        } catch (NumberFormatException exception) {
+            log.error("NumberFormatException for the String {}", lineNumberInputString);
         }
     }
 
@@ -126,23 +149,47 @@ public class DefaultLogsFacade implements LogsFacade {
         errorLog.setPackagePath(cleanPackagePath);
     }
 
-    private boolean isErrorLogValid(final ErrorLogDTO errorLogDTO) {
-        final String className = errorLogDTO.getClassName();
+    private boolean isErrorLogValid(final ErrorLogDTO errorLog, final List<ErrorLogDTO> errorLogs) {
+        final String className = errorLog.getClassName();
         if (StringUtils.isEmpty(className) || !className.contains(CLASS_PREFIX)) {
             return false;
         }
 
-        final String packagePath = errorLogDTO.getPackagePath();
+        final String packagePath = errorLog.getPackagePath();
         if (StringUtils.isEmpty(packagePath) || packagePath.contains("$$")) {
             return false;
         }
 
-        final String method = errorLogDTO.getMethod();
-        if (StringUtils.isEmpty(method) || method.equals("invoke") || method.contains("doFilter")) {
+        final String method = errorLog.getMethod();
+        if (StringUtils.isEmpty(method) || method.equals(INVOKE) || method.contains(DO_FILTER)) {
+            return false;
+        }
+
+        final boolean duplicatedErrorLog = isDuplicatedErrorLog(errorLog, errorLogs);
+        if(duplicatedErrorLog) {
             return false;
         }
 
         return true;
+    }
+
+    private boolean isDuplicatedErrorLog(final ErrorLogDTO errorLog, final List<ErrorLogDTO> errorLogs) {
+        if(CollectionUtils.isEmpty(errorLogs) || errorLog == null) {
+            return false;
+        }
+
+        for(ErrorLogDTO logs : errorLogs) {
+            final String className = errorLog.getClassName();
+            final Integer lineNumber = errorLog.getLineNumber();
+
+            final String logClassName = logs.getClassName();
+            final Integer logLineNumber = logs.getLineNumber();
+            if(StringUtils.equalsIgnoreCase(className, logClassName) && lineNumber.equals(logLineNumber)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private List<String> getLogFileContent(final ErrorLogsDTO errorLogDTO) {

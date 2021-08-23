@@ -1,0 +1,879 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.mercedes-benz.io/commerce/order/v4" targetNamespace="http://www.mercedes-benz.io/commerce/order/v4"
+	elementFormDefault="qualified" version="4.2">
+
+	<!-- The root elements -->
+	<xsd:element name="partial-order" type="PartialOrderType" />
+
+	<!-- partial-order -->
+	<xsd:complexType name="PartialOrderType">
+		<xsd:sequence>
+			<xsd:element name="dcp-partial-order-id" type="DcpPartialOrderIDType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="header" type="PartialOrderHeaderType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="order-lines" type="OrderLinesType"
+				minOccurs="1" maxOccurs="unbounded" />
+			<xsd:element name="shipment-lines" type="ShipmentLinesType"
+				minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="payments" type="PaymentsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="total-gross-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="extensions" type="ExtensionsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="dcp-master-order-id" type="DcpMasterOrderIDType"
+				minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute name="version" type="SemanticalVersionType" />
+	</xsd:complexType>
+
+	<xsd:complexType name="PartialOrderHeaderType">
+		<xsd:sequence>
+			<xsd:element name="status" type="OrderStatusType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="order-date" type="xsd:dateTime"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="language-code" type="LanguageCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="country-code" type="CountryCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="invoice-number" type="String20Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="dms-number" type="String20Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="document-type" type="DocumentTypeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="genesis-entity-id" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="seller-company-id" type="SellerCompanyIdType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="is-guest-order" type="xsd:boolean"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="customer" type="CustomerType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="billing-address" type="AddressType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="different-delivery-address" type="xsd:boolean"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="delivery-address" type="AddressType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="pick-up-outlet-id" type="String10Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payment-status" type="PaymentStatusType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="payment-mode" type="PaymentModeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="VehicleContextType">
+		<xsd:sequence>
+			<xsd:element name="vin" type="VINType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="licence-plate" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="registration-country" type="CountryCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CustomerType">
+		<xsd:sequence>
+			<xsd:element name="ciam-id" type="CIAMIdType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="uc-id" type="UCIdType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="customer-price-group" type="CustomerPriceGroupType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="dcp-customer-code" type="DcpCustomerCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="AddressType">
+		<xsd:sequence>
+			<xsd:element name="salutation" type="String20Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="first-name" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="second-name" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="last-name" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="date-of-birth" type="xsd:date"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="street" type="String64Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="address-line1" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="address-line2" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="address-line3" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="house-number" type="String20Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="phone" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="company-name" type="String255Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="legal-form" type="String255Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="vat-number" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="email" type="EmailAddressType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="city" type="String100Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="postal-code" type="String20Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="country-code" type="CountryCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="OrderLinesType">
+		<xsd:sequence>
+			<xsd:element name="order-line" type="OrderLineType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="OrderLineType">
+		<xsd:sequence>
+			<xsd:element name="order-line-id" type="String255Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="product-type" type="ProductTypeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="prices" type="PricesType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="quantity" type="QuantityType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="article-number" type="String255Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="shipment-id" type="ShipmentIdType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="extensions" type="ExtensionsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="vehicle-context" type="VehicleContextType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="article-name" type="String255Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="QuantityType">
+		<xsd:sequence>
+			<xsd:element name="unit" type="String10Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="count" type="xsd:integer" minOccurs="1"
+				maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PriceAdjustmentType">
+		<xsd:sequence>
+			<xsd:element name="adjustment-gross" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="adjustment-net" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="promotion-reference" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="coupon-reference" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="discount-percent" type="Integer2Type"
+				minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PricesType">
+		<xsd:sequence>
+			<xsd:element name="pricing-date" type="xsd:dateTime"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tax-rate" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tax-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="total-net-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="total-gross-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="unit-net-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="unit-gross-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="price-adjustment" type="PriceAdjustmentType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="currency" type="CurrencyCodeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CustomFieldsType">
+		<xsd:sequence>
+			<xsd:element name="custom-field" type="CustomFieldType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CustomFieldType">
+		<xsd:attribute name="fieldname">
+			<xsd:annotation>
+				<xsd:documentation>The name of the custom field.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="fieldvalue">
+			<xsd:annotation>
+				<xsd:documentation>The value of the custom field.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="PaymentsType">
+		<xsd:sequence>
+			<xsd:element name="payment" type="PaymentType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PaymentType">
+		<xsd:sequence>
+			<xsd:choice minOccurs="0">
+				<xsd:element name="credit-card-information" type="CreditCardPaymentType" />
+				<xsd:element name="paypal-information" type="PaypalPaymentType" />
+				<xsd:element name="finance-service-information" type="FinanceServicePaymentType" />
+			</xsd:choice>
+			<xsd:element name="merchant-id" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payment-date" type="xsd:dateTime"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payment-id" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="isPrepayment" type="xsd:boolean"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payment-processor" type="String50Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payment-method" type="PaymentMethodType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="NotesType">
+		<xsd:sequence>
+			<xsd:element name="note" type="NoteType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="NoteType">
+		<xsd:sequence>
+			<xsd:element name="created-by" type="String50Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="creation-date" type="xsd:dateTime"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="subject" type="String100Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="text" type="String256Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CreditCardPaymentType">
+		<xsd:sequence>
+			<xsd:element name="card-type" type="String20Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="masked-card-number" type="String25Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="card-holder" type="String50Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="card-token" type="String128Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="expiration-month" type="Integer2Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="expiration-year" type="Integer4Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="transaction-id" type="String50Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="transaction-type" type="TransactionTypeType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PaypalPaymentType">
+		<xsd:sequence>
+			<xsd:element name="transaction-id" type="String50Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="transaction-type" type="String50Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="payer-id" type="String100Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FinanceServicePaymentType">
+		<xsd:sequence>
+			<xsd:element name="application-id" type="String40Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="product-type" type="String40Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="application-status" type="String40Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="application-aggregation-status" type="ApplicationAggregationStatusType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="application-status-note" type="String1000Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="application-status-date" type="xsd:dateTime"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="finance-code" type="String40Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ShipmentLinesType">
+		<xsd:sequence>
+			<xsd:element name="shipment" type="ShipmentLineType"
+				minOccurs="1" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ShipmentLineType">
+		<xsd:sequence>
+			<xsd:element name="shipment-id" type="ShipmentIdType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="shipment-status" type="ShipmentStatusType"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:element name="shipment-carrier" type="String64Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tracking-reference" type="String100Type"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="currency" type="CurrencyCodeType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="total-net-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="total-gross-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tax-rate" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="tax-amount" type="MonetaryAmountType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="custom-fields" type="CustomFieldsType"
+				minOccurs="0" maxOccurs="1" />
+			<xsd:element name="shipment-method" type="String20Type"
+				minOccurs="1" maxOccurs="1" />
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##targetNamespace"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Extension points. -->
+	<xsd:complexType name="ExtensionsType">
+		<xsd:annotation>
+			<xsd:documentation>Allows the extension of an element with structures
+				specific for service initiatives.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="1" processContents="lax"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Simple types. -->
+	<xsd:simpleType name="SemanticalVersionType">
+		<xsd:restriction base="xsd:token">
+			<xsd:pattern value="[0-9]{1,}\.[0-9]{1,}\.[0-9]{1,}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="VINType">
+		<xsd:annotation>
+			<xsd:documentation>Defines VIN.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CustomerPriceGroupType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the price group of the customer.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="EK" />
+			<xsd:enumeration value="GEW" />
+			<xsd:enumeration value="MBA" />
+			<xsd:enumeration value="DAG" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PaymentStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the payment status
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PAID" />
+			<xsd:enumeration value="UNKNOWN" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PaymentModeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the payment mode.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ONLINE" />
+			<xsd:enumeration value="OFFLINE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DcpMasterOrderIDType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a unique order id as known in hybris
+				(DCP).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="22" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DcpPartialOrderIDType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a unique partial order id as known in
+				hybris (DCP).
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="22" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="SellerCompanyIdType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the company id of the seller.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DocumentTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the type of document.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CN">
+				<xsd:annotation>
+					<xsd:documentation>Stands for CreditNote.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CA">
+				<xsd:annotation>
+					<xsd:documentation>Stands for Cancellation</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CB">
+				<xsd:annotation>
+					<xsd:documentation>Stands for CashBack.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="SO">
+				<xsd:annotation>
+					<xsd:documentation>Stands for SalesOrder.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="DcpCustomerCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Code from Hybris (DCP) which uniquely identifies a
+				customer.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string"></xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CIAMIdType">
+		<xsd:annotation>
+			<xsd:documentation>CIAM code of the customer.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="16" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="UCIdType">
+		<xsd:annotation>
+			<xsd:documentation>UCID of the customer.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="19" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ShipmentIdType">
+		<xsd:annotation>
+			<xsd:documentation>Uniquely identifies a Shipment.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="64" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="EmailAddressType">
+		<xsd:annotation>
+			<xsd:documentation>Defines an email address.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[^@]+@[^\.]+\..+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ProductTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the type of product ordered.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CONNECT-SERVICE" />
+			<xsd:enumeration value="VANS-CONNECT-SERVICE" />
+			<xsd:enumeration value="USED-CAR" />
+			<xsd:enumeration value="NEW-CAR" />
+			<xsd:enumeration value="COLLECTION" />
+			<xsd:enumeration value="VEHICLE-ACCESSORY" />
+			<xsd:enumeration value="DRIVING-EVENT" />
+			<xsd:enumeration value="WARRANTY_PACK" />
+			<xsd:enumeration value="QUOTE_ADDITIONAL_SERVICE" />
+			<xsd:enumeration value="TYRE" />
+			<xsd:enumeration value="SMART_DEVICE" />
+			<xsd:enumeration value="PAYMENT-REQUEST" />
+			<xsd:enumeration value="SERVICE_CONTRACT" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ShipmentStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the shipment status of an order.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="NOT_SHIPED" />
+			<xsd:enumeration value="PART_SHIPED" />
+			<xsd:enumeration value="SHIPED" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OrderStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the status values an order can go
+				through.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CREATED" />
+			<xsd:enumeration value="CANCELLED" />
+			<xsd:enumeration value="COMPLETED" />
+			<xsd:enumeration value="UPDATED" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CountryCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a CountryCode. For example DE or AT. Can
+				sometimes be 5 letters long in specific contexts.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="2" />
+			<xsd:maxLength value="5" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LanguageCodeType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Defines a LanguageCode. For example DE or DE_DE.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="2" />
+			<xsd:maxLength value="5" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="LocaleType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a Locale.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="5" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="CurrencyCodeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a Currency. A Currency always has 3
+				letters for example EUR for euro.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:length value="3" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+	<xsd:simpleType name="TransactionTypeType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the type of a payment transaction.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AUTH" />
+			<xsd:enumeration value="AUTH_REVERSAL" />
+			<xsd:enumeration value="CAPTURE" />
+			<xsd:enumeration value="CREDIT" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="PaymentMethodType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the payment method
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CREDIT_CARD" />
+			<xsd:enumeration value="DIRECT_DEBIT" />
+			<xsd:enumeration value="ADVANCE" />
+			<xsd:enumeration value="INVOICE" />
+			<xsd:enumeration value="PAYPAL" />
+			<xsd:enumeration value="UNKNOWN" />
+			<xsd:enumeration value="FINANCE_SERVICE" />
+			<xsd:enumeration value="CASH" />
+			<xsd:enumeration value="ID" />
+			<xsd:enumeration value="BC" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="ApplicationAggregationStatusType">
+		<xsd:annotation>
+			<xsd:documentation>Defines the status of an application aggregation.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DSP_OPEN" />
+			<xsd:enumeration value="DSP_FAILED" />
+			<xsd:enumeration value="DSP_DONE" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+
+	<xsd:simpleType name="String20Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 20 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="20" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String25Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 25 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="25" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String30Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 30 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="30" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String40Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 40 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="40" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String256Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 256 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="256" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String255Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 255 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="255" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String100Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 100 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="100" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String50Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 50 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="50" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String64Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 64 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="64" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String128Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 128 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="128" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="String10Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 10 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="10" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+		<xsd:simpleType name="String1000Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a string which is 1000 characters long.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="1000" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Integer16Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a number with 16 digits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="16" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Integer25Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a number with 25 digits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="25" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Integer2Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a number with 2 digits
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="2" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Integer4Type">
+		<xsd:annotation>
+			<xsd:documentation>Defines a number with 4 digits.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:integer">
+			<xsd:totalDigits value="4" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="MonetaryAmountType">
+		<xsd:annotation>
+			<xsd:documentation>Defines a monetary amount.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:decimal">
+			<!-- decimal(13,4) -->
+			<xsd:fractionDigits value="4" />
+			<xsd:totalDigits value="17" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+</xsd:schema>

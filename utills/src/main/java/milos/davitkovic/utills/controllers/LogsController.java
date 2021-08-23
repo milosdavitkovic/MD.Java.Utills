@@ -40,4 +40,16 @@ public class LogsController {
         final String project = userPath + projectPath;
         return logsFacade.getErrorLogs(inputFileName, folderName, resultFileName, packageName, project);
     }
+
+    @GetMapping(value = "/validate/xml")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String validateXML() {
+        final String xmlFileName = "XmlLogs.txt";
+        final String xsdFileName = "commerce-order.xsd";
+        final String folderName = "files/logs/xml";
+        final String resultFileName = "XmlErrors.txt";
+
+        return logsFacade.getXmlErrors(xmlFileName, xsdFileName, folderName, resultFileName);
+    }
+
 }

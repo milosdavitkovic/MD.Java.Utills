@@ -14,4 +14,6 @@ public interface LogsService {
     void writeErrorLogsInFile(final String resultFileName, final List<String> content);
 
     String getErrorLineFromProjectFile(String fileName, int lineNumber, String projectPath);
+
+    String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName);
 }

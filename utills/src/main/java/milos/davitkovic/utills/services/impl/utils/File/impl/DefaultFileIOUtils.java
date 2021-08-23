@@ -101,11 +101,17 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
 
     @Override
     public List<Path> findFilesInWholeSystem(final String fileName, final String folderName) throws IOException {
-        final Path folderPath = Paths.get(folderName);
-        final Stream<Path> stream = Files.find(folderPath, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
-        return stream
-                .sorted()
-                .collect(Collectors.toList());
+        try {
+            final Path folderPath = Paths.get(folderName);
+            final Stream<Path> stream = Files.find(folderPath, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
+            return stream
+                    .sorted()
+                    .collect(Collectors.toList());
+        } catch (IOException exception) {
+            log.error("FIND-CODE-BASE-FILE, IOException {}", exception.getMessage(), exception);
+        }
+
+        return new ArrayList<>();
     }
 
     @Override

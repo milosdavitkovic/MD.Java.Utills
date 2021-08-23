@@ -10,7 +10,14 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,6 +27,11 @@ import java.util.List;
 @Service
 @Slf4j
 public class DefaultLogsService implements LogsService {
+
+    private static final String userPath = "/Users/milosdavitkovic";
+    private static final String mbio_projectPath = userPath + "/MEGAsync/Programming/davitko/projects/mbio/hybris";
+    private static final String utils_projectPath = userPath + "/MEGAsync/Programming/davitko/projects/utils/milos.davitkovic.utills/utills";
+    public static final String URL_SPLITTER = "/";
 
     @Autowired
     private FindIOUtils findUtils;
@@ -110,6 +122,48 @@ public class DefaultLogsService implements LogsService {
         }
 
         return StringUtils.EMPTY;
+    }
+
+    @Override
+    public String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName) {
+        try {
+            final Path xmlPath = findUtils.findFilesInWholeSystem(xmlFileName, utils_projectPath).stream().findFirst().orElse(null);
+            if (xmlPath == null) {
+                log.warn("FIND-CODE-BASE-FILE, XML File {} cannot be found in system.", xmlPath);
+                return StringUtils.EMPTY;
+            }
+
+            final Path xsdPath = findUtils.findFilesInWholeSystem(xsdFileName, utils_projectPath).stream().findFirst().orElse(null);
+            if (xsdPath == null) {
+                log.warn("FIND-CODE-BASE-FILE, XSD File {} cannot be found in system.", xmlPath);
+                return StringUtils.EMPTY;
+            }
+
+            final String validationMessage = validateXMLSchema(xsdPath.toFile(), xmlPath.toFile());
+            writeErrorLogsInFile(resultFileName, Collections.singletonList(validationMessage));
+            return validationMessage;
+
+        } catch (IOException exception) {
+            log.error("FIND-CODE-BASE-FILE, IOException {}", exception.getMessage(), exception);
+        }
+
+        return StringUtils.EMPTY;
+    }
+
+    private String validateXMLSchema(final File xsdFile, final File xmlFile) {
+        try {
+            final SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+//            final File xsdFile = new File(xsdPath);
+            final Schema schema = factory.newSchema(xsdFile);
+            final Validator validator = schema.newValidator();
+//            final File xmlFile = new File(xmlPath);
+            final StreamSource xmlStream = new StreamSource(xmlFile);
+            validator.validate(xmlStream);
+        } catch (IOException | SAXException e) {
+            return String.format("XML file [%s] is NOT valid, against XSD [%s]. Exception [%s].", xmlFile.getName(), xsdFile.getName(), e.getMessage());
+        }
+
+        return String.format("XML file [%s] is validated successfully against XSD [%s].", xmlFile.getName(), xsdFile.getName());
     }
 
     private List<String> cleanLogs(final List<String> systemLogs, final String keyMessage) {
