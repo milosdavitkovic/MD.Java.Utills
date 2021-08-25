@@ -15,5 +15,5 @@ public interface LogsService {
 
     String getErrorLineFromProjectFile(String fileName, int lineNumber, String projectPath);
 
-    String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName);
+    String getXmlErrors(String xmlFileName, String cleanXmlFileName, String xsdFileName, String folderName, String resultFileName);
 }

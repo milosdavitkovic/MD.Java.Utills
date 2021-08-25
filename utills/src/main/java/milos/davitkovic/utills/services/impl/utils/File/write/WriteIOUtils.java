@@ -17,6 +17,8 @@ public interface WriteIOUtils {
 
     void writeInFileWithPath(final Path filePath, final List<String> inputText);
 
+    void writeInFileWithPath(final Path filePath, final String inputText);
+
     void writeInFile(final String fileName, final String folderName, final List<String> inputText) throws IOException;
 
     void writeInResourceFile(final String fileName, final String folderName, final List<String> inputText) throws IOException;

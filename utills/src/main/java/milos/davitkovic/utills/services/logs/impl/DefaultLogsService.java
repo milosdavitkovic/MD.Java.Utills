@@ -6,6 +6,7 @@ import milos.davitkovic.utills.services.impl.utils.File.find.FindIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.read.ReadIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.write.WriteIOUtils;
 import milos.davitkovic.utills.services.logs.LogsService;
+import milos.davitkovic.utills.services.xml.XmlService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class DefaultLogsService implements LogsService {
     private static final String userPath = "/Users/milosdavitkovic";
     private static final String mbio_projectPath = userPath + "/MEGAsync/Programming/davitko/projects/mbio/hybris";
     private static final String utils_projectPath = userPath + "/MEGAsync/Programming/davitko/projects/utils/milos.davitkovic.utills/utills";
-    public static final String URL_SPLITTER = "/";
+    private static final String URL_SPLITTER = "/";
 
     @Autowired
     private FindIOUtils findUtils;
@@ -41,6 +42,8 @@ public class DefaultLogsService implements LogsService {
     private WriteIOUtils writeIOUtils;
     @Autowired
     private ReadIOUtils readIOUtils;
+    @Autowired
+    private XmlService xmlService;
 
     @Override
     public void createClearLogsFile(final String folderName, final String sourceFileName, final String resultFileName, final String keyMessage) {
@@ -125,24 +128,24 @@ public class DefaultLogsService implements LogsService {
     }
 
     @Override
-    public String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName) {
+    public String getXmlErrors(String rawXmlFileName, String cleanXmlFileName, String xsdFileName, String folderName, String resultFileName) {
         try {
-            final Path xmlPath = findUtils.findFilesInWholeSystem(xmlFileName, utils_projectPath).stream().findFirst().orElse(null);
-            if (xmlPath == null) {
-                log.warn("FIND-CODE-BASE-FILE, XML File {} cannot be found in system.", xmlPath);
+            final Path rawXmlPath = findUtils.findFilesInWholeSystem(rawXmlFileName, utils_projectPath).stream().findFirst().orElse(null);
+            if (rawXmlPath == null) {
+                log.warn("FIND-CODE-BASE-FILE, XML File {} cannot be found in system.", rawXmlFileName);
                 return StringUtils.EMPTY;
             }
 
             final Path xsdPath = findUtils.findFilesInWholeSystem(xsdFileName, utils_projectPath).stream().findFirst().orElse(null);
             if (xsdPath == null) {
-                log.warn("FIND-CODE-BASE-FILE, XSD File {} cannot be found in system.", xmlPath);
+                log.warn("FIND-CODE-BASE-FILE, XSD File {} cannot be found in system.", xsdFileName);
                 return StringUtils.EMPTY;
             }
 
-            final String validationMessage = validateXMLSchema(xsdPath.toFile(), xmlPath.toFile());
+            final Path cleanXmlPath = xmlService.getCleanXML(rawXmlFileName, cleanXmlFileName, xsdFileName);
+            final String validationMessage = validateXMLSchema(xsdPath.toFile(), cleanXmlPath.toFile());
             writeErrorLogsInFile(resultFileName, Collections.singletonList(validationMessage));
             return validationMessage;
-
         } catch (IOException exception) {
             log.error("FIND-CODE-BASE-FILE, IOException {}", exception.getMessage(), exception);
         }

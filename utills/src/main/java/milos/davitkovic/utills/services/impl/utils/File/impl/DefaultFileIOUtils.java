@@ -1146,6 +1146,15 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     }
 
     @Override
+    public void writeInFileWithPath(final Path filePath, final String inputText) {
+        try {
+            writeInFile(filePath, Collections.singletonList(inputText));
+        } catch (IOException ex) {
+            log.error("ERROR-WRITE-IN-FILE, FILE with file path {}. IOException {}", filePath, ex.getMessage());
+        }
+    }
+
+    @Override
     public void writeInFile(final String fileName, final String folderName, final List<String> inputText) throws IOException {
         final Path path = getFile(folderName, fileName);
         writeInFile(path, inputText);

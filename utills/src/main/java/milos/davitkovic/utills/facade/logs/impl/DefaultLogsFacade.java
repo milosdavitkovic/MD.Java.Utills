@@ -45,8 +45,8 @@ public class DefaultLogsFacade implements LogsFacade {
     }
 
     @Override
-    public String getXmlErrors(String xmlFileName, String xsdFileName, String folderName, String resultFileName) {
-        return logsService.getXmlErrors(xmlFileName, xsdFileName, folderName, resultFileName);
+    public String getXmlErrors(String xmlFileName, String cleanXmlFileName, String xsdFileName, String folderName, String resultFileName) {
+        return logsService.getXmlErrors(xmlFileName, cleanXmlFileName, xsdFileName, folderName, resultFileName);
     }
 
     private ErrorLogsDTO getErrorLog(final List<String> errorLogsLines, final String packageName, String projectPath) {
