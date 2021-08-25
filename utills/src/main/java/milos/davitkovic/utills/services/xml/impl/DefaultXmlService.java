@@ -31,8 +31,9 @@ public class DefaultXmlService implements XmlService {
     private static final String URL_SPLITTER = "/";
     private static final String XML_STRAT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
     private static final String XML_ORDER_END = "</order:partial-order>";
-    private static final String NEW_LINE = "\\n";
+    private static final String NEW_LINE_SIGN = "\\n";
     private static final String QUOTE_SIGN = "\\\"";
+    private static final String QUOTE = "\"";
 
     @Autowired
     private FindIOUtils findUtils;
@@ -126,15 +127,13 @@ public class DefaultXmlService implements XmlService {
 
     private String getCleanXml(final String rawXml) {
         // Remove \n and \"
-        final String rawXMLWithoutNewLine = StringUtils.replace(rawXml, NEW_LINE, StringUtils.EMPTY);
-        final String rawXmlWithoutChars = StringUtils.trimToEmpty(StringUtils.replace(rawXMLWithoutNewLine, "\\\"", "\""));
+        final String rawXMLWithoutNewLine = StringUtils.replace(rawXml, NEW_LINE_SIGN, StringUtils.EMPTY);
+        final String rawXmlWithoutChars = StringUtils.trimToEmpty(StringUtils.replace(rawXMLWithoutNewLine, QUOTE_SIGN, QUOTE));
 
         // Remove first part of the log before XML starts
         final String rawXmlStart = XML_STRAT + StringUtils.trimToEmpty(StringUtils.substringAfter(rawXmlWithoutChars, XML_STRAT));
         // Remove last part of the log, after XML end
-        final String cleanXml = StringUtils.trimToEmpty(StringUtils.substringBefore(rawXmlStart, XML_ORDER_END)) + XML_ORDER_END;
-
-        return cleanXml.trim().replaceFirst("^([\\W]+)<", "<").replaceAll(QUOTE_SIGN, "\"").replaceAll(NEW_LINE, StringUtils.EMPTY);
+        return StringUtils.trimToEmpty(StringUtils.substringBefore(rawXmlStart, XML_ORDER_END)) + XML_ORDER_END;
     }
 
     private String prettyFormat(String input, int indent) {
