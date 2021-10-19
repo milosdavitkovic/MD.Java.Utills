@@ -24,10 +24,10 @@ public class DefaultLogsFacade implements LogsFacade {
     private static final String DOT_SIGN = ".";
     private static final String CLASS_PREFIX = "Dcp";
     private static final String JAVA_CLASS = ".java";
-    public static final String AT_STRING = "at ";
-    public static final String REGEX_ONLY_NUMBERS = "[^0-9]";
-    public static final String INVOKE = "invoke";
-    public static final String DO_FILTER = "doFilter";
+    private static final String AT_STRING = "at ";
+    private static final String REGEX_ONLY_NUMBERS = "[^0-9]";
+    private static final String INVOKE = "invoke";
+    private static final String DO_FILTER = "doFilter";
 
     @Autowired
     private LogsService logsService;
@@ -53,6 +53,7 @@ public class DefaultLogsFacade implements LogsFacade {
         final ErrorLogsDTO errorLogs = new ErrorLogsDTO();
 
         if (CollectionUtils.isEmpty(errorLogsLines)) {
+            log.warn("No error logs lines. ErrorLogsDTO will be empty.");
             return errorLogs;
         }
 
@@ -71,6 +72,7 @@ public class DefaultLogsFacade implements LogsFacade {
         }
 
         errorLogs.setErrorLogsDTO(result);
+        log.info("Number of ErrorLogs is {}. ErrorLogsDTO will be empty.", result.size());
         return errorLogs;
     }
 
@@ -133,7 +135,7 @@ public class DefaultLogsFacade implements LogsFacade {
         }
     }
 
-    private void setLineNumber(ErrorLogDTO errorLog, String lineNumberInputString) {
+    private void setLineNumber(final ErrorLogDTO errorLog, final String lineNumberInputString) {
         try {
             final String cleanLineNumber = lineNumberInputString.replaceAll(REGEX_ONLY_NUMBERS, StringUtils.EMPTY);
             final Integer lineNum = NumberUtils.createInteger(cleanLineNumber);
@@ -165,8 +167,13 @@ public class DefaultLogsFacade implements LogsFacade {
             return false;
         }
 
+        final Integer lineNumber = errorLog.getLineNumber();
+        if (lineNumber == 1) {
+            return false;
+        }
+
         final boolean duplicatedErrorLog = isDuplicatedErrorLog(errorLog, errorLogs);
-        if(duplicatedErrorLog) {
+        if (duplicatedErrorLog) {
             return false;
         }
 
@@ -174,17 +181,17 @@ public class DefaultLogsFacade implements LogsFacade {
     }
 
     private boolean isDuplicatedErrorLog(final ErrorLogDTO errorLog, final List<ErrorLogDTO> errorLogs) {
-        if(CollectionUtils.isEmpty(errorLogs) || errorLog == null) {
+        if (CollectionUtils.isEmpty(errorLogs) || errorLog == null) {
             return false;
         }
 
-        for(ErrorLogDTO logs : errorLogs) {
+        for (ErrorLogDTO logs : errorLogs) {
             final String className = errorLog.getClassName();
             final Integer lineNumber = errorLog.getLineNumber();
 
             final String logClassName = logs.getClassName();
             final Integer logLineNumber = logs.getLineNumber();
-            if(StringUtils.equalsIgnoreCase(className, logClassName) && lineNumber.equals(logLineNumber)) {
+            if (StringUtils.equalsIgnoreCase(className, logClassName) && lineNumber.equals(logLineNumber)) {
                 return true;
             }
         }
@@ -194,11 +201,13 @@ public class DefaultLogsFacade implements LogsFacade {
 
     private List<String> getLogFileContent(final ErrorLogsDTO errorLogDTO) {
         if (errorLogDTO == null) {
+            log.warn("ErrorLogsDTO is null. No Error logs lines will be returned.");
             return new ArrayList<>();
         }
 
         final List<ErrorLogDTO> errorLogs = errorLogDTO.getErrorLogsDTO();
         if (CollectionUtils.isEmpty(errorLogs)) {
+            log.warn("ErrorLogsDTO has not ErrorLogDTOs. No Error logs lines will be returned.");
             return new ArrayList<>();
         }
 
