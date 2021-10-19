@@ -420,7 +420,7 @@ public class DefaultMDUtils implements MDUtils {
      */
     @Override
     public Integer roundOnLess(final Double inputValue) {
-        return numberUtils.roundOnLess(inputValue);
+        return numberUtils.getRoundOnLess(inputValue);
     }
 
     /**
