@@ -13,6 +13,8 @@ public class DefaultInvestmentFacade implements InvestmentFacade {
 
     private static final String CURRENCY_EUR = "EUR";
     private static final String SPACE = " ";
+    public static final String PERCENTAGE = "%";
+    public static final String YEARS = "years";
 
     @Autowired
     private InvestmentService investmentService;
@@ -39,9 +41,11 @@ public class DefaultInvestmentFacade implements InvestmentFacade {
         final double investmentReturnEstimationValue = investmentService.getInvestmentReturnEstimation(grossMonthlyIncome, propertyMonthlyExpenses, propertyPrice);
         garageInvest.setInvestmentReturnEstimationValue(investmentReturnEstimationValue);
 
-        garageInvest.setInvestmentReturnEstimation(investmentReturnEstimationValue + SPACE + CURRENCY_EUR);
+        final String investmentReturnEstimation = numberUtils.getAmount(investmentReturnEstimationValue);
+        garageInvest.setInvestmentReturnEstimation(investmentReturnEstimation + SPACE + YEARS);
 
-        garageInvest.setInvestmentReturnEstimationPositive(investmentReturnEstimationValue <= 8);
+        final boolean IsInvestmentReturnEstimationPositive = investmentReturnEstimationValue <= 8;
+        garageInvest.setInvestmentReturnEstimationPositive(IsInvestmentReturnEstimationPositive);
     }
 
     private void setCapitalisationRate(int propertyPrice, int grossMonthlyIncome, int propertyMonthlyExpenses, GarageInvestDTO garageInvest) {
@@ -49,7 +53,7 @@ public class DefaultInvestmentFacade implements InvestmentFacade {
         garageInvest.setCapitalizationRateValue(capitalizationRateValue);
 
         final String capitalizationRate = numberUtils.getAmount(capitalizationRateValue);
-        garageInvest.setCapitalizationRate(capitalizationRate + SPACE + CURRENCY_EUR);
+        garageInvest.setCapitalizationRate(capitalizationRate + SPACE + PERCENTAGE);
 
         garageInvest.setCapitalizationRatePositive(capitalizationRateValue >= 8);
     }
@@ -59,7 +63,7 @@ public class DefaultInvestmentFacade implements InvestmentFacade {
         garageInvest.setCashOnCashReturnValue(cashOnCashReturnValue);
 
         final String cashOnCashReturn = numberUtils.getAmount(cashOnCashReturnValue);
-        garageInvest.setCashOnCashReturn(cashOnCashReturn + SPACE + CURRENCY_EUR);
+        garageInvest.setCashOnCashReturn(cashOnCashReturn + SPACE + PERCENTAGE);
 
         garageInvest.setCashOnCashReturnPositive(cashOnCashReturnValue >= 10);
     }

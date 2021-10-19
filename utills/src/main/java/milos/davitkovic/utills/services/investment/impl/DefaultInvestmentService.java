@@ -47,13 +47,13 @@ public class DefaultInvestmentService implements InvestmentService {
 
     @Override
     public double getCashOnCashReturn(int annualCashFlow, int downPayment) {
-        return annualCashFlow / downPayment;
+        return (annualCashFlow / downPayment) * 100;
     }
 
     @Override
     public double getCashOnCashReturn(int grossMonthlyIncome, int propertyMonthlyExpenses, int monthlyMortgagePayment, int downPayment) {
         final double annualCashFlow = getAnnualCashFlow(grossMonthlyIncome, propertyMonthlyExpenses, monthlyMortgagePayment);
-        return annualCashFlow / downPayment;
+        return (annualCashFlow / downPayment) * 100;
     }
 
     @Override
