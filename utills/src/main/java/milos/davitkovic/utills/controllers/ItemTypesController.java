@@ -60,15 +60,4 @@ public class ItemTypesController {
 //        final String additionalParameter = "true";
         itemTypesFacade.createUpdateImpexWithPKs(folderName, inputFileName, resultFileName, header, additionalParameter);
     }
-
-    @PostMapping(value = "/createCleanLogs")
-    @ResponseStatus(value = HttpStatus.OK)
-    public void createCleanLogs(
-            @RequestParam final String inputFileName,
-            @RequestParam final String folderName,
-            @RequestParam final String resultFileName,
-            @RequestParam final String keyMessage
-    ) {
-        itemTypesFacade.createClearLogsFile(folderName, inputFileName, resultFileName, keyMessage);
-    }
 }

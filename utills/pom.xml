@@ -5,8 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.0.6</version>
+		<relativePath/>
 	</parent>
 	<groupId>milos.davitkovic</groupId>
 	<artifactId>utills</artifactId>
@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.12</version>
+			<version>1.18.26</version>
 			<scope>provided</scope>
 		</dependency>
 

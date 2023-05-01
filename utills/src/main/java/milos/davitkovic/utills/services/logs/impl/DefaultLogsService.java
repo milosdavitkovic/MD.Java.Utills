@@ -8,6 +8,7 @@ import milos.davitkovic.utills.services.impl.utils.File.read.ReadIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.write.WriteIOUtils;
 import milos.davitkovic.utills.services.logs.LogsService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,5 +77,28 @@ public class DefaultLogsService implements LogsService {
 
         log.info("CLEAN-LOGS, Created {} lines of clean logs for key message word {}.", cleanLogs.size(), keyMessage);
         return cleanLogs;
+    }
+
+    @Override
+    public String getO2OEmailPayload(final String inputLog)
+    {
+        if (StringUtils.isEmpty(inputLog)) {
+            log.warn("WARN-CLEAN-LOGS, Input logs is empty! Nothing to clean.");
+            return "Please send Log Messages from the Business Process step: sendOrderPlacedNotification.";
+        }
+
+        if(StringUtils.containsNone(inputLog, "O2O Email from market")) {
+            log.warn("WARN-CLEAN-LOGS, Input logs does not contain O2O Email.");
+            return "Provided Log Messages from the Business Process step: sendOrderPlacedNotification does not have O2O Email message payload.";
+        }
+
+        final String cleanLogs = StringUtils.trim(inputLog);
+
+        final String o2oPayload = StringUtils.substringBefore(StringUtils.substringAfter(cleanLogs, "O2O Email from market"),
+              "\",\"endOfBatch\":false");
+
+        return StringUtils.substringAfter(o2oPayload, ": {")
+              .replaceAll("\\\\n", "")
+              .replaceAll("\\\\", "");
     }
 }
