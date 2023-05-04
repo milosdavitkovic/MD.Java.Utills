@@ -87,18 +87,50 @@ public class DefaultLogsService implements LogsService {
             return "Please send Log Messages from the Business Process step: sendOrderPlacedNotification.";
         }
 
-        if(StringUtils.containsNone(inputLog, "O2O Email from market")) {
+        if(StringUtils.contains(inputLog, "O2O Email from market")) {
             log.warn("WARN-CLEAN-LOGS, Input logs does not contain O2O Email.");
-            return "Provided Log Messages from the Business Process step: sendOrderPlacedNotification does not have O2O Email message payload.";
+
+            final String cleanLogs = StringUtils.trim(inputLog);
+
+            final String o2oPayload = StringUtils.substringBefore(StringUtils.substringAfter(cleanLogs, "\"message\":\"O2O Email from market"),
+                  "\",\"endOfBatch\":false");
+
+            return StringUtils.substringAfter(o2oPayload, ": {")
+                  .replaceAll("\\\\n", "")
+                  .replaceAll("\\\\", "");
         }
 
-        final String cleanLogs = StringUtils.trim(inputLog);
+        if(StringUtils.contains(inputLog, "o2o-eda-adapter")) {
+            log.warn("WARN-CLEAN-LOGS, Input logs does not contain O2O Email.");
 
-        final String o2oPayload = StringUtils.substringBefore(StringUtils.substringAfter(cleanLogs, "O2O Email from market"),
-              "\",\"endOfBatch\":false");
+            final String cleanLogs = StringUtils.trim(inputLog);
 
-        return StringUtils.substringAfter(o2oPayload, ": {")
-              .replaceAll("\\\\n", "")
-              .replaceAll("\\\\", "");
+            final String o2oPayload = StringUtils.substringBefore(StringUtils.substringAfter(cleanLogs, "\"message\":"),
+                  "\",\"endOfBatch\":false");
+
+            return StringUtils.substringAfter(o2oPayload, ": {")
+                  .replaceAll("\\\\n", "")
+                  .replaceAll("\\\\", "");
+        }
+
+        return "Provided Log Messages from the Business Process step: sendOrderPlacedNotification does not have O2O Email message payload.";
+    }
+
+    @Override
+    public String getO2ODataPayload(final String inputLog)
+    {
+        final String o2OEmailPayload = getO2OEmailPayload(inputLog);
+        return StringUtils.substringBefore(StringUtils.substringAfter(o2OEmailPayload, "\"data\" :"), "\"content_type\"");
+    }
+
+    private static String removeLastChar(String str) {
+        return removeChars(str, 2);
+    }
+
+    private static String removeChars(String str, int numberOfCharactersToRemove) {
+        if(str != null && !str.trim().isEmpty()) {
+            return str.substring(0, str.length() - numberOfCharactersToRemove);
+        }
+        return "";
     }
 }

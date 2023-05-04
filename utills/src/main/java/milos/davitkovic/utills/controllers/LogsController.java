@@ -36,9 +36,18 @@ public class LogsController
 	@PostMapping(value = "/getO2OPayload", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	@ResponseBody
-	public String getO2OEmailPayload(@RequestBody final String inputLog) throws JsonProcessingException
+	public String getO2OEmailPayload(@RequestBody final String inputLog)
 	{
 		log.info("Logs Controller: Get O2O Email payload.");
 		return logsFacade.getO2OEmailPayload(inputLog);
+	}
+
+	@PostMapping(value = "/getO2ODataPayload", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(value = HttpStatus.OK)
+	@ResponseBody
+	public String getO2OEmailDataPayload(@RequestBody final String inputLog)
+	{
+		log.info("Logs Controller: Get O2O Email Data payload.");
+		return logsFacade.getO2ODataPayload(inputLog);
 	}
 }
