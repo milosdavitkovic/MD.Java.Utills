@@ -7,18 +7,20 @@ import milos.davitkovic.utills.services.impex.ImpexFilesCreationService;
 import milos.davitkovic.utills.services.ProductCodesComparingService;
 import milos.davitkovic.utills.services.UniqueIndexesService;
 
-import javax.annotation.Resource;
 import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Facade
 @Slf4j
 public class DefaultItemTypesFacade implements ItemTypesFacade {
 
-    @Resource
+    @Autowired
     private ProductCodesComparingService productCodesComparingService;
-    @Resource
+    @Autowired
     private UniqueIndexesService uniqueIndexesService;
-    @Resource
+    @Autowired
     private ImpexFilesCreationService impexFilesCreationService;
 
     @Override
