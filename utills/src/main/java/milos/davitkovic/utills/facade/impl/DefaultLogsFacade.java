@@ -3,6 +3,7 @@ package milos.davitkovic.utills.facade.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.Facade;
 import milos.davitkovic.utills.facade.LogsFacade;
@@ -18,7 +19,7 @@ public class DefaultLogsFacade implements LogsFacade
 	private LogsService logsService;
 
 	@Override
-	public void createClearLogsFile(final String folderName, final String sourceFileName, final String resultFileName, final String keyMessage) {
+	public void createClearLogsFile(@NonNull final String folderName, final String sourceFileName, final String resultFileName, final String keyMessage) {
 		logsService.createClearLogsFile(folderName, sourceFileName, resultFileName, keyMessage);
 	}
 
