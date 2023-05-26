@@ -1,0 +1,329 @@
+{
+	"subject": "Bekräftelse på din orderförfrågan ${orderId}",
+	"customer": {
+		"type": {
+			"content": "${customer.customerType!''}",
+			"label": "Kundtyp:"
+		},
+		"billingaddress": {
+			"label": "Faktureringsadress:",
+			"addressline": "${customer.street!''} ${customer.houseNumber!''}",
+			"cityline": "${customer.postCode!''} ${customer.city!''}",
+			"email": "${customer.email!''}",
+			"nameline": "${customer.firstName!''} ${customer.lastName!''}",
+			"country": "${customer.country!''}",
+			"phone": "${customer.phone!''}"
+		},
+		"businessinformation": {
+			"headline": "Företagsinformation"
+		},
+		"company": {
+			"legalform": {
+				"label": "Legal Form",
+				"content": "${customer.business.legalForm!''}"
+			},
+			"name": {
+				"label": "Företagsnamn",
+				"content": "${customer.business.name!''}"
+			},
+			"establishment": {
+				"date": {
+					"content": "${customer.business.establishment.date!''}",
+					"label": "Datum Företaget Grundades"
+				}
+			},
+			"vatID": {
+				"content": "${customer.business.vatID!''}",
+				"label": "Org.nummer:"
+			},
+			"contactaddress": {
+				"label": "Kontaktadress:"
+			}
+		},
+		"contactaddress": {
+			"cityline": "${customer.contact.postcode!''} ${customer.contact.city!''}",
+			"country": "${customer.contact.country!''}",
+			"email": "<a href='mailto:${customer.contact.email!''}' style=\"color: #333333\">${customer.contact.email!''}</a>",
+			"nameline": "${customer.contact.firstName!''} ${customer.contact.lastName!''}",
+			"phone": "${customer.contact.phone!''}",
+			"streetline": "${customer.contact.street!''} ${customer.contact.houseNumber!''}"
+		}
+	},
+	"dealer": {
+		"address": {
+			"label": "Säljare :",
+			"cityline": "${dealer.postCode!''} ${dealer.city!''}",
+			"email": "${dealer.email!''}",
+			"name": "${dealer.name1!''}",
+			"streetline": "${dealer.addressLine1!''}"
+		}
+	},
+	"delivery": {
+		"cost": {
+			"label": "Leveranskostnad",
+			"value": "${delivery.cost!''}"
+		},
+		"method": {
+			"content": "Din bil kommer att lämnas ut av din valda Mercedes-Benz partner.",
+			"label": "Leveransmetod "
+		}
+	},
+	"introduction": {
+		"content": "Tack så mycket!"
+	},
+	"mercedes": {
+		"partner": {
+			"label": "Önskad levererande Agent:",
+			"name": "${vehicle.pickupLocation.name!''}",
+			"streetLine": "${vehicle.pickupLocation.addressLine!''}",
+			"cityLine": "${vehicle.pickupLocation.postCode!''} ${vehicle.pickupLocation.city!''}",
+			"email": "${vehicle.pickupLocation.email!''}"
+		}
+	},
+	"order": {
+		"summary": {
+			"headline": "<strong>Din orderöversikt</strong>"
+		}
+	},
+	"partial": {
+		"order": {
+			"headline": "<strong>Order 1 av 1</strong>"
+		}
+	},
+	"payment": {
+		"info": {
+			"content": "Nedan hittar du detaljer om din order."
+		},
+		"method": {
+			"label": "Din valda betalningsmetod",
+			"leasing": {
+				"content": "Leasing"
+			},
+			"financing": {
+				"content": "Finansiering "
+			},
+			"kauf": {
+				"content": "Kontantköp"
+			},
+			"balloon": {
+				"content": "8"
+			},
+			"content": "&nbsp;",
+			"headline": "&nbsp;"
+		}
+	},
+	"salutation": {
+		"content": "Tack för din orderförfrågan ${orderId}. Din orderförfrågan är just nu under behandling och vi återkommer till dig snarast med en bekräftelse samt nästa steg.<br><br>Observera att din orderförfrågan endast är giltig när vi återkommit med en orderbekräftelse. Bekräftelsen kan också vara beroende på utfallet av din kreditansökan.",
+		"headline": "<strong>Hej ${customer.firstName!''} ${customer.lastName!''},</strong>",
+		"ms": {
+			"headline": "<strong>Hej ${customer.firstName!''} ${customer.lastName!''},</strong>"
+		},
+		"mr": {
+			"headline": "<strong>Hej ${customer.firstName!''} ${customer.lastName!''},</strong>"
+		}
+	},
+	"subtotal": {
+		"label": "Delsumma:",
+		"value": "<strong>0kr</strong>"
+	},
+	"tax": {
+		"inclued": {
+			"label": "(inkl. moms)"
+		}
+	},
+	"total": {
+		"amount": {
+			"label": "<strong>Debiteras direkt:</strong>",
+			"value": "${total!''}"
+		}
+	},
+	"vehicle": {
+		"order": {
+			"headline": "<strong>Ditt fordon</strong>"
+		},
+		"reservation": {
+			"fee": {
+				"headline": "<strong>Handpenning:</strong>",
+				"value": "${vehicle.reservationFee!''}"
+			}
+		},
+		"nefz": {
+			"headline": "WLTP values",
+			"energyefficiency": {
+				"displayImage": "${vehicle.nefz.energyefficiency.displayImage!''}"
+			}
+		},
+		"wltp": {
+			"headline": "<strong>Utsläpp och bränsleförbrukning</strong>",
+			"energyefficiency": {
+				"displayImage": "${vehicle.wltp.energyefficiency.displayImage!''}"
+			}
+		},
+		"priceInformation": {
+			"headline": "Överblick pris"
+		},
+		"estimatedArrivalDate": "Beräknad ankomst in ${vehicle.stock.estimatedArrivalDate!''} <sup>[1]</sup>",
+		"stockType": {
+			"inStock": "Leveransfärdig",
+			"comingSoon": "Längre leveranstid <sup>[1]</sup>"
+		}
+	},
+	"your": {
+		"order": {
+			"label": "Din Order ${orderId}"
+		}
+	},
+	"information": {
+		"dataprotection": {
+			"content": "Via denna <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.se/passengercars/content-pool/tool-pages/legal/privacy-statement.html\">länk</a> kan du erhålla mer information om hur dina personuppgifter blir behandlande av en Mercedes-Benz partner eller Mercedes-Benz Sverige AB. Om allt eller en del av din order hanteras av en oberoende Mercedes-Benz partner, gäller dataskyddsvillkoren som förses av den partnern.<br>Denna orderförfrågan är inte bindande. Med reservation för felskrivningar."
+		},
+		"disclaimer": {
+			"content": "Reservationen eller reservationsavgiften utgör inte ett bindande köpkontrakt för fordonet. Vänligen se reservationsvillkoren."
+		},
+		"emission": {
+			"content": "${(vehicle.wltp.footnotes)!''} "
+		},
+		"environmentalbonus": {
+			"content": "The purchase price includes the manufacturer's share of the environmental bonus in the amount of  ${vehicle.additionalPriceInfos.ecobonus!''}.  The amount and entitlement to claim the environmental bonus is regulated by the guidelines available on the BAFA website <a href=\"http://www.bafa.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">( www.bafa.de )</a> . There is no legal entitlement to the environmental bonus."
+		},
+		"footnote": {
+			"content": "<strong>Mercedes-Benz Sverige</strong>"
+		},
+		"thankyounote": {
+			"content": "Tack för din orderförfrågan. Your team from the Mercedes-Benz Online Store"
+		},
+		"chairpersonfooter": {
+			"content": "- Ditt Mercedes-Benz Online Store-Team"
+		},
+		"vat": {
+			"disclaimer": {
+				"content": "Alla priser är inkl. moms."
+			}
+		},
+		"vehicle": {
+			"stockType": "[1] Leveranstiden är preliminär och genomsnittlig. Vänligen observera att ändringar kan ske."
+		}
+	},
+	"Energy": {
+		"efficiency": {
+			"headline": "CO2 effektivitet"
+		}
+	},
+	"company": {
+		"billingaddress": {
+			"label": "Din faktureringsadress:"
+		},
+		"city": {
+			"value": "${customer.business.cityPostcodeLine}"
+		},
+		"contactnumber": {
+			"value": "${customer.business.phone!''}"
+		},
+		"country": {
+			"value": "${customer.business.country!''}"
+		},
+		"email": {
+			"value": "${customer.business.email!''}"
+		},
+		"name": {
+			"value": "${customer.business.name!''}"
+		},
+		"address": {
+			"value": "${customer.business.streetLine!''}"
+		}
+	},
+	"financing": {
+		"button": {
+			"label": "Påbörja finansiell förfågan nu ",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"nextstep": {
+			"content": "Vänligen fyll i relevant information för att gå vidare i processen mot din nya Mercedes-Benz. Din auktoriserade Mercedes-Benz Agent kommer kontakta dig och diskutera nästkommande steg. "
+		},
+		"introduction": {
+			"content": "Du kan genomföra&nbsp; din finansiella ansökan direkt på Mercedes-Benz hemsida direkt efter orderförfrågan är skickad."
+		}
+	},
+	"leasing": {
+		"button": {
+			"label": "Påbörja leasingförfrågan nu ",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "Du kan genomföra din leasingansökan direkt på Mercedes-Benz hemsida, direkt efter orderförfrågan är skickad. &nbsp;Klicka på länken nedan för att påbörja din leasigförfrågan nu."
+		},
+		"nextstep": {
+			"content": "Vänligen fyll i relevant information för att gå vidare i processen mot din nya Mercedes-Benz. Din auktoriserade Mercedes-Benz Agent kommer kontakta dig och diskutera nästkommande steg."
+		}
+	},
+	"balloon": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	},
+	"cross": {
+		"selling": {
+			"comment": {
+				"label": "Önskade vinterhjul:",
+				"text": "${customerComment!''}"
+			}
+		}
+	},
+	"purchase": {
+		"cooperative": {
+			"content": "Place Holder Purchase Cooperative"
+		}
+	},
+	"Purchase": "&nbsp;",
+	"purchaseCooperative": {
+		"content": "&nbsp;"
+	},
+	"commission": {
+		"number": "${vehicle.commissionNumber!''}"
+	},
+	"wheelSet": {
+		"headline": "${wheelSet.headline!''}",
+		"imageUrl": "${wheelSet.imageUrl!''}",
+		"price": {
+			"note": "(Price for all tyres)"
+		},
+		"subHeadline": "${wheelSet.subHeadline!''}",
+		"wheelSetPrice": "${wheelSet.wheelSetPrice!''}",
+		"options": {
+			"title": "Quote requested for the following additional services"
+		}
+	},
+	"additional": {
+		"items": {
+			"title": "Your additional items"
+		}
+	},
+	"WltpPlaceholder": "&nbsp;",
+	"wheelSetOptionNoChoice": "Not requested additional services",
+	"wheelSetOptionMountOnCar": "Mount on Car additional services",
+	"wheelSetOptionStoreInWarehause": "Store in Warehouse additional services",
+	"wheelSetOptionPrice": "0 €",
+	"chargedLaterLabel": "Charged Later",
+	"chargedLaterValue": "${chargedLater!''}",
+	"chargedLaterDescription": "This amount is due after your agreed on financing plan with your bank. The amount contains the vehicle price and optional additional product you may have added.",
+	"NefzPlaceholder": "&nbsp;",
+	"cash": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	}
+}

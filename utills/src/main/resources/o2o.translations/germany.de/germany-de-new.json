@@ -1,0 +1,329 @@
+{
+	"subject": "Ihre ${customer.business.businessSalutation!''} Bestellung ${orderId} im Mercedes-Benz Store",
+	"customer": {
+		"type": {
+			"label": "Kunde",
+			"content": "${customer.customerType!''}"
+		},
+		"billingaddress": {
+			"label": "Rechnungsadresse",
+			"addressline": "${customer.street!''} ${customer.houseNumber!''}",
+			"cityline": "${customer.postCode!''} ${customer.city!''}",
+			"email": "${customer.email!''}",
+			"nameline": "${customer.firstName} ${customer.lastName!''}",
+			"country": "${customer.country!''}",
+			"phone": "${customer.phone!''}"
+		},
+		"businessinformation": {
+			"headline": "Geschäftliche Angaben"
+		},
+		"company": {
+			"legalform": {
+				"label": "Rechtsform: ",
+				"content": "${customer.business.legalForm!''}"
+			},
+			"name": {
+				"label": "Unternehmensname: ",
+				"content": "${customer.business.name!''}"
+			},
+			"establishment": {
+				"date": {
+					"content": "${customer.business.establishment.date!''}",
+					"label": "Gründungsdatum/Selbstständig seit: "
+				}
+			},
+			"vatID": {
+				"content": "${customer.business.vatID!''}",
+				"label": "Umsatzsteuer-Identifikationsnummer: "
+			},
+			"contactaddress": {
+				"label": "Kontaktadresse"
+			}
+		},
+		"contactaddress": {
+			"cityline": "${customer.contact.postcode!''} ${customer.contact.city!''}",
+			"country": "${customer.contact.country!''}",
+			"email": "${customer.contact.email!''}",
+			"nameline": "${customer.contact.firstName!''} ${customer.contact.lastName!''}",
+			"phone": "${customer.contact.phone!''}",
+			"streetline": "${customer.contact.street!''} ${customer.contact.houseNumber!''}"
+		}
+	},
+	"dealer": {
+		"address": {
+			"label": "Ihr Verkäufer",
+			"cityline": "${dealer.postCode!''} ${dealer.city!''}",
+			"email": "${dealer.email!''}",
+			"name": "${dealer.name1!''}",
+			"streetline": "${dealer.addressLine1!''}"
+		}
+	},
+	"delivery": {
+		"cost": {
+			"label": "Lieferkosten",
+			"value": "${delivery.cost}"
+		},
+		"method": {
+			"content": "${delivery.description!''} ",
+			"label": "Liefermethode"
+		}
+	},
+	"introduction": {
+		"content": "<strong>Bitte beachten Sie, dass Ihre Fahrzeugreservierung erst wirksam ist, wenn sie durch die Mercedes-Benz AG bestätigt wurde. </strong>Die Annahme oder Stornierung wird Ihnen per E-Mail mitgeteilt."
+	},
+	"mercedes": {
+		"partner": {
+			"label": "Mercedes-Benz Partner",
+			"name": "${vehicle.pickupLocation.name!''}",
+			"streetLine": "${vehicle.pickupLocation.addressLine!''}",
+			"cityLine": "${vehicle.pickupLocation.postCode!''} ${vehicle.pickupLocation.city!''}",
+			"email": "${vehicle.pickupLocation.email!''}"
+		}
+	},
+	"order": {
+		"summary": {
+			"headline": "Ihre Bestellübersicht"
+		}
+	},
+	"partial": {
+		"order": {
+			"headline": "Bestellung 1 von 1 "
+		}
+	},
+	"payment": {
+		"info": {
+			"content": "&nbsp;"
+		},
+		"method": {
+			"label": "Zahlungsmethode",
+			"financing": {
+				"content": "Finanzierung"
+			},
+			"kauf": {
+				"content": "Kauf"
+			},
+			"leasing": {
+				"content": "Leasing"
+			},
+			"balloon": {
+				"content": "Plus 3 Finanzierung"
+			},
+			"content": "&nbsp;",
+			"headline": "&nbsp;"
+		}
+	},
+	"salutation": {
+		"content": "vielen Dank für Ihre Bestellung ${orderId}, deren Eingang wir hiermit bestätigen.<br><br>Unser Kundenservice wird diese nun bearbeiten und sich mit Ihnen in Verbindung setzen. Bei weiteren Fragen stehen wir Ihnen gerne telefonisch, unter 0800-623 222 2 oder per E-Mail unter <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"mailto:marktplatz@mercedes-benz.com\">marktplatz@mercedes-benz.com</a> zur Verfügung.&nbsp;",
+		"headline": "Herzlichen Glückwunsch zu Ihrem neuen Mercedes-Benz,",
+		"mr": {
+			"headline": "Sehr geehrter ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		},
+		"ms": {
+			"headline": "Sehr geehrte ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		}
+	},
+	"subtotal": {
+		"label": "Zwischensumme",
+		"value": "0,00 €"
+	},
+	"tax": {
+		"inclued": {
+			"label": "&nbsp"
+		}
+	},
+	"total": {
+		"amount": {
+			"label": "Gesamtbetrag",
+			"value": "${total}"
+		}
+	},
+	"vehicle": {
+		"order": {
+			"headline": "Ihr Fahrzeug"
+		},
+		"reservation": {
+			"fee": {
+				"headline": "Reservierungsgebühr",
+				"value": "${vehicle.reservationFee!''}"
+			}
+		},
+		"nefz": {
+			"headline": "NEFZ Verbrauchs- und Emissionsdaten <sup>[3]</sup>",
+			"energyefficiency": {
+				"displayImage": "${vehicle.nefz.energyefficiency.displayImage!''}"
+			}
+		},
+		"wltp": {
+			"headline": "WLTP Verbrauchs- und Emissionsdaten <sup>[2]</sup>",
+			"energyefficiency": {
+				"displayImage": "${vehicle.wltp.energyefficiency.displayImage!''}"
+			}
+		},
+		"priceInformation": {
+			"headline": "Preisübersicht"
+		},
+		"estimatedArrivalDate": "Voraussichtlich verfügbar in  ${vehicle.stock.estimatedArrivalDate!''} <sup>[1]</sup>",
+		"stockType": {
+			"inStock": "vorrätig",
+			"comingSoon": "demnächst verfügbar <sup>[1]</sup>"
+		}
+	},
+	"your": {
+		"order": {
+			"label": "Ihre Bestellung #${orderId}"
+		}
+	},
+	"information": {
+		"dataprotection": {
+			"content": "Unter diesem <a href=\"http://www.mercedes-benz.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">Link</a> erhalten Sie nähere Informationen über die Verarbeitung Ihrer personenbezogenen Daten durch die Mercedes-Benz AG."
+		},
+		"disclaimer": {
+			"content": "Dieser Betrag wurde bereits auf Ihrem Zahlungsmittel vorgemerkt. Mit der Reservierung bzw. der Zahlung der Reservierungsgebühr ist noch kein gültiger Kaufvertrag für das Fahrzeug zustande gekommen. Bitte beachten Sie die Reservierungsbedingungen der Mercedes-Benz AG. "
+		},
+		"emission": {
+			"content": "${(vehicle.wltp.footnotenumber)!''} ${(vehicle.wltp.footnotes)!''} <br><br>${(vehicle.nefz.footnotenumber)!''}${(vehicle.nefz.footnotes)!''}"
+		},
+		"environmentalbonus": {
+			"content": "Der Kaufpreis beinhaltet den Herstelleranteil am Umweltbonus i.H.v. ${vehicle.additionalPriceInfos.ecobonus!''}.  Die Höhe und Berechtigung zur Inanspruchnahme des Umweltbonus ist durch die auf der Webseite des BAFA <a href=\"http://www.bafa.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">( www.bafa.de )</a> abrufbare Richtlinie geregelt. Es besteht kein Rechtsanspruch auf Gewährung des Umweltbonus."
+		},
+		"footnote": {
+			"content": "Weitere Informationen zum offiziellen Kraftstoffverbrauch und den offiziellen spezifischen CO2-Emissionen neuer Personenkraftwagen können dem 'Leitfaden über den Kraftstoffverbrauch, die CO2-Emissionen und den Stromverbrauch neuer Personenkraftwagen' entnommen werden, der an allen Verkaufsstellen und bei der Deutschen Automobil Treuhand GmbH (DAT) unter <a href=\"http://www.dat.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">www.dat.de</a> unentgeltlich erhältlich ist."
+		},
+		"thankyounote": {
+			"content": "Wir danken Ihnen für Ihre Bestellung! <br><br><strong>Ihr Team vom Mercedes-Benz Store</strong>"
+		},
+		"vat": {
+			"disclaimer": {
+				"content": "Alle Preise sind inkl. Mehrwertsteuer."
+			}
+		},
+		"chairpersonfooter": {
+			"content": "Mercedes-Benz AG <br>Sitz und Registergericht / Domicile and Court of Registry: Stuttgart; HRB-Nr. / Commercial Register No. 762873 <br>Vorsitzender des Aufsichtsrats / Chairman of the Supervisory Board: Dr. Bernd Pischetsrieder  <br>Vorstand / Board of Management: Ola Källenius (Vorsitzender / Chairman),  <br>Jörg Burzer, Renata Jungo Brüngger, Magnus Östberg, Sabine Kohleisen, Markus Schäfer, Britta Seeger, Harald Wilhelm"
+		},
+		"vehicle": {
+			"stockType": "[1] Footnote pipeline stock"
+		}
+	},
+	"Energy": {
+		"efficiency": {
+			"headline": "Energieeffizienz"
+		}
+	},
+	"company": {
+		"billingaddress": {
+			"label": "Rechnungsadresse"
+		},
+		"city": {
+			"value": "${customer.postCode!''} ${customer.city!''}"
+		},
+		"contactnumber": {
+			"value": "${customer.phone!''}"
+		},
+		"country": {
+			"value": "${customer.country!''}"
+		},
+		"email": {
+			"value": "${customer.business.email!''}"
+		},
+		"name": {
+			"value": "${customer.business.name!''}"
+		},
+		"address": {
+			"value": "${customer.street!''} ${customer.houseNumber!''}"
+		}
+	},
+	"financing": {
+		"button": {
+			"label": "Jetzt Finanzierungsanfrage starten",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"nextstep": {
+			"content": "<strong>Ihre nächsten Schritte bis zu Ihrem neuen Mercedes-Benz</strong><br><br><strong>1. Finanzierungsanfrage durchführen</strong><br>Ermitteln Sie durch die Angabe Ihrer Daten die Finanzierungsmöglichkeiten für Ihr neues Fahrzeug. Diese werden vertraulich von der Mercedes-Benz Bank geprüft.<br><br><strong>2. Kontaktaufnahme durch Ihren Händler</strong><br>Ihr Mercedes-Benz Partner setzt sich nach der Prüfung mit Ihnen in Verbindung und bespricht mit Ihnen die weiteren Schritte.<br><br><strong>3. Inzahlungsnahme & Abholung</strong><br>Auf Wunsch nimmt ihr Händler Ihr aktuelles Fahrzeug nach eingehender Prüfung in Zahlung und vereinbart mit Ihnen den Abholungstermin Ihres neuen Fahrzeug."
+		},
+		"introduction": {
+			"content": "Falls Sie Ihre Finanzierungsanfrage bei der Mercedes-Benz Bank AG, Siemensstraße 7, 70469 Stuttgart, noch nicht gestartet haben, können Sie das über den Button \"Jetzt Finanzierungsanfrage stellen\" tun. Wir übermitteln die für Ihre Finanzierungsanfrage relevanten Daten direkt dorthin."
+		}
+	},
+	"leasing": {
+		"button": {
+			"label": "Jetzt Leasinganfrage starten",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "Falls Sie Ihre Leasinganfrage bei der Mercedes-Benz Leasing GmbH, Siemensstraße 7, 70469 Stuttgart, noch nicht gestellt haben, können Sie das über den Button \"Jetzt Leasinganfrage stellen\" tun. Wir übermitteln die für Ihre Leasinganfrage relevanten Daten direkt dorthin."
+		},
+		"nextstep": {
+			"content": "<strong>Ihre nächsten Schritte bis zu Ihrem neuen Mercedes-Benz</strong><br><br><strong>1. Leasinganfrage durchführen</strong><br>Ermitteln Sie durch die Angabe Ihrer Daten die Finanzierungsmöglichkeiten für Ihr neues Fahrzeug. Diese werden vertraulich von der Mercedes-Benz Bank geprüft.<br><br><strong>2. Kontaktaufnahme durch Ihren Händler</strong><br>Ihr Mercedes-Benz Partner setzt sich nach der Prüfung mit Ihnen in Verbindung und bespricht mit Ihnen die weiteren Schritte.<br><br><strong>3. Inzahlungsnahme & Abholung</strong><br>Auf Wunsch nimmt ihr Händler Ihr aktuelles Fahrzeug nach eingehender Prüfung in Zahlung und vereinbart mit Ihnen den Abholungstermin Ihres neuen Fahrzeuges."
+		}
+	},
+	"balloon": {
+		"button": {
+			"label": "Jetzt Plus 3 Finanzierungsanfrage starten",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "Falls Sie Ihre Plus 3 Finanzierungsanfrage bei der Mercedes-Benz Bank AG, Siemensstraße 7, 70469 Stuttgart, noch nicht gestartet haben, können Sie das über den Button \"Jetzt Plus 3 Finanzierungsanfrage stellen\" tun. Wir übermitteln die für Ihre Plus 3 Finanzierungsanfrage relevanten Daten direkt dorthin."
+		},
+		"nextstep": {
+			"content": "<strong>Ihre nächsten Schritte bis zu Ihrem neuen Mercedes-Benz</strong><br><br><strong>1. Plus 3 Finanzierungsanfrage durchführen</strong><br>Ermitteln Sie durch die Angabe Ihrer Daten die Plus 3 Finanzierungsmöglichkeiten für Ihr neues Fahrzeug. Diese werden vertraulich von der Mercedes-Benz Bank geprüft.<br><br><strong>2. Kontaktaufnahme durch Ihren Händler</strong><br>Ihr Mercedes-Benz Partner setzt sich nach der Prüfung mit Ihnen in Verbindung und bespricht mit Ihnen die weiteren Schritte.<br><br><strong>3. Inzahlungsnahme & Abholung</strong><br>Auf Wunsch nimmt ihr Händler Ihr aktuelles Fahrzeug nach eingehender Prüfung in Zahlung und vereinbart mit Ihnen den Abholungstermin Ihres neuen Fahrzeug."
+		}
+	},
+	"cross": {
+		"selling": {
+			"comment": {
+				"label": "&nbsp;",
+				"text": "&nbsp;"
+			}
+		}
+	},
+	"purchase": {
+		"cooperative": {
+			"content": "Ihre getätigte Bestellung basiert auf Ihren Einkaufsvorteilen als ${customer.purchaseCooperative!''} Mitglied."
+		}
+	},
+	"purchaseCooperative": {
+		"content": "Ihre getätigte Bestellung basiert auf Ihren Einkaufsvorteilen als ${customer.purchaseCooperative!''} Mitglied."
+	},
+	"Purchase": "&nbsp;",
+	"commission": {
+		"number": "${vehicle.commissionNumber!''}"
+	},
+	"wheelSet": {
+		"headline": "${wheelSet.headline!''}",
+		"imageUrl": "${wheelSet.imageUrl!''}",
+		"price": {
+			"note": "(Price for all tyres)"
+		},
+		"subHeadline": "${wheelSet.subHeadline!''}",
+		"wheelSetPrice": "${wheelSet.wheelSetPrice!''}",
+		"options": {
+			"title": "Quote requested for the following additional services"
+		}
+	},
+	"additional": {
+		"items": {
+			"title": "Your additional items"
+		}
+	},
+	"WltpPlaceholder": "&nbsp;",
+	"wheelSetOptionNoChoice": "Not requested additional services",
+	"wheelSetOptionMountOnCar": "Mount on Car additional services",
+	"wheelSetOptionStoreInWarehause": "Store in Warehouse additional services",
+	"wheelSetOptionPrice": "0 €",
+	"chargedLaterLabel": "Charged Later",
+	"chargedLaterValue": "${chargedLater!''}",
+	"chargedLaterDescription": "This amount is due after your agreed on financing plan with your bank. The amount contains the vehicle price and optional additional product you may have added.",
+	"NefzPlaceholder": "&nbsp;",
+	"cash": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	}
+}
