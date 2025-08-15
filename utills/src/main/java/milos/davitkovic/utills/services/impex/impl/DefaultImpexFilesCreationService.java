@@ -41,10 +41,10 @@ public class DefaultImpexFilesCreationService implements ImpexFilesCreationServi
     @Override
     public void createUpdateImpexWithPKs(final String folderName, final String sourceFileName, final String resultFileName, final String header, final String lineAddition) throws IOException {
         final Set<String> pkList = new HashSet<>(mdUtils.readResourceFile(sourceFileName, folderName));
-        log.info(String.format("Number of lines read from file [%s] is [%s] elements.", sourceFileName, pkList.size()));
+        log.info("Number of lines read from file {} is {} elements.", sourceFileName, pkList.size());
 
         final List<String> result = createUpdateImpexWithPKs(header, pkList, lineAddition);
-        log.info(String.format("Number of lines ready to write in the file [%s] is [%s] elements.", resultFileName, result.size()));
+        log.info("Number of lines ready to write in the file {} is {} elements.", resultFileName, result.size());
 
         mdUtils.writeInResourceFile(resultFileName, folderName, result);
     }

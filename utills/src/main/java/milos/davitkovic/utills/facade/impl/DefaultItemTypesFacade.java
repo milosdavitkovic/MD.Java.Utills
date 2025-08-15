@@ -1,31 +1,27 @@
 package milos.davitkovic.utills.facade.impl;
 
-import java.io.IOException;
-
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.Facade;
 import milos.davitkovic.utills.facade.ItemTypesFacade;
+import milos.davitkovic.utills.services.impex.ImpexFilesCreationService;
 import milos.davitkovic.utills.services.ProductCodesComparingService;
 import milos.davitkovic.utills.services.UniqueIndexesService;
-import milos.davitkovic.utills.services.impex.ImpexFilesCreationService;
-import milos.davitkovic.utills.services.logs.LogsService;
+
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Facade
 @Slf4j
 public class DefaultItemTypesFacade implements ItemTypesFacade {
 
-    @Resource
-    private ProductCodesComparingService productCodesComparingService;
-    @Resource
-    private UniqueIndexesService uniqueIndexesService;
-    @Resource
-    private ImpexFilesCreationService impexFilesCreationService;
     @Autowired
-    private LogsService logsService;
+    private ProductCodesComparingService productCodesComparingService;
+    @Autowired
+    private UniqueIndexesService uniqueIndexesService;
+    @Autowired
+    private ImpexFilesCreationService impexFilesCreationService;
 
     @Override
     public void compare2Files(final String folderName, final String sourceFileName1, final String sourceFileName2, final String resultFileName) throws IOException {
@@ -45,10 +41,5 @@ public class DefaultItemTypesFacade implements ItemTypesFacade {
     @Override
     public void createUpdateImpexWithPKs(final String folderName, final String sourceFileName, final String resultFileName, final String header, final String lineAddition) throws IOException {
         impexFilesCreationService.createUpdateImpexWithPKs(folderName, sourceFileName, resultFileName, header, lineAddition);
-    }
-
-    @Override
-    public void createClearLogsFile(final String folderName, final String sourceFileName, final String resultFileName, final String keyMessage) {
-        logsService.createClearLogsFile(folderName, sourceFileName, resultFileName, keyMessage);
     }
 }

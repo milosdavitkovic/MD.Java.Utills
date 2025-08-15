@@ -2,8 +2,8 @@ package milos.davitkovic.utills.services.impl.utils.File.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.utills.annotations.UtilClass;
-import milos.davitkovic.utills.services.impl.utils.File.create.CreateIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.FileIOUtils;
+import milos.davitkovic.utills.services.impl.utils.File.create.CreateIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.find.FindIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.read.ReadIOUtils;
 import milos.davitkovic.utills.services.impl.utils.File.write.WriteIOUtils;
@@ -23,6 +23,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -108,15 +109,27 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     }
 
     @Override
-    public Path findFileInSystem(final String fileName, final String folderName) {
-        final Path folderPath = Paths.get(folderName);
+    public Path findFile(final String fileName) {
         try {
-            final Stream<Path> stream = Files.find(folderPath, DEFAULT_MAX_DEPTH, (path, attr) -> String.valueOf(path).endsWith(fileName));
-            return stream
-                    .findFirst()
-                    .orElse(null);
+            final List<Path> filePaths = findFilesInWholeSystem(fileName);
+            return CollectionUtils.emptyIfNull(filePaths).stream().findFirst().orElse(null);
         } catch (IOException ex) {
-            log.error("ERROR-FIND-FILE-IN-SYSTEM, IOException {}", ex.getMessage());
+            log.error("ERROR-FIND-FILE-IN-SYSTEM, Cannot find file {} in the system. IOException {}", fileName, ex.getMessage());
+        }
+
+        log.error("WARN-FIND-FILE-IN-SYSTEM, Cannot find file {} in the system.", fileName);
+        return null;
+    }
+
+    @Override
+    public Path findFileInSystem(final String fileName, final String folderName) {
+        try {
+            final List<Path> filePaths = findFilesInWholeSystem(fileName, folderName);
+            return CollectionUtils.emptyIfNull(filePaths).stream().findFirst().orElse(null);
+        } catch (NoSuchFileException ex) {
+            log.error("ERROR-FIND-FILE-IN-SYSTEM, Cannot find file {} in the folder {}. NoSuchFileException {}", fileName, folderName, ex.getMessage());
+        } catch (IOException ex) {
+            log.error("ERROR-FIND-FILE-IN-SYSTEM, Cannot find file {} in the folder {}. IOException {}", fileName, folderName, ex.getMessage());
         }
 
         return null;
@@ -770,7 +783,7 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     public Path createFile(final String fileName, final String folderName) {
         try {
             final File file = new File(folderName, fileName);
-            if(file.exists()) {
+            if (file.exists()) {
                 log.info("CREATE-FILE, File {} in folder {} already exists.", fileName, folderName);
                 return file.toPath();
             }
@@ -1032,8 +1045,10 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     public List<String> readResourceFile(final String fileName, final String folderName) throws IOException {
         final Path path = getResourceFile(folderName, fileName);
         if (StringUtils.isBlank(path.toString())) {
+            log.error("ERROR-READ-RESOURCE-FILE, Resource File {} cannot be found in folder {}. Nothing to read.", fileName, folderName);
             return Collections.emptyList();
         }
+
         log.debug("Resource File for reading, path: " + path.toAbsolutePath());
         return Files.isReadable(path) ? Files.readAllLines(path) : Collections.emptyList();
     }
@@ -1042,15 +1057,17 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
     public List<String> readFile(final String fileName, final String folderName) throws IOException {
         final Path path = getFile(folderName, fileName);
         if (StringUtils.isBlank(path.toString())) {
+            log.error("ERROR-READ-RESOURCE-FILE, File {} cannot be found in folder {}. Nothing to read.", fileName, folderName);
             return Collections.emptyList();
         }
+
         log.debug("File for reading, path: " + path.toAbsolutePath());
         return Files.isReadable(path) ? Files.readAllLines(path) : Collections.emptyList();
     }
 
     @Override
     public List<String> readFile(final Path filePath) {
-        if(filePath == null) {
+        if (filePath == null) {
             return Collections.emptyList();
         }
 
@@ -1058,11 +1075,11 @@ public class DefaultFileIOUtils implements FindIOUtils, CreateIOUtils, ReadIOUti
             return Collections.emptyList();
         }
         try {
-             if(Files.isReadable(filePath)) {
-                 return Files.readAllLines(filePath);
-             } else {
-                 Collections.emptyList();
-             }
+            if (Files.isReadable(filePath)) {
+                return Files.readAllLines(filePath);
+            } else {
+                Collections.emptyList();
+            }
         } catch (IOException ex) {
             log.error("ERROR-READ-FILE, File {}. IOException {}.", filePath.toString(), ex.getMessage());
         }

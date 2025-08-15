@@ -574,15 +574,15 @@ public class DefaultMDUtils implements MDUtils {
 
         final List<String> inputText = listUtils.convertToStringList(input);
         if (CollectionUtils.isEmpty(inputText)) {
-            logger.warn("List with lines for write is empty. Nothing to write down in a file {} from folder {}.", fileName, folderName);
+            logger.warn("WARN-WRITE-IN-RESOURCE-FILE, List with lines for write is empty. Nothing to write down in a file {} from folder {}.", fileName, folderName);
             return;
         }
 
         try {
             writeIOUtils.writeInResourceFile(fileName, folderName, inputText);
-            logger.info("{} lines of text have been written down in file {} placed in folder {}", inputText.size(), fileName, folderName);
+            logger.info("WRITE-IN-RESOURCE-FILE, {} lines of text have been written down in file {} placed in folder {}", inputText.size(), fileName, folderName);
         } catch (IOException e) {
-            throw new IOException(String.format("Cannot write in a file [%s] from folder [%s]!", fileName, folderName));
+            throw new IOException(String.format("ERROR-WRITE-IN-RESOURCE-FILE, Cannot write in a file [%s] from folder [%s]!", fileName, folderName));
         }
     }
 
