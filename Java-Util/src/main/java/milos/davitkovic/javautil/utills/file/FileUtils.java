@@ -8,7 +8,25 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * File Utils class for saving and getting files from the file system
+ * Interface for comprehensive file system operations and utilities.
+ * 
+ * <p>This interface provides a complete set of methods for file management operations
+ * including creating, reading, writing, and manipulating files of various types.
+ * It supports operations for PDF files, resource files, JSON files, and general
+ * file system operations with cross-platform compatibility.</p>
+ * 
+ * <p>The interface includes methods for:</p>
+ * <ul>
+ *   <li>File creation and saving operations</li>
+ *   <li>Resource file management</li>
+ *   <li>Directory operations and validation</li>
+ *   <li>File path resolution and manipulation</li>
+ *   <li>File type validation and processing</li>
+ * </ul>
+ * 
+ * @author Milos Davitkovic
+ * @version 1.0
+ * @since 1.0
  */
 public interface FileUtils {
 
