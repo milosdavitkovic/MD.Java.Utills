@@ -1,7 +1,5 @@
 package milos.davitkovic.javautil.utills.facade;
 
-import milos.davitkovic.javautil.utills.annotations.Interface;
-
 
 
 public interface LogsFacade

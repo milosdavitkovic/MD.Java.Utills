@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Hex;
 import milos.davitkovic.javautil.utills.annotations.UtilClass;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import org.springframework.util.xml.XmlValidationModeDetector;
 
 @Slf4j
 @UtilClass

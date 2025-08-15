@@ -1,7 +1,6 @@
 package milos.davitkovic.javautil.utills.file.impl;
 
 import lombok.NonNull;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import milos.davitkovic.javautil.utills.services.impl.utils.File.find.FindIOUtils;
 import org.apache.commons.collections4.CollectionUtils;
@@ -31,11 +30,9 @@ public class DefaultFileUtils implements FileUtils {
 
     private static final String SLASH = "/";
     private static final String PDF_EXTENSION = ".pdf";
-    private static final String DATE_TIME_PATTERN = "dd-MM-yyyy_HH-mm-ss";
     private static final String BACK_SLASH = "\\";
     private static final String ALREADY_SENT_SUFIX = "_sent_";
     private static final String JSON_EXTENSION = ".json";
-    private static final String COOKIES_FILE_NAME = "cookies";
     private static final String HTML_EXTENSION = ".html";
     private static final String XML_EXTENSION = ".xml";
 
