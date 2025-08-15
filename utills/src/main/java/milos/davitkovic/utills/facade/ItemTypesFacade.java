@@ -22,5 +22,5 @@ public interface ItemTypesFacade {
 
     void createUpdateImpexWithPKs(final String folderName, final String sourceFileName, final String resultFileName, final String header, final String lineAddition) throws IOException;
 
-    void createClearLogsFile(final String folderName, final String sourceFileName, final String resultFileName, final String keyMessage);
+
 }

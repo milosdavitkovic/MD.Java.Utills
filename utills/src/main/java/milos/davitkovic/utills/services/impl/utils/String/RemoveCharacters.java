@@ -1,5 +1,6 @@
-package milos.davitkovic.utills.services.impl.string;
+package milos.davitkovic.utills.services.impl.utils.String;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -8,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * Remove character
@@ -48,5 +50,9 @@ public class RemoveCharacters {
         });
         // print String List like one String
         System.out.println(String.join("", string1List));
+    }
+
+    public String removeNewLineCharachters(final String inputString) {
+        return StringUtils.trim(inputString);
     }
 }

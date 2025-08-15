@@ -1,0 +1,329 @@
+{
+	"subject": "La sua ${customer.business.businessSalutation!''} richiesta di prenotazione ${orderId} nel Mercedes-Benz Store – Veicoli nuovi",
+	"customer": {
+		"type": {
+			"label": "Cliente",
+			"content": "${customer.customerType!''}"
+		},
+		"billingaddress": {
+			"label": "Indirizzo di fatturazione",
+			"addressline": "${customer.street!''} ${customer.houseNumber!''}",
+			"cityline": "${customer.postCode!''} ${customer.city!''}",
+			"email": "<a href='mailto:${customer.email}' style=\"color: #333333\">${customer.email}</a>",
+			"nameline": "${customer.firstName} ${customer.lastName!''}",
+			"country": "${customer.country!''}",
+			"phone": "${customer.phone!''}"
+		},
+		"businessinformation": {
+			"headline": "Dati sull’azienda"
+		},
+		"company": {
+			"legalform": {
+				"label": "Forma giuridica:",
+				"content": "${customer.business.legalForm!''}"
+			},
+			"name": {
+				"label": "Ragione sociale:",
+				"content": "${customer.business.name!''}"
+			},
+			"establishment": {
+				"date": {
+					"content": "${customer.business.establishment.date!''}",
+					"label": "Data di fondazione/libero professionista dal:"
+				}
+			},
+			"vatID": {
+				"content": "${customer.business.vatID!''}",
+				"label": "IDI:"
+			},
+			"contactaddress": {
+				"label": "Indirizzo di contatto"
+			}
+		},
+		"contactaddress": {
+			"cityline": "${customer.contact.postcode!''} ${customer.contact.city!''}",
+			"country": "${customer.contact.country!''}",
+			"email": "<a href='mailto:${customer.contact.email!''}' style=\"color: #333333\">${customer.contact.email!''}</a>",
+			"nameline": "${customer.contact.firstName!''} ${customer.contact.lastName!''}",
+			"phone": "${customer.contact.phone!''}",
+			"streetline": "${customer.contact.street!''} ${customer.contact.houseNumber!''}"
+		}
+	},
+	"dealer": {
+		"address": {
+			"label": "Il suo venditore",
+			"cityline": "${dealer.postCode!''} ${dealer.city!''}",
+			"email": "<a href='mailto:${dealer.email}' style=\"color: #333333\">${dealer.email}</a>",
+			"name": "${dealer.name1!''}",
+			"streetline": "${dealer.addressLine1!''}"
+		}
+	},
+	"delivery": {
+		"cost": {
+			"label": "&nbsp;",
+			"value": "&nbsp;"
+		},
+		"method": {
+			"content": "D’intesa con il suo concessionario Mercedes-Benz",
+			"label": "Metodo di consegna"
+		}
+	},
+	"introduction": {
+		"content": "<strong>Attenzione: la sua prenotazione del veicolo risulterà a tutti gli effetti valida solo a seguito di conferma da parte del suo concessionario Mercedes-Benz. </strong>La conferma o l’eventuale rifiuto le sarà comunicato/-a via e-mail."
+	},
+	"mercedes": {
+		"partner": {
+			"label": "Concessionario Mercedes-Benz",
+			"name": "${vehicle.pickupLocation.name!''}",
+			"streetLine": "${vehicle.pickupLocation.addressLine!''}",
+			"cityLine": "${vehicle.pickupLocation.postCode!''} ${vehicle.pickupLocation.city!''}",
+			"email": "<a href='mailto:${vehicle.pickupLocation.email!''}' style=\"color: #333333\">${vehicle.pickupLocation.email!''}</a>"
+		}
+	},
+	"order": {
+		"summary": {
+			"headline": "La sua panoramica delle ordinazioni"
+		}
+	},
+	"partial": {
+		"order": {
+			"headline": "Ordinazione 1 di 1"
+		}
+	},
+	"payment": {
+		"info": {
+			"content": "&nbsp;"
+		},
+		"method": {
+			"label": "Metodo di pagamento",
+			"financing": {
+				"content": "${payment.method!''}"
+			},
+			"kauf": {
+				"content": "Acquisto"
+			},
+			"leasing": {
+				"content": "Leasing"
+			},
+			"balloon": {
+				"content": "&nbsp;"
+			},
+			"content": "&nbsp;",
+			"headline": "&nbsp;"
+		}
+	},
+	"salutation": {
+		"content": "Grazie per la sua richiesta di prenotazione ${orderId}, di cui confermiamo la ricezione.<br>Il concessionario Mercedes-Benz da lei selezionato esaminerà ora la sua richiesta e la contatterà.",
+		"headline": "&nbsp",
+		"mr": {
+			"headline": "Egregio ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		},
+		"ms": {
+			"headline": "Gentile ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		}
+	},
+	"subtotal": {
+		"label": "Subtotale",
+		"value": "CHF 0.–"
+	},
+	"tax": {
+		"inclued": {
+			"label": "&nbsp;"
+		}
+	},
+	"total": {
+		"amount": {
+			"label": "Importo totale",
+			"value": "${total}"
+		}
+	},
+	"vehicle": {
+		"order": {
+			"headline": "Il suo veicolo"
+		},
+		"reservation": {
+			"fee": {
+				"headline": "Commissione di riservazione",
+				"value": "${vehicle.reservationFee!''}"
+			}
+		},
+		"nefz": {
+			"headline": "Dati di consumo ed emissioni WLTP <sup>[1]</sup>",
+			"energyefficiency": {
+				"displayImage": "${vehicle.nefz.energyefficiency.displayImage!''}"
+			}
+		},
+		"wltp": {
+			"headline": "Dati di consumo ed emissioni WLTP <sup>[1]</sup>",
+			"energyefficiency": {
+				"displayImage": "${vehicle.wltp.energyefficiency.displayImage!''}"
+			}
+		},
+		"priceInformation": {
+			"headline": "Panoramica dei prezzi"
+		},
+		"estimatedArrivalDate": "&nbsp;",
+		"stockType": {
+			"comingSoon": "&nbsp;",
+			"inStock": "&nbsp;"
+		}
+	},
+	"your": {
+		"order": {
+			"label": "La sua richiesta di prenotazione #${orderId}"
+		}
+	},
+	"information": {
+		"dataprotection": {
+			"content": "Questo <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.ch/it/passengercars/content-pool/tool-pages/legal/privacy-statement-switzerland.html?_ga=2.180872295.1300576800.1643304655-1904844914.1642673739&amp;tgroup=realControl\"><strong>Link</strong></a> le fornirà maggiori informazioni in merito al trattamento dei suoi dati personali da parte di Mercedes-Benz Svizzera SA. Qualora la sua prenotazione sia stata effettuata, in toto o parzialmente, tramite un concessionario Mercedes-Benz indipendente, si applica inoltre anche la dichiarazione sulla protezione dei dati dell’azienda partner."
+		},
+		"disclaimer": {
+			"content": "Si prega di consultare le condizioni di riservazione."
+		},
+		"emission": {
+			"content": "[1] ${(vehicle.nefz.footnotes)!''}"
+		},
+		"environmentalbonus": {
+			"content": "&nbsp;"
+		},
+		"footnote": {
+			"content": "&nbsp;"
+		},
+		"thankyounote": {
+			"content": "La ringraziamo per la sua richiesta di prenotazione.<br><br><strong>Il team del Mercedes-Benz Store – Veicoli nuovi</strong>"
+		},
+		"vat": {
+			"disclaimer": {
+				"content": "I prezzi indicati includono l’imposta sul valore aggiunto prevista per legge."
+			}
+		},
+		"chairpersonfooter": {
+			"content": "Mercedes-Benz Svizzera AG"
+		},
+		"vehicle": {
+			"stockType": "&nbsp;"
+		}
+	},
+	"Energy": {
+		"efficiency": {
+			"headline": "Efficienza energetica"
+		}
+	},
+	"company": {
+		"billingaddress": {
+			"label": "Indirizzo di fatturazione"
+		},
+		"city": {
+			"value": "${customer.postCode!''} ${customer.city!''}"
+		},
+		"contactnumber": {
+			"value": "${customer.business.phone!''}"
+		},
+		"country": {
+			"value": "${customer.business.country!''}"
+		},
+		"email": {
+			"value": "<a href='mailto:${customer.business.email!''}' style=\"color: #333333\">${customer.business.email!''}</a>"
+		},
+		"name": {
+			"value": "${customer.business.name!''}"
+		},
+		"address": {
+			"value": "${customer.business.streetLine!''}"
+		}
+	},
+	"financing": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		}
+	},
+	"leasing": {
+		"button": {
+			"label": "Leasing",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "Come metodo di pagamento preferito ha selezionato il leasing. I suoi dati relativi alle condizioni di leasing sono stati trasmessi al suo concessionario Mercedes-Benz che, una volta verificata la richiesta, la contatterà per sottoporle un’offerta di leasing idonea.&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	},
+	"balloon": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	},
+	"cross": {
+		"selling": {
+			"comment": {
+				"label": "&nbsp;",
+				"text": "&nbsp;"
+			}
+		}
+	},
+	"purchase": {
+		"cooperative": {
+			"content": "&nbsp;"
+		}
+	},
+	"Purchase": "&nbsp;",
+	"purchaseCooperative": {
+		"content": "&nbsp;"
+	},
+	"commission": {
+		"number": "${vehicle.commissionNumber!''}"
+	},
+	"wheelSet": {
+		"headline": "${wheelSet.headline!''}",
+		"imageUrl": "${wheelSet.imageUrl!''}",
+		"price": {
+			"note": "(Price for all tyres)"
+		},
+		"subHeadline": "${wheelSet.subHeadline!''}",
+		"wheelSetPrice": "${wheelSet.wheelSetPrice!''}",
+		"options": {
+			"title": "Quote requested for the following additional services"
+		}
+	},
+	"additional": {
+		"items": {
+			"title": "Your additional items"
+		}
+	},
+	"WltpPlaceholder": "&nbsp;",
+	"wheelSetOptionNoChoice": "Not requested additional services",
+	"wheelSetOptionMountOnCar": "Mount on Car additional services",
+	"wheelSetOptionStoreInWarehause": "Store in Warehouse additional services",
+	"wheelSetOptionPrice": "0 €",
+	"chargedLaterLabel": "Charged Later",
+	"chargedLaterValue": "${chargedLater!''}",
+	"chargedLaterDescription": "This amount is due after your agreed on financing plan with your bank. The amount contains the vehicle price and optional additional product you may have added.",
+	"NefzPlaceholder": "&nbsp;",
+	"cash": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	}
+}

@@ -1,0 +1,329 @@
+{
+	"subject": "Your Order Confirmation",
+	"customer": {
+		"type": {
+			"content": "${customer.customerType!''}",
+			"label": "Customer Type:"
+		},
+		"billingaddress": {
+			"label": "Billing Address:",
+			"addressline": "${customer.street!''} ${customer.houseNumber!''}",
+			"cityline": "${customer.postCode!''} ${customer.city!''}",
+			"email": "${customer.email!''}",
+			"nameline": "${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''}",
+			"country": "${customer.country!''}",
+			"phone": "${customer.phone!''}"
+		},
+		"businessinformation": {
+			"headline": "Business Information"
+		},
+		"company": {
+			"legalform": {
+				"label": "Legal Form",
+				"content": "${customer.business.legalForm!''}"
+			},
+			"name": {
+				"label": "Company name",
+				"content": "${customer.business.name!''}"
+			},
+			"establishment": {
+				"date": {
+					"content": "${customer.business.establishment.date!''}",
+					"label": "&nbsp;"
+				}
+			},
+			"vatID": {
+				"content": "${customer.business.vatID!''}",
+				"label": "VAT ID:"
+			},
+			"contactaddress": {
+				"label": "Contact address:"
+			}
+		},
+		"contactaddress": {
+			"cityline": "${customer.contact.postcode!''} ${customer.contact.city!''}",
+			"country": "${customer.contact.country!''}",
+			"email": "<a href='mailto:${customer.contact.email!''}' style=\"color: #333333\">${customer.contact.email!''}</a>",
+			"nameline": "${customer.contact.firstName!''} ${customer.contact.lastName!''}",
+			"phone": "${customer.contact.phone!''}",
+			"streetline": "${customer.contact.street!''} ${customer.contact.houseNumber!''}"
+		}
+	},
+	"dealer": {
+		"address": {
+			"label": "Seller:",
+			"cityline": "${dealer.postCode!''} ${dealer.city!''}",
+			"email": "${dealer.email!''}",
+			"name": "${dealer.name1!''}",
+			"streetline": "${dealer.addressLine1!''}"
+		}
+	},
+	"delivery": {
+		"cost": {
+			"label": "&nbsp;",
+			"value": "&nbsp;"
+		},
+		"method": {
+			"content": "${delivery.method!''}",
+			"label": "Delivery method"
+		}
+	},
+	"introduction": {
+		"content": "&nbsp;"
+	},
+	"mercedes": {
+		"partner": {
+			"label": "Preferred Delivering Agent:",
+			"name": "${vehicle.pickupLocation.name!''}",
+			"streetLine": "${vehicle.pickupLocation.addressLine!''}",
+			"cityLine": "${vehicle.pickupLocation.postCode!''} ${vehicle.pickupLocation.city!''}",
+			"email": "${vehicle.pickupLocation.email!''}"
+		}
+	},
+	"order": {
+		"summary": {
+			"headline": "Order summary"
+		}
+	},
+	"partial": {
+		"order": {
+			"headline": "Order 1 from 1"
+		}
+	},
+	"payment": {
+		"info": {
+			"content": "The total amount of the order value has been reserved on the payment method you specified. If you make use of your right of withdrawal, the amount will be refunded.  You will find the details of your order below."
+		},
+		"method": {
+			"label": "Payment method",
+			"leasing": {
+				"content": "Leasing"
+			},
+			"financing": {
+				"content": "Financing"
+			},
+			"kauf": {
+				"content": "Outright Purchase"
+			},
+			"balloon": {
+				"content": "Plus 3 Financing"
+			},
+			"headline": "&nbsp;",
+			"content": "&nbsp;"
+		}
+	},
+	"salutation": {
+		"content": "Congratulations and thank you for your order.<br><br>We are pleased to welcome you to the Mercedes-Benz family. Your online order has been received and we will be in touch shortly to finalise your order, and provide an estimated delivery date.<br>&nbsp;<br>Your order confirmation number is ${orderId}.<br>&nbsp;<br>If you have any questions, please contact us directly on 1300 762 718. We cannot wait to get you behind the wheel of your new car. <br><br>Sincerely,<br>&nbsp;<br>The Mercedes-Benz Store<br>&nbsp;<br><strong>Mercedes-Benz New Zealand Ltd</strong>",
+		"headline": "Dear ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},",
+		"ms": {
+			"headline": "Dear ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		},
+		"mr": {
+			"headline": "Dear ${customer.salutation!''} ${customer.firstName!''} ${customer.lastName!''},"
+		}
+	},
+	"subtotal": {
+		"label": "<strong>Subtotal:</strong>",
+		"value": "<strong>$ 1,000.00</strong>"
+	},
+	"tax": {
+		"inclued": {
+			"label": "(incl. GST)"
+		}
+	},
+	"total": {
+		"amount": {
+			"label": "Total sum",
+			"value": "${total}"
+		}
+	},
+	"vehicle": {
+		"order": {
+			"headline": "Your vehicle"
+		},
+		"reservation": {
+			"fee": {
+				"headline": "<strong>Holding Deposit:</strong>",
+				"value": "${vehicle.reservationFee!''}"
+			}
+		},
+		"nefz": {
+			"headline": "NEFZ values",
+			"energyefficiency": {
+				"displayImage": "${vehicle.nefz.energyefficiency.displayImage!''}"
+			}
+		},
+		"wltp": {
+			"headline": "WLTP consumption and emission values",
+			"energyefficiency": {
+				"displayImage": "${vehicle.wltp.energyefficiency.displayImage!''}"
+			}
+		},
+		"priceInformation": {
+			"headline": "Price Details"
+		},
+		"estimatedArrivalDate": "22.04.2022",
+		"stockType": {
+			"inStock": "&nbsp;",
+			"comingSoon": "&nbsp;"
+		}
+	},
+	"your": {
+		"order": {
+			"label": "Your Order #${orderId}"
+		}
+	},
+	"information": {
+		"dataprotection": {
+			"content": "<a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.co.nz/passengercars/content-pool/tool-pages/legal/cookies.html\">Cookies</a> | <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.co.nz/passengercars/content-pool/tool-pages/legal/privacy-statement.html\">Privacy Policy</a> | <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.co.nz/passengercars/content-pool/tool-pages/legal/legal-notice.html\">Legal notice</a>"
+		},
+		"disclaimer": {
+			"content": "This amount has already been reserved on your payment method. With the reservation or the payment of the reservation fee, a valid purchase contract for the vehicle has not yet been concluded. Please note the reservation conditions of Mercedes-Benz AG."
+		},
+		"emission": {
+			"content": "${(vehicle.wltp.footnotes)!''} "
+		},
+		"environmentalbonus": {
+			"content": "The purchase price includes the manufacturer's share of the environmental bonus in the amount of  ${vehicle.additionalPriceInfos.ecobonus!''}.  The amount and entitlement to claim the environmental bonus is regulated by the guidelines available on the BAFA website <a href=\"http://www.bafa.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">( www.bafa.de )</a> . There is no legal entitlement to the environmental bonus."
+		},
+		"footnote": {
+			"content": "<strong>*</strong>Holding Deposit Amount is refundable subject to terms and conditions of this order, which are available for your review attached in this confirmation."
+		},
+		"thankyounote": {
+			"content": "&nbsp;"
+		},
+		"chairpersonfooter": {
+			"content": "© Mercedes-Benz New Zealand Ltd. All rights reserved. <br>Use of the information which is contained on this page is governed by the laws of New Zealand."
+		},
+		"vat": {
+			"disclaimer": {
+				"content": "&nbsp;"
+			}
+		},
+		"vehicle": {
+			"stockType": "&nbsp;"
+		}
+	},
+	"Energy": {
+		"efficiency": {
+			"headline": "CO2 efficiency"
+		}
+	},
+	"company": {
+		"billingaddress": {
+			"label": "Billing Address:"
+		},
+		"city": {
+			"value": "${customer.business.cityPostcodeLine!''}"
+		},
+		"contactnumber": {
+			"value": "${customer.business.phone!''}"
+		},
+		"country": {
+			"value": "${customer.business.country!''}"
+		},
+		"email": {
+			"value": "${customer.business.email!''}"
+		},
+		"name": {
+			"value": "${customer.business.name!''}"
+		},
+		"address": {
+			"value": "${customer.business.streetLine!''}"
+		}
+	},
+	"financing": {
+		"button": {
+			"label": "Submit financing request now",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"nextstep": {
+			"content": "<strong>Your next steps to your new Mercedes-Benz</strong> <strong>1. Carry out a financing request </strong> Determine the financing options for your new vehicle by entering your details. These are checked confidentially by Mercedes-Benz Bank. <br> <strong>2.Contact by your dealer</strong> Your Mercedes-Benz partner will contact you after the exam and discuss the next steps with you. , <br>  <strong>3. Pick-up</strong> Upon request, your dealer will accept your current vehicle in payment after a thorough examination and agree with you on the pick-up date for your new vehicle."
+		},
+		"introduction": {
+			"content": "If you have not yet submitted your financing request to Mercedes-Benz Bank AG, Siemensstrasse 7, 70469 Stuttgart, you can do so using the \"Submit financing request now\" button. We send the relevant data for your financing request directly there."
+		}
+	},
+	"leasing": {
+		"button": {
+			"label": "Submit leasing request now",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "If you have not yet submitted your leasing request to Mercedes-Benz Bank AG, Siemensstrasse 7, 70469 Stuttgart, you can do so using the \"Submit leasing request now\" button. We send the relevant data for your leasing request directly there."
+		},
+		"nextstep": {
+			"content": "<strong>Your next steps to your new Mercedes-Benz</strong> <br><br> <strong>1. Carry out a leasing request </strong> Determine the financing options for your new vehicle by entering your details. These are checked confidentially by Mercedes-Benz Bank. <br> <strong>2.Contact by your dealer</strong> Your Mercedes-Benz partner will contact you after the exam and discuss the next steps with you. , <br>  <strong>3. Pick-up</strong> Upon request, your dealer will accept your current vehicle in payment after a thorough examination and agree with you on the pick-up date for your new vehicle."
+		}
+	},
+	"balloon": {
+		"button": {
+			"label": "Start a Plus 3 financing application now",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "If you have not yet started your Plus 3 financing application at Mercedes-Benz Bank AG, Siemensstraße 7, 70469 Stuttgart, you can do so by clicking on the button \"Submit Plus 3 financing application now\". We will send the data relevant to your Plus 3 financing application directly to them."
+		},
+		"nextstep": {
+			"content": "<strong>Your next steps to your new Mercedes-Benz</strong><br><br><strong>1. Carry out Plus 3 financing enquiry</strong><br>Find out the Plus 3 financing options for your new vehicle by providing your details. These will be checked confidentially by Mercedes-Benz Bank.<br><br><strong>2. Contact by your dealer</strong><br>Your Mercedes-Benz partner will contact you after the check and discuss the next steps with you.<br><br><strong>3. Payment & collection</strong><br>If you wish, your dealer will take your current vehicle in payment after a detailed check and arrange a collection date for your new vehicle with you.  Translated with www.DeepL.com/Translator (free version)"
+		}
+	},
+	"cross": {
+		"selling": {
+			"comment": {
+				"label": "&nbsp;",
+				"text": "&nbsp;"
+			}
+		}
+	},
+	"purchase": {
+		"cooperative": {
+			"content": "&nbsp;"
+		}
+	},
+	"purchaseCooperative": {
+		"content": "&nbsp;"
+	},
+	"Purchase": "&nbsp;",
+	"commission": {
+		"number": "&nbsp;"
+	},
+	"NefzPlaceholder": "&nbsp;",
+	"WltpPlaceholder": "&nbsp;",
+	"additional": {
+		"items": {
+			"title": "&nbsp;"
+		}
+	},
+	"chargedLaterDescription": "&nbsp;",
+	"chargedLaterLabel": "&nbsp;",
+	"chargedLaterValue": "&nbsp;",
+	"wheelSet": {
+		"headline": "&nbsp;",
+		"imageUrl": "&nbsp;",
+		"options": {
+			"title": "&nbsp;"
+		},
+		"price": {
+			"note": "&nbsp;"
+		},
+		"subHeadline": "&nbsp;",
+		"wheelSetPrice": "&nbsp;"
+	},
+	"wheelSetOptionMountOnCar": "&nbsp;",
+	"wheelSetOptionNoChoice": "&nbsp;",
+	"wheelSetOptionPrice": "&nbsp;",
+	"wheelSetOptionStoreInWarehause": "&nbsp;",
+	"cash": {
+		"nextstep": {
+			"content": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"button": {
+			"link": "&nbsp;",
+			"label": "&nbsp;"
+		}
+	}
+}

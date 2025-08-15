@@ -1,0 +1,332 @@
+{
+	"subject": "Rezervasyonunuz için teşekkür ederiz! | Mercedes-Benz Online Showroom",
+	"customer": {
+		"type": {
+			"content": "${customer.customerType}",
+			"label": "Bireysel / Şirket: "
+		},
+		"billingaddress": {
+			"label": "İletişim Bilgileri ",
+			"email": "${customer.email!''}",
+			"nameline": "${customer.firstName} ${customer.lastName}",
+			"phone": "${customer.phone!''}",
+			"addressline": "${customer.street!''} ${customer.houseNumber!''}",
+			"cityline": "${customer.postCode!''} ${customer.city!''}",
+			"country": "${customer.country!''}"
+		},
+		"businessinformation": {
+			"headline": "Şirket Bilgileri"
+		},
+		"company": {
+			"legalform": {
+				"label": "Rechtsform: (TRANSLATIONS NEEDED)",
+				"content": "${customer.business.legalForm!''}"
+			},
+			"name": {
+				"label": "Şirket İsmi",
+				"content": "${customer.business.name!''}"
+			},
+			"vatID": {
+				"content": "${customer.business.vatID!''}",
+				"label": "Vergi Numarası"
+			},
+			"contactaddress": {
+				"label": "İletişim Adresi"
+			},
+			"establishment": {
+				"date": {
+					"content": "${customer.business.establishment.date!''}",
+					"label": "Gründungsdatum/Selbstständig seit: (TRANSLATIONS NEEDED)"
+				}
+			}
+		},
+		"contactaddress": {
+			"country": "${customer.contact.country!''}",
+			"email": "${customer.contact.email!''}",
+			"nameline": "${customer.contact.firstName!''} ${customer.contact.lastName!''}",
+			"phone": "${customer.contact.phone!''}",
+			"cityline": "${customer.contact.postcode!''} ${customer.contact.city!''}",
+			"streetline": "${customer.contact.street!''} ${customer.contact.houseNumber!''}"
+		}
+	},
+	"delivery": {
+		"cost": {
+			"label": "Teslimat Masrafları ",
+			"value": "${delivery.cost}"
+		},
+		"method": {
+			"content": "${delivery.method!''}",
+			"label": "Teslimat Tipi"
+		}
+	},
+	"introduction": {
+		"content": "&nbsp;"
+	},
+	"mercedes": {
+		"partner": {
+			"label": "Teslimat için tercih edilen Mercedes-Benz Showroom'unuz:",
+			"name": "${vehicle.pickupLocation.name!''}",
+			"streetLine": "${vehicle.pickupLocation.addressLine!''}",
+			"cityLine": "${vehicle.pickupLocation.postCode!''} ${vehicle.pickupLocation.city!''}",
+			"email": "${vehicle.pickupLocation.email!''}"
+		}
+	},
+	"order": {
+		"summary": {
+			"headline": "Rezervasyon Özetiniz"
+		}
+	},
+	"partial": {
+		"order": {
+			"headline": "Tercih edilen teslimat bilgileri"
+		}
+	},
+	"payment": {
+		"info": {
+			"content": "&nbsp;"
+		},
+		"method": {
+			"label": "Tercih ettiğiniz ödeme yöntemi",
+			"leasing": {
+				"content": "Leasing"
+			},
+			"financing": {
+				"content": "Mercedes-Benz Finansal Hizmetler"
+			},
+			"cash": {
+				"content": "Peşin Ödeme"
+			},
+			"content": "${payment.method!''}",
+			"headline": "Kart Bilgisi",
+			"balloon": {
+				"content": "&nbsp;"
+			},
+			"kauf": {
+				"content": "Peşin Ödeme"
+			}
+		}
+	},
+	"salutation": {
+		"content": "Online Showroom’u kullandığınız için teşekkür ederiz. Mercedes-Benz aracınızın rezervasyon talebi tarafımıza ulaştı. Rezervasyon numaranız: ${orderId} <br><br><strong> Dikkat edilmesi gereken noktalar: </strong><br><br>- Rezerve ettiğiniz aracı sizin için Online Showroom'dan kaldırdık. Rezervasyon bedelinin ödenmesi aracın satışını garantilemez. Aracı satın almak için en geç <strong>iki iş günü</strong> içerisinde tercih ettiğiniz showroom ile iletişime geçerek satış işlemlerini tamamlayınız. İki iş günü içerisinde gerekli işlemlerin başlatılmaması durumunda rezervasyonunuz iptal edilecek ve araç tekrar yayına açılacaktır.<br><br>- Ödenecek tutar sadece seçtiğiniz aracın rezervasyonu içindir. Bu bedel aracın satın alma esnasında ödenecek toplam tutardan düşülecektir. <br><br>- Aracın rezervasyonu sonrasında Mercedes-Benz Otomotiv'in satış koşulları geçerli olacaktır. <br><br>- Herhangi bir sebeple rezervasyonun iptali durumunda rezervasyon bedeli işlem yaptığınız karta iade edilecektir.",
+		"headline": "Sayın ${customer.firstName} ${customer.lastName}",
+		"ms": {
+			"headline": "&nbsp;"
+		},
+		"mr": {
+			"headline": "&nbsp;"
+		}
+	},
+	"subtotal": {
+		"label": "Araç Satış Fiyatı",
+		"value": "${vehicle.specialOfferPrice}"
+	},
+	"tax": {
+		"inclued": {
+			"label": "&nbsp;"
+		}
+	},
+	"total": {
+		"amount": {
+			"label": "Ödenen Tutar",
+			"value": "${total}"
+		}
+	},
+	"vehicle": {
+		"order": {
+			"headline": "Aracınız"
+		},
+		"reservation": {
+			"fee": {
+				"headline": "Rezervasyon Bedeli",
+				"value": "${vehicle.reservationFee!''}"
+			}
+		},
+		"nefz": {
+			"headline": "NEFZ değerleri",
+			"energyefficiency": {
+				"displayImage": "&nbsp;"
+			}
+		},
+		"wltp": {
+			"headline": "WLTP Değerleri",
+			"energyefficiency": {
+				"displayImage": "&nbsp;"
+			}
+		},
+		"stockType": {
+			"comingSoon": "Tedarik Sürecinde",
+			"inStock": "Satışa Hazır"
+		},
+		"estimatedArrivalDate": "${vehicle.stock.estimatedArrivalDate!''}",
+		"priceInformation": {
+			"headline": "t38"
+		}
+	},
+	"your": {
+		"order": {
+			"label": "Rezervasyon Numaranız: ${orderId}"
+		}
+	},
+	"information": {
+		"dataprotection": {
+			"content": "<a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.com.tr/passengercars/content-pool/tool-pages/legal/cookies.html\">Ayarlar</a> | <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.com.tr/passengercars/content-pool/tool-pages/legal/privacy-statement.html\">Veri Gizliliği</a>| <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.com.tr/passengercars/content-pool/tool-pages/legal/legal-notice.html\">Yasal Uyarılar</a>| <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.mercedes-benz.com.tr/passengercars/content-pool/tool-pages/legal/information-security.html\">Bilgi Güvenliği</a>"
+		},
+		"disclaimer": {
+			"content": "Ödenecek tutar sadece seçtiğiniz aracın rezervasyonu içindir. Bu bedel aracı satın alma esnasında ödenecek toplam tutardan düşülecektir."
+		},
+		"emission": {
+			"content": "${(vehicle.wltp.footnotes)!''} <br><br> ${(vehicle.nefz.footnotes)!''}"
+		},
+		"environmentalbonus": {
+			"content": " Satın aldığınız tutar, üreticinin çevresel ikramiye miktarındaki ${vehicle.additionalPriceInfos.ecobonus!''} değerinde tutarı da içerir.  Çevresel ikramiyeyi talep etme miktarı ve hakkı, BAFA web sitesinde bulunan yönergeler tarafından düzenlenir <a href=\"http://www.bafa.de\" style=\"color:#333333; font-weight: bold; margin: 4px 0 0;\">( www.bafa.de )</a> . Çevre bonusu için yasal bir hak yoktur."
+		},
+		"footnote": {
+			"content": "&nbsp;"
+		},
+		"thankyounote": {
+			"content": "Siparişiniz için teşekkür ederiz. <br><br><strong> Mercedes-Benz</strong>"
+		},
+		"chairpersonfooter": {
+			"content": "&nbsp;"
+		},
+		"vat": {
+			"disclaimer": {
+				"content": "&nbsp;"
+			}
+		},
+		"vehicle": {
+			"stockType": "&nbsp;"
+		}
+	},
+	"company": {
+		"billingaddress": {
+			"label": "Şirket Adres Bilgileri"
+		},
+		"city": {
+			"value": "${customer.business.cityPostcodeLine!''}"
+		},
+		"contactnumber": {
+			"value": "${customer.business.phone!''}"
+		},
+		"country": {
+			"value": "Türkiye"
+		},
+		"email": {
+			"value": "${customer.business.email!''}"
+		},
+		"name": {
+			"value": "${customer.business.name!''}"
+		},
+		"address": {
+			"value": "${customer.business.streetLine!''}"
+		}
+	},
+	"financing": {
+		"button": {
+			"label": "Finansman/Sigorta Talebi Başlat",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"nextstep": {
+			"content": "<strong>Mercedes-Benz'inize kavuşmak için bir sonraki adım</strong> <br><strong>1.</strong> Finansman/Sigorta talebinizi iletin&nbsp;yeni aracınız için belirlediğiniz finansman/sigorta seçenekleri ile müşteri bilgileriniz ile ön başvurunuzu oluşturun. Bu bilgiler sadece Mercedes-Benz Finansal Hizmetler tarafından özel olarak görüntülenecektir.&nbsp;<br><strong>2.</strong>Acentanız aracılığı ile iletişime geçin. Mercedes-Benz ortağınız sonraki adımlar ve finansman/sigorta talebiniz için sizinle iletişime geçecektir.&nbsp;<br><strong>3.</strong> Yerinden alma Dilerseniz bayiniz, mevcut aracınızı kapsamlı bir incelemeden sonra ödemeli olarak kabul edecek ve yeni aracınızın teslim tarihi konusunda sizi bilgilendirecektir."
+		},
+		"introduction": {
+			"content": "Finansman ve Sigorta talebinizi, Mercedes-Benz Finansal Hizmetler'e henüz iletmediyseniz, aşağıda yer alan&nbsp; \"Finansman/Sigorta Talebimi Başlat\" butonuna tıklayarak başvuru sayfasına ulaşabilirsiniz."
+		}
+	},
+	"leasing": {
+		"button": {
+			"label": "Leasing talebini ilet",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"introduction": {
+			"content": "Leasing talebinizi henüz Mercedes-Benz Finansal Hizmetler'e iletmediyseniz, \"Leasing talebini ilet\" butonunu kullanarak bunu yapabilirsiniz. Leasing talebiniz için ilgili verileri doğrudan oraya gönderiyoruz."
+		},
+		"nextstep": {
+			"content": "<strong>Mercedes-Benz'inize kavuşmak için bir sonraki adım</strong> <br><br> <strong>1. Bir leasing talebi gerçekleştirin </strong> Bilgilerinizi girerek yeni aracınız için finansman seçeneklerini belirleyin. Bunlar Mercedes-Benz Finansal Hizmetler tarafından gizli olarak kontrol edilir. <br> <strong>2.Bayiniz aracılığı ile iletişime geçin.</strong> Mercedes-Benz ortağınız sizinle sonraki adımlar için iletişime geçecektir.  <br>  <strong>3. Yerinden alma</strong> Dilerseniz bayiniz, mevcut aracınızı kapsamlı bir incelemeden sonra ödemeli olarak kabul edecek ve yeni aracınızın teslim tarihi konusunda sizi bilgilendirecektir. "
+		}
+	},
+	"dealer": {
+		"address": {
+			"cityline": "${dealer.postCode!''} ${dealer.city!''}",
+			"email": "${dealer.email!''}",
+			"label": "Tercih edilen aracın satıcı bilgileri",
+			"name": "${dealer.name1!''}",
+			"streetline": "${dealer.addressLine1!''}"
+		}
+	},
+	"cash": {
+		"button": {
+			"label": "Sigorta Talebi Başlat",
+			"link": "${payment.financing.dspLink!''}"
+		},
+		"nextstep": {
+			"content": "<strong>Aracınızı Mercedes-Benz Kasko güvencesi ile  koruma altına almak  için izlemeniz gereken adımlar</strong> <br><br><strong>1. Sigorta Talebimi Başlat butonu </strong>ile giriş yaptıktan sonra müşteri bilgilerinizi doldurarak prim hesapla butonuna bastığınızda Mercedes-Benz Kasko teklifiniz tek ve çok yıllı seçenekleri ile  hesaplanacak ve size en uygun teklifi seçerek işleminize devam edebileceksiniz. <br><strong>2.</strong> Seçmiş olduğunuz kasko teklifi ve diğer alternatifler ile ilgili olarak Mercedes-Benz Sigorta danışmanlarımız sizinle en kısa süre içerisinde iletişime geçecektir. <br><strong>3.</strong> Mercedes- Benz Finansal Hizmetler’e ulaşmak için; <br>Müşteri İletişim Merkezi: <strong>444 62 44</strong><br>E-mail: <strong>mbft.musteri@mercedes-benz.com</strong>"
+		},
+		"introduction": {
+			"content": "Sigorta talebinizi, Mercedes-Benz Finansal Hizmetler'e henüz iletmediyseniz, aşağıda yer alan 'Sigorta Talebimi Başlat' butonuna tıklayarak başvuru sayfasına ulaşabilirsiniz."
+		}
+	},
+	"Energy": {
+		"efficiency": {
+			"headline": "&nbsp;"
+		}
+	},
+	"NefzPlaceholder": "&nbsp;",
+	"Purchase": "&nbsp;",
+	"WltpPlaceholder": "&nbsp;",
+	"additional": {
+		"items": {
+			"title": "&nbsp;"
+		}
+	},
+	"balloon": {
+		"button": {
+			"label": "&nbsp;",
+			"link": "&nbsp;"
+		},
+		"introduction": {
+			"content": "&nbsp;"
+		},
+		"nextstep": {
+			"content": "&nbsp;"
+		}
+	},
+	"chargedLaterDescription": "&nbsp;",
+	"chargedLaterLabel": "&nbsp;",
+	"chargedLaterValue": "&nbsp;",
+	"commission": {
+		"number": "&nbsp;"
+	},
+	"cross": {
+		"selling": {
+			"comment": {
+				"label": "&nbsp;",
+				"text": "&nbsp;"
+			}
+		}
+	},
+	"purchase": {
+		"cooperative": {
+			"content": "&nbsp;"
+		}
+	},
+	"purchaseCooperative": {
+		"content": "&nbsp;"
+	},
+	"wheelSet": {
+		"headline": "&nbsp;",
+		"imageUrl": "&nbsp;",
+		"options": {
+			"title": "&nbsp;"
+		},
+		"price": {
+			"note": "&nbsp;"
+		},
+		"subHeadline": "&nbsp;",
+		"wheelSetPrice": "&nbsp;"
+	},
+	"wheelSetOptionMountOnCar": "&nbsp;",
+	"wheelSetOptionNoChoice": "&nbsp;",
+	"wheelSetOptionPrice": "&nbsp;",
+	"wheelSetOptionStoreInWarehause": "&nbsp;"
+}
